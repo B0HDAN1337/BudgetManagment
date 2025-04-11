@@ -23,7 +23,8 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "src/icons",
+                "output": "assets/icons"
               }
             ],
             "styles": [
@@ -81,7 +82,8 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "src/icons",
+                "output": "assets/icons"
               }
             ],
             "styles": [
