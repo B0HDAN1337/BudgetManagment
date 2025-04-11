@@ -1,0 +1,73 @@
+header {
+    top: 0;
+    padding: 0;
+    position: relative;
+    background-color: #4DB6AC;
+    justify-content: center;
+    align-items: center;
+}
+
+.iconLogin {
+    background: none;
+    border: 0;
+
+}
+
+.circle {
+    display: inline-block;  
+    width: 50px;            
+    height: 50px;           
+    background-color: #FAF9F6;  
+    border-radius: 50%;     
+    text-align: center;    
+    line-height: 50px;     
+    color: white;          
+    font-size: 20px;        
+    opacity: 0.75;
+}
+
+.header-navigation nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    margin-right: 24px;
+    
+}
+
+.header-navigation nav button {
+    margin-right: 29px;
+    width: 125px;
+    height: 46px;
+    border-radius: 8px;
+    border: 0;
+    background-color: #FAF9F6;
+    font-family: Poppins;
+    font-size: 24px;
+    text-align: center;
+    font-weight: 400;
+}
+
+.left-navigation {
+    display: flex;
+    align-items: center;
+}
+
+.left-navigation label {
+    display: flex;
+    align-items: center;
+    font-family: Sora;
+    font-size: 40px;
+    color: #FAF9F6;
+}
+
+.right-navigation {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: auto;
+}
+
+

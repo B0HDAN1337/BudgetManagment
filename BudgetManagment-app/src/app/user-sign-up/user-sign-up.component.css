@@ -1,0 +1,168 @@
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 0 20px;
+    box-sizing: border-box;
+    flex-grow: 1;
+}   
+
+.corners {
+    display: flex; 
+    align-items: center;     
+    gap: 10rem;
+    padding: 100px;
+    background-color: #FAF9F6;
+    border-top-right-radius: 100px;
+    border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 8px;
+    border-top-left-radius: 8px;
+    box-sizing: border-box;
+}
+
+.centered {
+    background-color: #4DB6AC;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    padding: auto;
+}
+
+.Logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.Logo label {
+    font-family: Sora;
+    font-size: 64px;
+    color: #1C1C1E;
+}
+
+.Form-container {
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.form-group input {
+    padding: 10px;
+    width: 30rem ;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    background-color: #FAF9F6;
+    font-family: Poppins;
+    font-size: 24px;
+    font-style: italic;
+}
+
+.form-group label {
+    font-size: 1rem;
+    font-family: Poppins;
+    font-size: 22px;
+    color: #5E5B5B;
+}
+
+.LoginText {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.LoginText label {
+    font-family: Poppins;
+}
+
+.LoginText .first-text {
+    color: #0A1C14;
+    font-size: 48px;
+}
+.LoginText .second-text {
+    color: #0A1C14;
+    font-size: 24px;
+    font-style: italic;
+    color: #000000;
+}
+
+.LoginText u {
+    color: #4DB6AC;
+}
+
+.button-container {
+    text-align: center;
+}
+
+.button-container button {
+    background-color: #4DB6AC;
+    color: #FAF9F6;
+    border: 0;
+    border-radius: 8px;
+    text-align: center;
+    font-family: Poppins;
+    font-size: 24px;
+    height: 63px;
+    width: 300px;
+}
+
+
+/* For screens smaller than 600px (vertical orientation) */
+@media (max-width: 600px) {
+    .corners {
+        padding: 10%;  /* Reduce padding on small screens */
+        flex-direction: column;  /* Stack items vertically */
+        align-items: center;  /* Center all items horizontally */
+        gap: 1.5rem;  /* Reduce space between items */
+    }
+
+    .form-group input {
+        width: 100%;  /* Input takes full width */
+        font-size: 1.2rem;  /* Adjust font size for smaller screens */
+    }
+
+    .button-container button {
+        width: 100%;  /* Button takes full width on small screens */
+        font-size: 1.2rem;  /* Adjust button font size */
+        height: auto;  /* Ensure button height is flexible */
+    }
+
+    .LoginText .first-text {
+        font-size: 36px;  /* Adjust heading size */
+        text-align: center;  /* Center the title on small screens */
+    }
+
+    .Logo label {
+        font-size: 48px;  /* Adjust logo font size */
+        text-align: center;  /* Ensure logo is centered */
+    }
+}
+
+/* For tablet-sized screens (up to 1024px) */
+@media (max-width: 1024px) {
+    .corners {
+        padding: 15%;  /* Medium padding for tablets */
+        flex-direction: column;  /* Ensure a column layout */
+    }
+
+    .form-group input {
+        width: 80%;  /* Slightly smaller input width */
+    }
+
+    .button-container button {
+        width: 80%;  /* Slightly smaller button */
+    }
+}
