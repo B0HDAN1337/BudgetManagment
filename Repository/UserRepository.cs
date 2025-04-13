@@ -30,8 +30,7 @@ namespace BudgetManagmentServer.Repository
         {
             var existUser = _context.Users.Find(id);
 
-            existUser.Name = user.Name;
-            existUser.LastName = user.LastName;
+            existUser.UserName = user.UserName;
             existUser.Email = user.Email;
             existUser.Password = user.Password;
 
