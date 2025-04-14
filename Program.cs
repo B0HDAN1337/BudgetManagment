@@ -28,8 +28,17 @@ namespace BudgetManagmentServer
             builder.Services.AddSwaggerGen();
 
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowBudgetMAnagment", policy =>
+                {
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200");
+                });
+            });
+
             var app = builder.Build();
 
+            
 
             using (var scope = app.Services.CreateScope())
             {
@@ -43,6 +52,9 @@ namespace BudgetManagmentServer
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+
+            app.UseCors("AllowBudgetMAnagment");
 
             app.UseHttpsRedirection();
 
