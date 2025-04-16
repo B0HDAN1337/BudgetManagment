@@ -124,49 +124,35 @@
 }
 
 
-/* For screens smaller than 600px (vertical orientation) */
-@media (max-width: 600px) {
+@media (max-width: 1200px) {
     .corners {
-        padding: 10%;  /* Reduce padding on small screens */
-        flex-direction: column;  /* Stack items vertically */
-        align-items: center;  /* Center all items horizontally */
-        gap: 1.5rem;  /* Reduce space between items */
+        flex-direction: column;
+        gap: 2rem;
+        height: auto;
+
+        padding: 2rem 1rem;
     }
 
-    .form-group input {
-        width: 100%;  /* Input takes full width */
-        font-size: 1.2rem;  /* Adjust font size for smaller screens */
-    }
-
-    .button-container button {
-        width: 100%;  /* Button takes full width on small screens */
-        font-size: 1.2rem;  /* Adjust button font size */
-        height: auto;  /* Ensure button height is flexible */
-    }
-
-    .LoginText .first-text {
-        font-size: 36px;  /* Adjust heading size */
-        text-align: center;  /* Center the title on small screens */
+    .Logo {
+        padding-left: 0;
     }
 
     .Logo label {
-        font-size: 48px;  /* Adjust logo font size */
-        text-align: center;  /* Ensure logo is centered */
-    }
-}
-
-/* For tablet-sized screens (up to 1024px) */
-@media (max-width: 1024px) {
-    .corners {
-        padding: 15%;  /* Medium padding for tablets */
-        flex-direction: column;  /* Ensure a column layout */
+        font-size: 2.5rem;
     }
 
     .form-group input {
-        width: 80%;  /* Slightly smaller input width */
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .Form-container {
+        padding: 1rem;
+        gap: 1rem;
     }
 
     .button-container button {
-        width: 80%;  /* Slightly smaller button */
+        width: 100%;
     }
+
 }
