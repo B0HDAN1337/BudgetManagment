@@ -1,0 +1,133 @@
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}   
+
+.corners {
+    display: flex; 
+    align-items: center;       
+    gap: 15rem;
+    width: 100%;
+    max-width: 1400px;
+    height: 756px;
+    background-color: #FAF9F6;
+    border-top-right-radius: 100px;
+    border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 8px;
+    border-top-left-radius: 8px;
+    box-sizing: border-box;
+}
+
+.centered {
+    background-color: #4DB6AC;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    padding: auto;
+    width: 100%;
+    max-width: 1400px;
+    height: auto;
+}
+
+.Logo {
+    padding-left: 10vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.Logo label {
+    font-family: Sora;
+    font-size: 4rem;
+    color: #1C1C1E;
+}
+
+.Form-container {
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.form-group input {
+    padding: 0.6rem;
+    width: 30rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    background-color: #FAF9F6;
+    font-family: Poppins;
+    font-size: 1.5rem;
+    font-style: italic;
+}
+
+.form-group label {
+    font-family: Poppins;
+    font-size: 1.4rem;
+    color: #5E5B5B;
+}
+
+.button-container {
+    text-align: center;
+}
+
+.button-container button {
+    background-color: #4DB6AC;
+    color: #FAF9F6;
+    border: 0;
+    border-radius: 8px;
+    text-align: center;
+    font-family: Poppins;
+    font-size: 1.5rem;
+    height: 4rem;
+    width: 100%;
+    max-width: 300px;
+}
+
+
+
+@media (max-width: 1200px) {
+    .corners {
+        flex-direction: column;
+        gap: 2rem;
+        height: auto;
+
+        padding: 2rem 1rem;
+    }
+
+    .Logo {
+        padding-left: 0;
+    }
+
+    .Logo label {
+        font-size: 2.5rem;
+    }
+
+    .form-group input {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .Form-container {
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .button-container button {
+        width: 100%;
+    }
+
+}
