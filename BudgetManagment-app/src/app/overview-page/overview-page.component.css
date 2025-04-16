@@ -1,0 +1,112 @@
+
+.dynamic-name {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-left: 15vw ;
+    
+}
+.dynamic-name label {
+    font-family: Poppins;
+    font-size: 3.5rem;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+
+}   
+
+.corners {
+    position: relative;
+    display: flex; 
+    align-items: flex-start;
+    width: 100%;
+    max-width: 1400px;
+    height: 756px;
+    flex-direction: column;
+    background-color: #FAF9F6;
+    border-top-right-radius: 100px;
+    border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 8px;
+    border-top-left-radius: 8px;
+    box-sizing: border-box;
+}
+
+.centered {
+    background-color: #4DB6AC;
+    width: 100%;
+    max-width: 1400px;
+    height: auto;
+    border-radius: 8px;
+    display: flex;
+    padding: auto;
+}
+
+
+.wallets {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    padding-bottom: 0%;
+  }
+
+.add-wallet {
+    background-color: #4DB6AC;
+    color: #FAF9F6;
+    border: 0;
+    border-radius: 8px;
+    text-align: center;
+    font-family: Poppins;
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    height: 3.5rem;
+    width: 100%;
+    max-width: 180px;
+  }
+
+  .last-transactions {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+  }
+
+
+  .add-transaction {
+    background-color: #4DB6AC;
+    color: #FAF9F6;
+    border: 0;
+    margin-top: 10px;
+    border-radius: 8px;
+    text-align: center;
+    font-family: Poppins;
+    margin-top: 1rem;
+    font-size: 24px;
+    height: 63px;
+    width: 100%;
+    max-width: 240px;
+  }
+
+
+  .bottom-text {
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+    font-weight: 600;
+    font-size: 1.5rem;
+    text-align: center;
+    font-family: Poppins;
+    color:#4DB6AC;
+  }
+
+  .text1 {
+    font-family: Poppins;
+    font-size: 3rem ;
+  }
+
+  .text2 {
+    font-family: Poppins;
+    font-size: 1.5rem;
+    font-style: italic;
+  }
