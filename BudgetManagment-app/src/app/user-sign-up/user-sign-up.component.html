@@ -19,27 +19,33 @@
                                 <label class="first-text"><b> Sign Up</b> to Sova!</label>
                                 <label class="second-text">Have an account? <u>Login here!</u></label>
                             </div>
-                            <form class="Form-container">
+                            <form class="Form-container" (ngSubmit)="onCreate(signUpObj)">
                                 <div class="form-group">
                                     <label>Username</label>
-                                    <input type="text" name="UserName" [(ngModel)]="signUpObj.UserName" placeholder="Username">
+                                    <input type="text" name="UserName" required [(ngModel)]="signUpObj.UserName" #userName="ngModel" placeholder="Username">
+                                    <span *ngIf="submitted && userName.invalid" style="color: red; font-family: Poppins;">Username is reqiured</span>
                                 </div>
                                 <div class="form-group">
                                     <label>E-mail address</label>
-                                    <input type="text" name="Email" [(ngModel)]="signUpObj.Email" placeholder="E-mail address">
+                                    <input type="email" name="Email" required email="" [(ngModel)]="signUpObj.Email" #userEmail="ngModel" placeholder="E-mail address">
+                                    <span *ngIf="submitted && userEmail.errors?.['email']" style="color: red; font-family: Poppins;">invalid Email </span>
                                 </div>
                                 <div class="form-group">
                                     <label>Password</label>
-                                    <input type="text" name="Password" [(ngModel)]="signUpObj.Password" placeholder="Password">
+                                    <input type="password" name="Password" required minlength="5" [(ngModel)]="signUpObj.Password" #userPassword="ngModel" placeholder="Password">
+                                    <span *ngIf="submitted && userPassword.invalid" style="color: red; font-family: Poppins;">Password is required</span>
+                                    <span *ngIf="submitted && userPassword.errors?.['minlength']" style="color: red; font-family: Poppins;">Password must be at least 6 characters long</span>
                                 </div>
                                 <div class="form-group">
                                     <label>Confirm Password</label>
-                                    <input type="text" placeholder="Confirm Password">
+                                    <input type="password" name="ConfirmPassword" required [(ngModel)]="ConfirmPassword" #confirmPassword="ngModel" placeholder="Confirm Password">
+                                    <span *ngIf="submitted && signUpObj.Password !== ConfirmPassword" style="color: red; font-family: Poppins;">Passwords do not match</span>
+                                </div>
+                                <div class="button-container">
+                                    <button type="submit">Create my account</button>
                                 </div>
                             </form>
-                            <div class="button-container">
-                                <button (click)="onCreate()">Create my account</button>
-                            </div>
+                            
                         </div>            
             </div>
         </div>
