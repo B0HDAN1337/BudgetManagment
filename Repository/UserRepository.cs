@@ -46,5 +46,10 @@ namespace BudgetManagmentServer.Repository
             _context.SaveChanges();
             return userDelete;
         } 
+
+        public bool existUser(string username, string email)
+        {
+            return _context.Users.Any(u=> u.UserName == username || u.Email == email);
+        }
     }
 }

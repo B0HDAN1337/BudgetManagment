@@ -32,6 +32,7 @@ namespace BudgetManagmentServer.Controllers
         [HttpPost]
         public IActionResult CreateUser(User user)
         {
+            
             var newUser = _userRepository.CreateUser(user);
 
             return Ok(newUser);
@@ -57,6 +58,13 @@ namespace BudgetManagmentServer.Controllers
 
             return Ok(delete);
             
+        }
+
+        [HttpGet("exists")]
+        public IActionResult CheckUser([FromQuery] string username, [FromQuery] string email)
+        {
+            bool exist = _userRepository.existUser(username, email);
+            return Ok(exist);
         }
 
 
