@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class UserSignUpComponent {
 
+  //bool query to check if button already pushed
   submitted = false;
 
    signUpObj:any = {
@@ -20,15 +21,19 @@ export class UserSignUpComponent {
     "Password": ""
    };
 
+   //Check if passwords do match 
    ConfirmPassword = '';
 
-   urlCreate = 'http://localhost:5142/api/User';
+   //url requests to database server 
+   private urlCreate = 'http://localhost:5142/api/User';
+   private urlCheckUser = 'http://localhost:5142/api/User/exists';
 
    constructor(private http:HttpClient) {}
 
+   //When click button to Sign up
    onCreate(form: NgForm)
    {
-
+    
     this.submitted = true;
 
     if(form.invalid)
@@ -36,19 +41,45 @@ export class UserSignUpComponent {
       return;
     }
       
+    this.onCheckUser(this.signUpObj.UserName, this.signUpObj.Email).subscribe( exist =>
+    {
+      if (exist)
+      {
+        console.log(exist);
+        alert("User exist with this username or email"); 
+      } else
+      {
+        this.registerUser();
+      }
+    });
 
-    this.http.post(this.urlCreate, this.signUpObj).subscribe( success =>
-    {
-      console.log("Success", success);
-      alert("Sign up Success");
-    }, 
-    error =>
-    {
-      console.log("Error", error);
-      alert("Sign up Failed");
-    }
-    );
    };
 
+   // http get request to validate if user with username and email exist
+   onCheckUser(username: string, email: string)
+   {
+    return this.http.get(this.urlCheckUser, {
+      params: {
+        username: this.signUpObj.UserName,
+        email: this.signUpObj.Email
+      }
+    });
+   }
+
+   // http post request for add new user
+   registerUser()
+   {
+
+    this.http.post(this.urlCreate, this.signUpObj).subscribe( success =>
+      {
+        console.log("Success added", success);
+        alert("Sign up success");
+      }, error =>
+      {
+        
+        console.log("Error add", error);
+        alert("Sign up failed");
+      })
+   }
 
 }
