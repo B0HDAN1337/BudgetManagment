@@ -1,5 +1,7 @@
 ﻿using BudgetManagmentServer.Data;
 using BudgetManagmentServer.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BudgetManagmentServer.Repository
 {
@@ -50,6 +52,14 @@ namespace BudgetManagmentServer.Repository
         public bool existUser(string username, string email)
         {
             return _context.Users.Any(u=> u.UserName == username || u.Email == email);
+        }
+
+        public User LoginUser(User user)
+        {
+            var userLogin = _context.Users.FirstOrDefault(u => u.Email == user.Email && u.Password == user.Password);
+        
+            return userLogin;
+            
         }
     }
 }
