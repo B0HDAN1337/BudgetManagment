@@ -15,5 +15,6 @@ namespace BudgetManagmentServer.Repository
         User UpdateUser(int id, User user);
         User DeleteUser(int id);
         bool existUser(string username, string email);
+        User LoginUser(User user);
     }
 }

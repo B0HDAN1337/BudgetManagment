@@ -68,6 +68,18 @@ namespace BudgetManagmentServer.Controllers
         }
 
 
+        [HttpPost("login")]
+        public IActionResult LoginUser(User user)
+        {
+            var userLogin = _userRepository.LoginUser(user);
+            
+            if (userLogin == null)
+            {
+                return Unauthorized();
+            }
+
+            return Ok();
+        }
 
     }
 }
