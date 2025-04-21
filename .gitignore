@@ -268,6 +268,11 @@ ServiceFabricBackup/
 *.ldf
 *.ndf
 
+#SQL Lite files
+budgetManagment.db
+budgetManagment.db-shm
+budgetManagment.db-wal
+
 # Business Intelligence projects
 *.rdl.data
 *.bim.layout
@@ -287,6 +292,7 @@ FakesAssemblies/
 .ntvs_analysis.dat
 node_modules/
 .angular/cache/19.2.5/BudgetManagment-app
+.angular/
 
 # Visual Studio 6 build log
 *.plg
