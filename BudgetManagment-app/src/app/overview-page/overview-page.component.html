@@ -20,11 +20,58 @@
                         <div class="last-transactions">  
                             <label class="text1">Your <b>Last Transactions</b></label>
                             <label class="text2">Looks like you don’t have any transactions!</label>
-                            <button class="add-transaction">New Transaction</button>
+                            <button class="add-transaction" (click)="OpenMenu()">New Transaction</button>
                         </div>
                         <div class="bottom-text">Overview</div>
                 </div>  
             </div>
+        </div>
+        <div class="overlay" *ngIf="isMenuVisible">
+            <div class="centered-add-transaction">
+                <div class="corners-add-transaction">
+                    <button class="closeMenu" (click)="CloseMenu()">Close</button>
+                    
+                        <form class="form">
+                            <div class="top-row-container">
+                                <div class="category">
+                                    <label>Category</label>
+                                    <select name="Category" id="Category">
+                                        <option value="" disabled selected hidden >Category</option>
+                                        <option value="Food">Food</option>
+                                        <option value="Travel">Travel</option>
+                                        <option value="Home">Home</option>
+                                        <option value="Healthcare">Healthcare</option>
+                                        <option value="Income">Income</option>
+                                    </select>
+                                </div>
+                                <div class="date">
+                                    <label>Date</label>
+                                    <input type="text" placeholder="dd/mm/rrrr"/>
+                                </div>
+                            </div>
+                            <div class="bottom-row-container">
+                                <div class="amount">
+                                    <label>Amount</label>
+                                    <input type="text" placeholder="Amount"/>
+                                </div>
+                                <div class="currency">
+                                    <label>Currency</label>
+                                    <select name="Currency" id="Currency">
+                                        <option value="" disabled selected hidden>Currency</option>
+                                        <option value="USD">United States Dolar</option>
+                                        <option value="EUR">Euro</option>
+                                        <option value="PLN">Polish złoty</option>
+                                    </select>
+                                </div>
+                                <button>Add Transaction</button>
+                            </div>
+                        </form>
+                    
+                </div>
+                
+            </div>
+
+           
         </div>
 </body>
 </html>
