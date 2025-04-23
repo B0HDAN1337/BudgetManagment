@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router, RouterOutlet } from '@angular/router';
+
 @Component({
   selector: 'app-overview-page',
   imports: [FormsModule, CommonModule],
@@ -9,6 +11,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './overview-page.component.css'
 })
 export class OverviewPageComponent {
+
+  constructor(private router: Router) {}
 
   isMenuVisible = false;
 
@@ -20,5 +24,10 @@ export class OverviewPageComponent {
   CloseMenu()
   {
     this.isMenuVisible = false;
+  }
+
+  OpenCreateMenu()
+  {
+    this.router.navigate(['/wallet-creation']); 
   }
 }

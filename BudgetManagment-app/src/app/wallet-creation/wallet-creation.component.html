@@ -16,23 +16,26 @@
                     </div>
                         <div class="formCreateWallet">
                             
-                            <form class="Form-container">
+                            <form class="Form-container" (ngSubmit)="OnCreateWallet(WalletObj)">
                                 <div class="form-group">
                                     <label>Wallet name</label>
-                                    <input type="text" placeholder="Wallet name">
+                                    <input type="text" name="WalletName" required [(ngModel)]="WalletObj.WalletName" #walletName="ngModel" placeholder="Wallet name">
+                                    <span *ngIf="isSubmitted && walletName.invalid" style="color: red; font-family: Poppins;">Wallet name is reqiured</span>
                                 </div>
                                 <div class="form-group">
                                     <label>Description (optional)</label>
-                                    <input type="text" placeholder="Description">
+                                    <input type="text" name="Description" [(ngModel)]="WalletObj.Description" placeholder="Description">
                                 </div>
                                 <div class="form-group">
                                     <label>Currency</label>
-                                    <input type="text" placeholder="Currency">
+                                    <input type="number" name="Currency" required [(ngModel)]="WalletObj.Currency" #currency="ngModel" placeholder="Currency">
+                                    <span *ngIf="isSubmitted && currency.invalid" style="color: red; font-family: Poppins;">Currency is reqiured</span>
+                                </div>
+                                <div class="button-container">
+                                    <button type="submit">Create my wallet</button>
                                 </div>
                             </form>
-                            <div class="button-container">
-                                <button>Create my wallet</button>
-                            </div>
+                           
                         </div>            
             </div>
         </div>
