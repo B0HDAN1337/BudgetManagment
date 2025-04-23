@@ -55,6 +55,11 @@ namespace BudgetManagmentServer.Repository
             return deleteWallet;
 
         }
+
+        public bool existWallet(string walletName)
+        {
+            return _context.Wallets.Any(w => w.WalletName == walletName);
+        }
     }
 }
 

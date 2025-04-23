@@ -61,6 +61,14 @@ namespace BudgetManagmentServer.Controllers
             
         }
 
+        [HttpGet("exists")]
+        public  IActionResult existWallet( [FromQuery] string walletName)
+        {
+            bool exist = _walletRepository.existWallet(walletName);
+            
+            return Ok(exist);
+        }
+
 
        
     }

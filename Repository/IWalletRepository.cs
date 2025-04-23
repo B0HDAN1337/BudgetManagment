@@ -14,5 +14,6 @@ namespace BudgetManagmentServer.Repository
         Wallet CreateWallet(Wallet wallet);
         Wallet UpdateWallet(int id, Wallet wallet);
         Wallet DeleteWallet(int id);
+        bool existWallet(string walletName);
     }
 }

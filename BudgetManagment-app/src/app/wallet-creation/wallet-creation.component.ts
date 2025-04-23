@@ -12,23 +12,59 @@ import { CommonModule } from '@angular/common';
 })
 export class WalletCreationComponent {
 
+    //bool query to check if button already pushed
+  isSubmitted = false;
+
   WalletObj: any =
   {
   "WalletName": "",
   "Description": "",
   "Currency": ""
   }
-
-  urlCreateWallet = 'http://localhost:5142/api/Wallet';
+  
+  //url requests to database server 
+  private urlCreateWallet = 'http://localhost:5142/api/Wallet';
+  private urlCheckWallet = 'http://localhost:5142/api/Wallet/exists';
 
   constructor(private http: HttpClient) {}
 
-  OnCreateWallet()
+   //When click button to Create wallet
+  OnCreateWallet(form: NgForm)
   {
-    this.CreatingWallet();
+
+    this.isSubmitted = true;
+
+    if(form.invalid)
+    {
+      return;
+    }
+
+    this.CheckWalletExist(this.WalletObj.WalletName).subscribe(exist => 
+    {
+      if(exist)
+      {
+        console.log(exist);
+        alert("Wallet already exist");
+      } else
+      {
+        this.CreatingWallet();
+      }
+    }
+    );
+  }
+
+  // http get request to validate if wallet with walletname exist
+  CheckWalletExist(walletname: string)
+  {
+    return this.http.get(this.urlCheckWallet, {
+      params: {
+        walletname: this.WalletObj.WalletName
+      }
+    });
   }
 
 
+  // http post request for create new wallet
   CreatingWallet()
   {
     this.http.post(this.urlCreateWallet, this.WalletObj).subscribe( success =>
