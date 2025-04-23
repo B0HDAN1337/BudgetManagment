@@ -19,19 +19,19 @@
                             <form class="Form-container">
                                 <div class="form-group">
                                     <label>Wallet name</label>
-                                    <input type="text" placeholder="Wallet name">
+                                    <input type="text" name="WalletName" required [(ngModel)]="WalletObj.WalletName" placeholder="Wallet name">
                                 </div>
                                 <div class="form-group">
                                     <label>Description (optional)</label>
-                                    <input type="text" placeholder="Description">
+                                    <input type="text" name="Description" [(ngModel)]="WalletObj.Description" placeholder="Description">
                                 </div>
                                 <div class="form-group">
                                     <label>Currency</label>
-                                    <input type="text" placeholder="Currency">
+                                    <input type="number" name="Currency" required [(ngModel)]="WalletObj.Currency" placeholder="Currency">
                                 </div>
                             </form>
                             <div class="button-container">
-                                <button>Create my wallet</button>
+                                <button (click)="OnCreateWallet()">Create my wallet</button>
                             </div>
                         </div>            
             </div>
