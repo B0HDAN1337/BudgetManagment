@@ -2,6 +2,10 @@
 using BudgetManagmentServer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http.HttpResults;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace BudgetManagmentServer.Controllers
 {
@@ -69,7 +73,7 @@ namespace BudgetManagmentServer.Controllers
 
 
         [HttpPost("login")]
-        public IActionResult LoginUser(User user)
+        public IActionResult LoginUser( [FromBody] User user)
         {
             var userLogin = _userRepository.LoginUser(user);
             
@@ -78,7 +82,27 @@ namespace BudgetManagmentServer.Controllers
                 return Unauthorized();
             }
 
-            return Ok();
+            var claim = new[]
+            {
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, "User")
+            };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("KEY-TOKEN-FOR-USER-AUTHORIZE"));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.Aes128CbcHmacSha256);
+
+            var token = new JwtSecurityToken(
+                issuer: "BudgetManagment-app",
+                audience: "BudgetManagment-app",
+                claims: claim,
+                expires: DateTime.Now.AddHours(1),
+                signingCredentials: creds
+            );
+
+            return Ok( new
+            {
+                token = new JwtSecurityTokenHandler().WriteToken(token)
+            });
         }
 
     }
