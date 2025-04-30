@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-log-in',
@@ -23,7 +24,7 @@ export class UserLogInComponent {
   //bool query to check if button already pushed
   submitted = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   LoginOn(form:NgForm)
   {
@@ -43,10 +44,11 @@ export class UserLogInComponent {
   //Post request to log in user by email and password
   AutorizeUser()
   {
-    this.http.post(this.getUserUrl, this.LoginObj).subscribe( success =>
+    this.http.post<any>(this.getUserUrl, this.LoginObj).subscribe( success =>
       {
         console.log("Success Log in", success);
-        alert("Success Log in");
+        localStorage.setItem('token', success.token);
+        this.router.navigate(['/overview-page']);
       },
       error =>
       {
