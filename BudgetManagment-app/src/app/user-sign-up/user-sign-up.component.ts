@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-sign-up',
@@ -28,7 +29,7 @@ export class UserSignUpComponent {
    private urlCreate = 'http://localhost:5142/api/User';
    private urlCheckUser = 'http://localhost:5142/api/User/exists';
 
-   constructor(private http:HttpClient) {}
+   constructor(private http:HttpClient, private router: Router) {}
 
    //When click button to Sign up
    onCreate(form: NgForm)
@@ -74,6 +75,7 @@ export class UserSignUpComponent {
       {
         console.log("Success added", success);
         alert("Sign up success");
+        this.router.navigate(['/login-in']);
       }, error =>
       {
         
