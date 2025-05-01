@@ -77,6 +77,8 @@ namespace BudgetManagmentServer.Controllers
         {
             var userLogin = _userRepository.LoginUser(user);
             
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
             if (userLogin == null)
             {
                 return Unauthorized();
@@ -84,6 +86,7 @@ namespace BudgetManagmentServer.Controllers
 
             var claim = new[]
             {
+                new Claim(ClaimTypes.NameIdentifier, userLogin.UserID.ToString()),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Role, "User")
             };
@@ -101,7 +104,8 @@ namespace BudgetManagmentServer.Controllers
 
             return Ok( new
             {
-                token = new JwtSecurityTokenHandler().WriteToken(token)
+                token = new JwtSecurityTokenHandler().WriteToken(token),
+                userid = claim
             });
         }
 
