@@ -39,7 +39,7 @@ namespace BudgetManagmentServer
 
             var app = builder.Build();
 
-            
+            app.UseCors("AllowBudgetMAnagment");
 
             using (var scope = app.Services.CreateScope())
             {

@@ -1,21 +1,45 @@
-<header class="headerdiv">
-  <div class="header-navigation">  
-    <nav class="navigation">
-
-      <div class="left-navigation">
-        <img src="assets/icons/LogoSovaWhite.png" alt="Logo" class="logo">
-        <label>SOVA</label>
-      </div>
-
+<ng-container *ngIf="isLoginOrRegisterPage; else loggedHeader">
+  <!-- Header dla logowania i rejestracji -->
+  <header class="headerdiv">
+    <div class="header-navigation">  
+      <nav class="navigation">
+        <div class="left-navigation">
+          <img src="assets/icons/LogoSovaWhite.png" alt="Logo" class="logo">
+          <label>SOVA</label>
+        </div>
         <div class="right-navigation">
-            <button  (click)="btnClickLogin()">Log In</button>
-            <button (click)="btnClickSignUp()"> Sign Up</button>
-            <span class="circle">
-              <img src="assets/icons/person.svg">
-            </span>
-          </div>
+          <button  (click)="btnClickLogin()" class="header-buttons-reg-log">Log In</button>
+          <button (click)="btnClickSignUp()" class="header-buttons-reg-log"> Sign Up</button>
+        </div>
       </nav>
-  </div>
-</header>
+    </div>
+  </header>
+</ng-container>
+
+<ng-template #loggedHeader>
+  <!-- Header dla zalogowanych -->
+  <header class="headerdiv">
+    <div class="header-navigation">  
+      <nav class="navigation">
+        <div class="left-navigation">
+          <img src="assets/icons/LogoSovaWhite.png" alt="Logo" class="logo">
+          <label>SOVA</label>
+        </div>
+        <div class="right-navigation">
+          <span class="circle">
+            <img width="38px" height="38px" src="assets/icons/contact_support.png">
+          </span>
+          <span class="circle">
+            <img width="27px" height="33px" src="assets/icons/Vector.png">
+          </span>
+          <span class="circle" style="cursor:pointer;" (click)="goToAccountOverview()">
+            <img width="42.56px" height="42.56px" src="assets/icons/person.svg">
+          </span>
+          <button (click)="logout()" class="log-out-nav-label">Log Out</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+</ng-template>
 
 <router-outlet></router-outlet>

@@ -14,7 +14,9 @@ header {
 }
 
 .circle {
-    display: inline-block;  
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     width: 50px;            
     height: 50px;           
     background-color: #FAF9F6;  
@@ -24,6 +26,8 @@ header {
     color: white;          
     font-size: 20px;        
     opacity: 0.75;
+    margin-left: 13px;
+    margin-right: 13px;
 }
 
 .header-navigation nav {
@@ -35,7 +39,19 @@ header {
     
 }
 
-.header-navigation nav button {
+.log-out-nav-label {
+    margin-right: 0px;
+    width: 118px;
+    border: 0;
+    background-color: #4DB6AC;
+    color: #FAF9F6;
+    font-family: Poppins;
+    font-size: 24px;
+    text-align: center;
+    font-weight: 400;
+}
+
+.header-buttons-reg-log {
     margin-right: 29px;
     width: 125px;
     height: 46px;
@@ -66,8 +82,11 @@ header {
     align-items: center;
 }
 
+
+
 .logo {
     height: auto;
 }
+
 
 

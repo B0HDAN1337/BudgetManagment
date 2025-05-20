@@ -1,0 +1,67 @@
+<div class="container">
+    <div class="centered">
+      <div class="corners">
+        <div class="Logo">
+          <img src="assets/icons/LogoSova.png" alt="SOVA" />
+          <label>SOVA</label>
+        </div>
+        <div class="formLogin">
+          <div class="LoginText">
+            <label class="first-text">Your <b>account info</b></label>
+            <label class="second-text">We are pleased to have you here!</label>
+          </div>
+          <form class="Form-container">
+            <div class="form-group">
+              <label>Username</label>
+              <input type="email" name="Email" placeholder="Username" />
+            </div>
+            <div class="form-group">
+              <label>E-mail address</label>
+              <input type="email" name="Email" placeholder="E-mail address" />
+            </div>
+            <div class="form-group">
+              <label>Total amount of days on SOVA</label>
+              <label class="total-days">
+                22 <label class="days">days</label>
+                <label class="archievement"> that's impressive!</label>
+              </label>
+            </div>
+            <div class="button-container">
+              <button class="save-changes" type="button">Save Changes</button>
+              <button class="delete-account" type="button" (click)="OpenMenu()">Delete Account</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Overlay -->
+  <div class="overlay" *ngIf="isMenuVisible">
+    <div class="centered-add-transaction">
+      <div class="corners-add-transaction">
+        <button class="closeMenu" (click)="CloseMenu()">Close</button>
+  
+        <div class="Logo">
+          <img src="assets/icons/sad_sova-removebg-preview 1.png" alt="SOVA" />
+        </div>
+  
+        <div class="Form-container">
+          <p class="confirm-text">
+            Are you sure that you want to <strong>DELETE</strong> your account?
+          </p>
+          <div class="form-group1">
+            <label>
+                Type DELETE to confirm
+            </label>
+            <input placeholder="DELETE" />
+          </div>
+          <div class="button-container">
+            <button class="delete-account-confirm" type="button">Delete account</button>
+            <button class="cancel-deleting" type="button" (click)="CloseMenu()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
