@@ -6,6 +6,7 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BudgetManagmentServer.Controllers
 {
@@ -36,7 +37,7 @@ namespace BudgetManagmentServer.Controllers
         [HttpPost]
         public IActionResult CreateUser(User user)
         {
-            
+
             var newUser = _userRepository.CreateUser(user);
 
             return Ok(newUser);
@@ -46,7 +47,7 @@ namespace BudgetManagmentServer.Controllers
         public IActionResult UpdateUser(int id, User user)
         {
             var updateUser = _userRepository.UpdateUser(id, user);
-            
+
             if (updateUser == null)
             {
                 return NotFound($"User with id {id} not found.");
@@ -58,10 +59,10 @@ namespace BudgetManagmentServer.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteUser(int id)
         {
-           var delete = _userRepository.DeleteUser(id);
+            var delete = _userRepository.DeleteUser(id);
 
             return Ok(delete);
-            
+
         }
 
         [HttpGet("exists")]
@@ -73,11 +74,9 @@ namespace BudgetManagmentServer.Controllers
 
 
         [HttpPost("login")]
-        public IActionResult LoginUser( [FromBody] User user)
+        public IActionResult LoginUser([FromBody] User user)
         {
             var userLogin = _userRepository.LoginUser(user);
-            
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (userLogin == null)
             {
@@ -91,8 +90,8 @@ namespace BudgetManagmentServer.Controllers
                 new Claim(ClaimTypes.Role, "User")
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("KEY-TOKEN-FOR-USER-AUTHORIZE"));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.Aes128CbcHmacSha256);
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("keyGenerationTokenForUserIdentification"));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
                 issuer: "BudgetManagment-app",
@@ -102,10 +101,11 @@ namespace BudgetManagmentServer.Controllers
                 signingCredentials: creds
             );
 
-            return Ok( new
+            return Ok(new
             {
                 token = new JwtSecurityTokenHandler().WriteToken(token),
-                userid = claim
+                userid = userLogin.UserID,
+                userdata = claim
             });
         }
 
