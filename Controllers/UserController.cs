@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace BudgetManagmentServer.Controllers
 {
@@ -87,6 +88,7 @@ namespace BudgetManagmentServer.Controllers
             {
                 new Claim(ClaimTypes.NameIdentifier, userLogin.UserID.ToString()),
                 new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Name, userLogin.UserName),
                 new Claim(ClaimTypes.Role, "User")
             };
 
@@ -105,8 +107,23 @@ namespace BudgetManagmentServer.Controllers
             {
                 token = new JwtSecurityTokenHandler().WriteToken(token),
                 userid = userLogin.UserID,
-                userdata = claim
+                username = userLogin.UserName
             });
+        }
+
+        [Authorize]
+        [HttpGet("getdata")]
+        public IActionResult GetData()
+        {
+            var email = User.FindFirst(ClaimTypes.Email)?.Value;
+            var username = User.FindFirst(ClaimTypes.Name)?.Value;
+            var userData = new
+            {
+                Email = email,
+                name = username 
+            };
+
+            return Ok(userData);
         }
 
     }
