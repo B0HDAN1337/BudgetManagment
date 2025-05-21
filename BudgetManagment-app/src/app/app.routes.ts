@@ -9,7 +9,7 @@ import { AccountOverviewComponent } from './account-overview/account-overview.co
 export const routes: Routes = [
     {path: 'user-log-in', component: UserLogInComponent},
     {path: 'user-sign-up', component: UserSignUpComponent},
-    {path: 'account-overview', component: AccountOverviewComponent},
+    {path: 'account-overview', component: AccountOverviewComponent, canActivate: [authGuard]},
     {path: 'overview-page', component: OverviewPageComponent, canActivate: [authGuard]},
     {path: 'wallet-creation', component: WalletCreationComponent, canActivate: [authGuard]}
 ];
