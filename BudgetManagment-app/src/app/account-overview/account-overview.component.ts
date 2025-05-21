@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { UserService } from '../services/user.service';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-account-overview',
   standalone: true,
-  imports: [CommonModule],  
+  imports: [CommonModule, FormsModule],  
   templateUrl: './account-overview.component.html',
   styleUrls: ['./account-overview.component.css']
 })
@@ -15,6 +16,8 @@ export class AccountOverviewComponent implements OnInit {
   userData: any;
 
   isMenuVisible = false;
+
+  textDelete: string = '';
 
   constructor(private userService: UserService, private http: HttpClient, private authService: AuthService) {}
 
@@ -41,15 +44,22 @@ export class AccountOverviewComponent implements OnInit {
 
     btnDelete()
     {
-      this.userService.deleteUser().subscribe(success =>
+      if(this.textDelete !== 'DELETE')
       {
-        console.log("User deleted", success)
-        this.authService.logout();
-        
-      }, error =>
+        alert("enter DELETE");
+      } else
       {
-        console.log("User delete Error", error)
+        this.userService.deleteUser().subscribe(success =>
+          {
+            console.log("User deleted", success)
+            this.authService.logout();
+    
+          }, error =>
+          {
+            console.log("User delete Error", error)
+          }
+          )
       }
-      )
+      
     }
 }

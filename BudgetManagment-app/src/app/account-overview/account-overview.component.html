@@ -54,7 +54,7 @@
             <label>
                 Type DELETE to confirm
             </label>
-            <input placeholder="DELETE" />
+            <input type="text"  [(ngModel)]="textDelete" placeholder="DELETE" />
           </div>
           <div class="button-container">
             <button class="delete-account-confirm" type="button" (click)="btnDelete()">Delete account</button>
