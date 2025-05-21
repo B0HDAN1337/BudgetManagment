@@ -57,12 +57,30 @@ namespace BudgetManagmentServer.Controllers
             return Ok(updateUser);
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult DeleteUser(int id)
+        [Authorize]
+        [HttpDelete("delete")]
+        public IActionResult DeleteUser()
         {
-            var delete = _userRepository.DeleteUser(id);
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            return Ok(delete);
+            if (string.IsNullOrEmpty(userIdClaim))
+            {
+                return Unauthorized();    
+            }
+
+            if (!int.TryParse(userIdClaim, out int userId))
+            {
+                return BadRequest("Invalid user ID");
+            }
+
+            var delete = _userRepository.DeleteUser(userId);
+
+            if (delete == null)
+            {
+                return NotFound("User not found or already deleted");
+            }
+
+            return Ok();
 
         }
 
@@ -115,10 +133,13 @@ namespace BudgetManagmentServer.Controllers
         [HttpGet("getdata")]
         public IActionResult GetData()
         {
+            var id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var email = User.FindFirst(ClaimTypes.Email)?.Value;
             var username = User.FindFirst(ClaimTypes.Name)?.Value;
+
             var userData = new
             {
+                ID = id,
                 Email = email,
                 name = username 
             };
