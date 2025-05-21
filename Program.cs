@@ -2,6 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using BudgetManagmentServer.Repository;
 using Microsoft.Data.Sqlite;
 using BudgetManagmentServer.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace BudgetManagmentServer
 {
@@ -20,8 +23,28 @@ namespace BudgetManagmentServer
             builder.Services.AddDbContext<BudgetManagmentContext>(options =>
                 options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-           
+            builder.Services
+            .AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = "BudgetManagment-app",
+                    ValidAudience = "BudgetManagment-app",
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("keyGenerationTokenForUserIdentification"))
+                };
+            });
 
+            builder.Services.AddAuthorization();
+            builder.Services.AddControllers();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -38,8 +61,6 @@ namespace BudgetManagmentServer
             });
 
             var app = builder.Build();
-
-            app.UseCors("AllowBudgetMAnagment");
 
             using (var scope = app.Services.CreateScope())
             {
@@ -59,6 +80,7 @@ namespace BudgetManagmentServer
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
