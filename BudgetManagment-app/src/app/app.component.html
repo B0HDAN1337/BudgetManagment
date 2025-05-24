@@ -1,5 +1,4 @@
 <ng-container *ngIf="isLoginOrRegisterPage; else loggedHeader">
-  <!-- Header dla logowania i rejestracji -->
   <header class="headerdiv">
     <div class="header-navigation">  
       <nav class="navigation">
@@ -17,7 +16,6 @@
 </ng-container>
 
 <ng-template #loggedHeader>
-  <!-- Header dla zalogowanych -->
   <header class="headerdiv">
     <div class="header-navigation">  
       <nav class="navigation">
@@ -26,7 +24,7 @@
           <label>SOVA</label>
         </div>
         <div class="right-navigation">
-          <span class="circle">
+          <span class="circle" style="cursor:pointer;" (click)="goToSupportForm()">
             <img width="38px" height="38px" src="assets/icons/contact_support.png">
           </span>
           <span class="circle">
@@ -41,5 +39,8 @@
     </div>
   </header>
 </ng-template>
+
+
+<app-support-help-form-overlay *ngIf="isSupportVisible" (close)="isSupportVisible = false"></app-support-help-form-overlay>
 
 <router-outlet></router-outlet>

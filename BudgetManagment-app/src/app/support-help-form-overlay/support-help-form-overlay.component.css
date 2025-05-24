@@ -1,0 +1,301 @@
+
+.form-group1 input {
+    padding: 10px;
+    width: 38rem ;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #EEEEEE;
+    background-color: #FAF9F6;
+    font-family: Poppins;
+    font-size: 24px;
+    font-style: italic;
+    font-weight: bold;
+    
+}
+
+.form-group1 input::placeholder{
+    color: #BABABA;
+    font-weight: 50;
+}
+
+.form-group1 label {
+    font-size: 1rem;
+    font-family: Poppins;
+    font-size: 22px;
+    color: #5E5B5B;
+    padding: 10px;
+}
+
+.form-group1 {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Space between fields */
+  width: 100%;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 509px;
+  padding-left: 95px;
+}
+
+.form-field label {
+  margin-bottom: 0.5rem;
+  font-size: 22px;
+  color: #5E5B5B;
+  font-family: Poppins;
+}
+
+.form-field input {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #EEEEEE;
+  background-color: #FAF9F6;
+  font-family: Poppins;
+  font-size: 24px;
+  font-style: italic;
+  width: 100%;
+  font-weight: bold;
+}
+
+.form-field input::placeholder {
+  color: #BABABA;
+  font-weight: 50;
+}
+
+.Form-container h1 {
+  font-size: 48px;
+  font-family: Poppins;
+  margin: 0;
+  color: #1C1C1E;
+  padding-left: 49px;
+  padding-top: 11px;
+}
+
+.button-container button {
+    
+    color: #FAF9F6;
+    border: 0;
+    border-radius: 8px;
+    text-align: center;
+    font-family: Poppins;
+    font-size: 24px;
+    height: 63px;
+    width: 205px;
+}
+
+
+.button-container .send-button {
+    background-color: #5C6AC4;
+    color: #FAF9F6;
+    margin-left: 49px;
+}
+
+.button-container .delete-account-confirm {
+    background-color: #FF6F61;
+    color: #EEEEEE;
+    margin-left: 10px;
+}
+
+@media (max-width: 1200px) {
+    .corners {
+        flex-direction: column;
+        gap: 2rem;
+        height: auto;
+
+        padding: 2rem 1rem;
+    }
+
+    .Logo {
+        padding-left: 0;
+    }
+
+    .Logo label {
+        font-size: 2.5rem;
+    }
+
+    .form-group input {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .Form-container {
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .button-container button {
+        width: 100%;
+    }
+
+    .form-bottom-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .contact-info {
+    text-align: left;
+  }
+
+
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  z-index: 1000;
+}
+
+.centered-add-transaction {
+  background-color: #5C6AC4;
+  width: 100%;
+  max-width: 1077px;
+  border-radius: 8px;
+  padding: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.corners-add-transaction {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  background-color: #FAF9F6;
+  border-top-right-radius: 100px;
+  border-bottom-left-radius: 100px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 8px;
+  padding: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+  gap: 2rem;
+}
+
+.corners-add-transaction .closeMenu {
+    position: absolute;
+    background-color: #FF6F61;
+    color: #FAF9F6;
+    border: 0;
+    border-radius: 8px;
+    text-align: center;
+    font-family: Poppins;
+    font-weight: 600;
+    top: -1.15rem;
+    margin-left: 2rem;
+    font-size: 24px;
+    height: 36px;
+    width: 100%;
+    max-width: 113px;
+  }
+
+
+
+.Form-container {
+  position: relative;
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.confirm-text {
+   margin: auto;
+  font-family: Poppins;
+  font-size: 24px;
+  text-align: center;
+  color: #1C1C1E;
+}
+
+.confirm-text strong {
+  color: #FF6F61;
+}
+
+.button-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.button-container .save-changes {
+  background-color: #4DB6AC;
+  color: white;
+}
+
+.button-container .delete-account {
+  background-color: #EEEEEE;
+  color: #FF6F61;
+}
+
+  .top-row-container, .bottom-row-container {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+  }
+
+  .Logo {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Logo img {
+  max-width: 100%;
+  height: auto;
+}
+
+.form-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  padding-left: 0px;
+  padding-right: 0px;
+  box-sizing: border-box;
+}
+
+.contact-info {
+  position: absolute;
+  left: 605px;
+  text-align: right;
+  font-family: Poppins;
+  font-size: 16px;
+  color: #5E5B5B;
+  width: 368px; 
+}
+
+.contact-via {
+    font-size: 24px;
+    font-weight: 100;
+    color: #5E5B5B;
+}
+
+.call-email{
+    font-size: 24px;
+    font-weight: 100;
+    color: #5E5B5B;
+}
+
+.contact {
+    font-size: 24px;
+    color: #0A1C14;
+    font-weight: bold;
+}
