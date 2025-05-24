@@ -6,8 +6,8 @@
     <title>Overview</title>
 </head>
 <body>
-        <div class="dynamic-name">
-            <label>Welcome Back, <b>Name</b></label>
+        <div class="dynamic-name" *ngIf = "userData">
+            <label>Welcome Back, <b>{{userData.name}}</b></label>
         </div>
         <div class="container">
             <div class="centered">

@@ -10,14 +10,14 @@
             <label class="first-text">Your <b>account info</b></label>
             <label class="second-text">We are pleased to have you here!</label>
           </div>
-          <form class="Form-container">
+          <form class="Form-container" *ngIf="userData">
             <div class="form-group">
               <label>Username</label>
-              <input type="email" name="Email" placeholder="Username" />
+              <input type="text" name="text" [placeholder]="userData.name"/>
             </div>
             <div class="form-group">
               <label>E-mail address</label>
-              <input type="email" name="Email" placeholder="E-mail address" />
+              <input type="email" name="Email" [placeholder]="userData.email" />
             </div>
             <div class="form-group">
               <label>Total amount of days on SOVA</label>
@@ -53,10 +53,10 @@
             <label>
                 Type DELETE to confirm
             </label>
-            <input placeholder="DELETE" />
+            <input type="text"  [(ngModel)]="textDelete" placeholder="DELETE" />
           </div>
           <div class="button-container">
-            <button class="delete-account-confirm" type="button">Delete account</button>
+            <button class="delete-account-confirm" type="button" (click)="btnDelete()">Delete account</button>
             <button class="cancel-deleting" type="button" (click)="CloseMenu()">Cancel</button>
           </div>
         </div>

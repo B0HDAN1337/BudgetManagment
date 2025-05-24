@@ -6,6 +6,8 @@ using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace BudgetManagmentServer.Controllers
 {
@@ -36,7 +38,7 @@ namespace BudgetManagmentServer.Controllers
         [HttpPost]
         public IActionResult CreateUser(User user)
         {
-            
+
             var newUser = _userRepository.CreateUser(user);
 
             return Ok(newUser);
@@ -46,7 +48,7 @@ namespace BudgetManagmentServer.Controllers
         public IActionResult UpdateUser(int id, User user)
         {
             var updateUser = _userRepository.UpdateUser(id, user);
-            
+
             if (updateUser == null)
             {
                 return NotFound($"User with id {id} not found.");
@@ -55,13 +57,31 @@ namespace BudgetManagmentServer.Controllers
             return Ok(updateUser);
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult DeleteUser(int id)
+        [Authorize]
+        [HttpDelete("delete")]
+        public IActionResult DeleteUser()
         {
-           var delete = _userRepository.DeleteUser(id);
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            return Ok(delete);
-            
+            if (string.IsNullOrEmpty(userIdClaim))
+            {
+                return Unauthorized();    
+            }
+
+            if (!int.TryParse(userIdClaim, out int userId))
+            {
+                return BadRequest("Invalid user ID");
+            }
+
+            var delete = _userRepository.DeleteUser(userId);
+
+            if (delete == null)
+            {
+                return NotFound("User not found or already deleted");
+            }
+
+            return Ok();
+
         }
 
         [HttpGet("exists")]
@@ -73,10 +93,10 @@ namespace BudgetManagmentServer.Controllers
 
 
         [HttpPost("login")]
-        public IActionResult LoginUser( [FromBody] User user)
+        public IActionResult LoginUser([FromBody] User user)
         {
             var userLogin = _userRepository.LoginUser(user);
-            
+
             if (userLogin == null)
             {
                 return Unauthorized();
@@ -84,12 +104,14 @@ namespace BudgetManagmentServer.Controllers
 
             var claim = new[]
             {
+                new Claim(ClaimTypes.NameIdentifier, userLogin.UserID.ToString()),
                 new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Name, userLogin.UserName),
                 new Claim(ClaimTypes.Role, "User")
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("KEY-TOKEN-FOR-USER-AUTHORIZE"));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.Aes128CbcHmacSha256);
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("keyGenerationTokenForUserIdentification"));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
                 issuer: "BudgetManagment-app",
@@ -99,10 +121,30 @@ namespace BudgetManagmentServer.Controllers
                 signingCredentials: creds
             );
 
-            return Ok( new
+            return Ok(new
             {
-                token = new JwtSecurityTokenHandler().WriteToken(token)
+                token = new JwtSecurityTokenHandler().WriteToken(token),
+                userid = userLogin.UserID,
+                username = userLogin.UserName
             });
+        }
+
+        [Authorize]
+        [HttpGet("getdata")]
+        public IActionResult GetData()
+        {
+            var id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var email = User.FindFirst(ClaimTypes.Email)?.Value;
+            var username = User.FindFirst(ClaimTypes.Name)?.Value;
+
+            var userData = new
+            {
+                ID = id,
+                Email = email,
+                name = username 
+            };
+
+            return Ok(userData);
         }
 
     }
