@@ -12,6 +12,7 @@ namespace BudgetManagmentServer.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Wallet> Wallets {get; set;}
+        public DbSet<Transaction> Transactions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -19,6 +20,7 @@ namespace BudgetManagmentServer.Data
 
             modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<Wallet>().ToTable("Wallet");
+            modelBuilder.Entity<Transaction>().ToTable("Transaction");
         }
     }
 }
