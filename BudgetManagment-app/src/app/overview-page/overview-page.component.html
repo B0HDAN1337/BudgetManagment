@@ -14,9 +14,21 @@
                 <div class="corners">
                         <div class="wallets">  
                             <label class="text1">Your <b>Wallets</b></label>
-                            <label class="text2">Looks like you don’t have any wallets!</label>
-                            <button class="add-wallet" (click)="OpenCreateMenu()">New Wallet</button>
-                        </div>
+                            <!-- <div class="no-wallets">
+                                <label class="text2">Looks like you don’t have any wallets!</label>
+                                <button class="add-wallet" (click)="OpenCreateMenu()">New Wallet</button>
+                            </div> -->
+                            
+                                <div class="wallet-card">
+                                    <img width="35" height="35" src="assets/icons/Vector.svg" alt="Wallet">
+                                    <div class="wallet-name">
+                                        <label class="name"><b>Name</b></label>
+                                        <label class="description">Description</label>
+                                    </div>
+                                    <a>100</a>
+                                </div>
+                            </div>
+                        
                         <div class="last-transactions">  
                             <label class="text1">Your <b>Last Transactions</b></label>
                             <label class="text2">Looks like you don’t have any transactions!</label>
