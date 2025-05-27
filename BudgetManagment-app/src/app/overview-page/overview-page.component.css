@@ -52,6 +52,40 @@
     padding-bottom: 0%;
   }
 
+
+  .wallet-card {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+    height: 5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1), 0 8px 16px rgba(0,0,0,0.1);
+    padding: 1rem;
+    border-radius: 8px;
+  }
+
+ .wallet-name {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Poppins';
+  padding-left: 1rem;
+}
+
+.wallet-name .name {
+  font-size: 1.5rem;
+}
+.wallet-name .description {
+  font-size: 0.8rem;
+}
+
+.wallet-card a {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  margin: 0;
+  font-family: 'Poppins';
+}
+
 .add-wallet {
     background-color: #4DB6AC;
     color: #FAF9F6;
@@ -288,8 +322,6 @@
     width: 100%;
     max-width: 280px;
   }
-
-
 
   /* Адаптивні стилі */
 @media (max-width: 1024px) {
