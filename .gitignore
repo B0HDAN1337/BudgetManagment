@@ -273,6 +273,9 @@ budgetManagment.db
 budgetManagment.db-shm
 budgetManagment.db-wal
 
+#DS_Store
+*.DS_Store
+
 # Business Intelligence projects
 *.rdl.data
 *.bim.layout
