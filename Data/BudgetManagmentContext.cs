@@ -12,13 +12,19 @@ namespace BudgetManagmentServer.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Wallet> Wallets {get; set;}
+        public DbSet<Transaction> Transactions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<User>().ToTable("User");
-            modelBuilder.Entity<Wallet>().ToTable("Wallet");
+            modelBuilder.Entity<Wallet>().ToTable("Wallet")
+            .HasOne(u => u.User)
+            .WithMany(w => w.Wallets)
+            .HasForeignKey(w => w.userId)
+            .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Transaction>().ToTable("Transaction");
         }
     }
 }
