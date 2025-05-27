@@ -2,6 +2,7 @@ using BudgetManagmentServer.Repository;
 using BudgetManagmentServer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http.HttpResults;
+using System.Security.Claims;
 
 namespace BudgetManagmentServer.Controllers
 {
@@ -33,6 +34,14 @@ namespace BudgetManagmentServer.Controllers
         [HttpPost]
         public IActionResult CreateWallet(Wallet wallet)
         {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return BadRequest("User ID claim is missing");
+            }
+
+            wallet.userId = int.Parse(userId);
             
             var newWallet = _walletRepository.CreateWallet(wallet);
 

@@ -15,5 +15,7 @@ namespace BudgetManagmentServer.Models
         [Required]
         [MinLength(5)]
         public string Password { get; set; }
+
+        public ICollection<Wallet>? Wallets { get; set; }
     }
 }
