@@ -26,6 +26,7 @@
     max-width: 1400px;
     height: 756px;
     flex-direction: column;
+    overflow: hidden;
     background-color: #FAF9F6;
     border-top-right-radius: 100px;
     border-bottom-left-radius: 100px;
