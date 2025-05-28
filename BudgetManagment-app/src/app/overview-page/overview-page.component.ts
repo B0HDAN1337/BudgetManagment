@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
 import { UserService } from '../services/user.service';
+import { Wallet } from '../interface/wallet.model';
 
 @Component({
   selector: 'app-overview-page',
@@ -13,7 +14,7 @@ import { UserService } from '../services/user.service';
 })
 export class OverviewPageComponent implements OnInit{
   userData: any;
-
+  wallets: Wallet[] =[];
   constructor(private router: Router, private userService: UserService) {}
 
   isMenuVisible = false;
@@ -41,7 +42,22 @@ export class OverviewPageComponent implements OnInit{
     {
       console.log("Error transfer data", error);
     }
-    
+    )
+
+    this.loadWallets();
+  }
+
+  loadWallets() {
+    this.userService.getUserWallet().subscribe (wallet =>
+    {
+      this.wallets = wallet;
+      console.log(wallet);
+    }, error => 
+    {
+      console.error('Error loading wallets:', error);
+      this.wallets = [];
+    }
     )
   }
+
 }

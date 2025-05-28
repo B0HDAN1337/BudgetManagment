@@ -9,7 +9,7 @@ namespace BudgetManagmentServer.Repository
 {
     public interface IWalletRepository
     {
-        IEnumerable<Wallet> GetAllWallet();
+        IEnumerable<Wallet> GetAllWallet(int userID);
         Wallet GetWalletById(int id);
         Wallet CreateWallet(Wallet wallet);
         Wallet UpdateWallet(int id, Wallet wallet);

@@ -14,18 +14,21 @@
                 <div class="corners">
                         <div class="wallets">  
                             <label class="text1">Your <b>Wallets</b></label>
-                            <!-- <div class="no-wallets">
+                            <div *ngIf="wallets && wallets.length === 0" class="no-wallets">
                                 <label class="text2">Looks like you don’t have any wallets!</label>
                                 <button class="add-wallet" (click)="OpenCreateMenu()">New Wallet</button>
-                            </div> -->
-                            
-                                <div class="wallet-card">
-                                    <img width="35" height="35" src="assets/icons/Vector.svg" alt="Wallet">
-                                    <div class="wallet-name">
-                                        <label class="name"><b>Name</b></label>
-                                        <label class="description">Description</label>
+                            </div>
+                                <div class="wallets-row">
+                                    <div class="wallet-card" *ngFor="let wallet of wallets">
+                                        <img width="35" height="35" src="assets/icons/Vector.svg" alt="Wallet">
+                                        <div class="wallet-name">
+                                            <label class="name"><b>{{wallet.walletName}}</b></label>
+                                            <label class="description">{{wallet.description}}</label>
+                                            
+                                        </div>
+                                        <a>{{wallet.currency}}</a>
                                     </div>
-                                    <a>100</a>
+                                    <button *ngIf="wallets && wallets.length >= 1 && wallets.length < 5" class="add-wallet-circle" (click)="OpenCreateMenu()">+</button>
                                 </div>
                             </div>
                         

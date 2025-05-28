@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Wallet } from '../interface/wallet.model';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,7 @@ import { Observable } from 'rxjs';
 export class UserService {
   private getData = 'http://localhost:5142/api/User/getdata';
   private userDelete = 'http://localhost:5142/api/User/delete';
+  private userWallet = 'http://localhost:5142/api/Wallet';
   constructor(private http: HttpClient) {}
 
   getUserData(): Observable<any> {
@@ -36,4 +38,17 @@ export class UserService {
 
     return this.http.delete<any>(this.userDelete, { headers });
   }
+
+  getUserWallet(): Observable<Wallet[]> {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    throw new Error('Token is missing');
+  }
+
+  const headers = new HttpHeaders({
+    'Authorization': `Bearer ${token}`
+  });
+
+  return this.http.get<Wallet[]>(this.userWallet, { headers });
+}
 }
