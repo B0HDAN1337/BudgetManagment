@@ -15,9 +15,9 @@ namespace BudgetManagmentServer.Repository
         }
 
 
-        public IEnumerable<Wallet> GetAllWallet()
+        public IEnumerable<Wallet> GetAllWallet(int userID)
         {
-            return _context.Wallets;
+            return _context.Wallets.Where(w=> w.userId == userID);
         }
 
         public Wallet GetWalletById(int id)

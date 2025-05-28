@@ -3,6 +3,7 @@ using BudgetManagmentServer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http.HttpResults;
 using System.Security.Claims;
+using BudgetManagmentServer.Data;
 
 namespace BudgetManagmentServer.Controllers
 {
@@ -11,37 +12,47 @@ namespace BudgetManagmentServer.Controllers
     public class WalletController : ControllerBase
     {
         private IWalletRepository _walletRepository;
-        public WalletController(IWalletRepository walletRepository)
+        private BudgetManagmentContext _context;
+        public WalletController(IWalletRepository walletRepository, BudgetManagmentContext context)
         {
             _walletRepository = walletRepository;
+            _context = context;
         }
 
 
        [HttpGet]
         public IActionResult GetAllWallets()
         {
-            var wallets = _walletRepository.GetAllWallet();
-            return Ok(wallets);
-        }
+           var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || string.IsNullOrEmpty(userIdClaim.Value))
+            {
+                return BadRequest("User ID claim is missing");
+            }
 
-        [HttpGet("{id}")]
-        public IActionResult GetWalletById(int id)
-        {
-            var wallet = _walletRepository.GetWalletById(id);
-            return Ok(wallet);
+            if (!int.TryParse(userIdClaim.Value, out int userId))
+            {
+                return BadRequest("Invalid User ID claim");
+            }
+
+            var wallets = _walletRepository.GetAllWallet(userId);
+            return Ok(wallets);
         }
 
         [HttpPost]
         public IActionResult CreateWallet(Wallet wallet)
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            if (string.IsNullOrEmpty(userId))
+            int UserIdClaim = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var walletCount = _context.Wallets.Where(w => w.userId == UserIdClaim).Count();
+            if (UserIdClaim == null)
             {
                 return BadRequest("User ID claim is missing");
             }
+            else if (walletCount >= 5)
+            {
+                return BadRequest("Max wallets 5");
+            }
 
-            wallet.userId = int.Parse(userId);
+            wallet.userId = UserIdClaim;
             
             var newWallet = _walletRepository.CreateWallet(wallet);
 
