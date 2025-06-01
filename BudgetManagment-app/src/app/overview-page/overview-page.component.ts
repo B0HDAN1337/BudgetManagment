@@ -5,17 +5,29 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { Wallet } from '../interface/wallet.model';
+import { TransactionService } from '../services/transaction.service';
+import { TransactionListComponent } from '../transaction-list/transaction-list.component';
+import { TransactionCardComponent } from '../transaction-card/transaction-card.component';
+import { Transaction } from './transaction'; 
+
 
 @Component({
   selector: 'app-overview-page',
-  imports: [FormsModule, CommonModule],
+  standalone: true,      
+  imports: [FormsModule, CommonModule, TransactionListComponent, TransactionCardComponent],
   templateUrl: './overview-page.component.html',
   styleUrl: './overview-page.component.css'
 })
 export class OverviewPageComponent implements OnInit{
   userData: any;
+
   wallets: Wallet[] =[];
-  constructor(private router: Router, private userService: UserService) {}
+  transactions: Transaction[] = [];
+
+  constructor(
+    private router: Router, 
+    private userService: UserService, 
+    private transactionService: TransactionService) {}
 
   isMenuVisible = false;
 
@@ -45,6 +57,7 @@ export class OverviewPageComponent implements OnInit{
     )
 
     this.loadWallets();
+    this.loadTransactions();
   }
 
   loadWallets() {
@@ -59,5 +72,36 @@ export class OverviewPageComponent implements OnInit{
     }
     )
   }
+
+  loadTransactions() {
+    this.transactionService.getLatest().subscribe(data => {
+      this.transactions = data;
+    });
+
+  }
+    
+  onAddTransaction(form: any) {
+    const newTx: Transaction = {
+      userID: 1, 
+      categoryID: +form.value.CategoryID,
+      amount: +form.value.Amount,
+      date: form.value.Date,
+      currency: form.value.Currency
+    };
+  
+    this.transactionService.add(newTx).subscribe(() => {
+      this.loadTransactions();       
+      this.CloseMenu();              
+      form.resetForm();              
+    });
+  }
+
+  removeTransactionFromList(deletedId: number) {
+    console.log('Removing transaction with ID:', deletedId);
+    this.transactions = this.transactions.filter(tx => tx.transactionID !== deletedId);
+  }
+  
+
+  
 
 }

@@ -1,44 +1,25 @@
-using BudgetManagmentServer.Repository;
-using BudgetManagmentServer.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http.HttpResults;
+using BudgetManagmentServer.Models;
 
 namespace BudgetManagmentServer.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
-    public class TransactionController : ControllerBase
+    [Route("api/transactions")]
+    public class TransactionsController : ControllerBase
     {
-        private ITransactionRepository _transactionRepository;
-        public TransactionController(ITransactionRepository transactionRepository)
-        {
-            _transactionRepository = transactionRepository;
-        }
+        private static List<Transaction> transactions = new();
+
         [HttpGet]
-        public IActionResult GetAllTransactios()
+        public IActionResult Get()
         {
-            var existTransactions = _transactionRepository.GetAllTransaction();
-            return Ok(existTransactions);
+            return Ok(transactions.OrderByDescending(t => t.date).Take(7));
         }
-        [HttpGet("id")]
-        public Transaction GetTransactionById(int id)
-        {
-            throw new NotImplementedException();
-        }
+
         [HttpPost]
-        public Transaction CreateTransaction(Transaction transaction)
+        public IActionResult Post([FromBody] Transaction transaction)
         {
-            throw new NotImplementedException();
-        }
-        [HttpPost("id")]
-        public Transaction UpdateTransaction(int id, Transaction transaction)
-        {
-            throw new NotImplementedException();
-        }
-        [HttpDelete("id")]
-        public Transaction DeleteTransaction(int id)
-        {
-            throw new NotImplementedException();
+            transactions.Add(transaction);
+            return Ok(transaction);
         }
     }
 }

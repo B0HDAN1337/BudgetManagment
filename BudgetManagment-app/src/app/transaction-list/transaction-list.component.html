@@ -1,0 +1,5 @@
+<app-transaction-card 
+  *ngFor="let transaction of transactions" 
+  [transaction]="transaction"
+  (deleteTransactionEvent)="onDelete(transaction.transactionID)">
+</app-transaction-card>
