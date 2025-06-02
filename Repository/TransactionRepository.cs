@@ -11,9 +11,9 @@ namespace BudgetManagmentServer.Repository
         {
             _context = context;
         }
-        public IEnumerable<Transaction> GetAllTransaction()
+        public IEnumerable<Transaction> GetAllTransaction(int userId)
         {
-            return _context.Transactions;
+            return _context.Transactions.Where(t => t.UserID == userId );
         }
         public Transaction GetTransactionById(int id)
         {
@@ -30,7 +30,7 @@ namespace BudgetManagmentServer.Repository
             var existTransaction = _context.Transactions.Find(id);
 
             existTransaction.TransactionID = transaction.TransactionID;
-            existTransaction.CategoryID = transaction.CategoryID;
+            existTransaction.Category = transaction.Category;
             existTransaction.UserID = transaction.UserID;
             existTransaction.amount = transaction.amount;
             existTransaction.date = transaction.date;

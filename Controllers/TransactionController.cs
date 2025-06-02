@@ -1,25 +1,62 @@
 using Microsoft.AspNetCore.Mvc;
 using BudgetManagmentServer.Models;
+using BudgetManagmentServer.Data;
+using BudgetManagmentServer.Repository;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
+using System.Security.Claims;
 
 namespace BudgetManagmentServer.Controllers
 {
     [ApiController]
-    [Route("api/transactions")]
+    [Route("api/[controller]")]
     public class TransactionsController : ControllerBase
     {
-        private static List<Transaction> transactions = new();
+        private ITransactionRepository _repository;
+        private BudgetManagmentContext _context;
 
-        [HttpGet]
-        public IActionResult Get()
+        public TransactionsController(ITransactionRepository repository, BudgetManagmentContext context)
         {
-            return Ok(transactions.OrderByDescending(t => t.date).Take(7));
+            _repository = repository;
+            _context = context;
         }
 
-        [HttpPost]
-        public IActionResult Post([FromBody] Transaction transaction)
+        [HttpGet]
+        public IActionResult GetAllTransactions()
         {
-            transactions.Add(transaction);
-            return Ok(transaction);
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+
+            if (userIdClaim == null || string.IsNullOrEmpty(userIdClaim.Value))
+            {
+                return BadRequest("User ID claim is missing");
+            }
+
+            if (!int.TryParse(userIdClaim.Value, out int userId))
+            {
+                return BadRequest("Invalid User ID claim");
+            }
+
+            var transactions = _repository.GetAllTransaction(userId);
+            return Ok(transactions);
+        }
+        [HttpPost]
+        public IActionResult CreateTransaction(Transaction transaction)
+        {
+            int UserIdClaim = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var transactionCount = _context.Transactions.Where(w => w.UserID == UserIdClaim).Count();
+            if (UserIdClaim == null)
+            {
+                return BadRequest("User ID claim is missing");
+            }
+            
+            if (!ModelState.IsValid)
+    {
+        return BadRequest(ModelState);
+    }
+
+            transaction.UserID = UserIdClaim;
+
+            var newTransaction = _repository.CreateTransaction(transaction);
+            return Ok(newTransaction);
         }
     }
 }

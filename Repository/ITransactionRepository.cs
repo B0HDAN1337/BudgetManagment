@@ -5,7 +5,7 @@ namespace BudgetManagmentServer.Repository
 {
     public interface ITransactionRepository
     {
-        IEnumerable<Transaction> GetAllTransaction();
+        IEnumerable<Transaction> GetAllTransaction(int userId);
         Transaction GetTransactionById(int id);
         Transaction CreateTransaction(Transaction transaction);
         Transaction UpdateTransaction(int id, Transaction transaction);
