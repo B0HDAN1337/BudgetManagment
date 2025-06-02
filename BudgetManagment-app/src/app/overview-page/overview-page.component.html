@@ -23,24 +23,26 @@
                                         <img width="35" height="35" src="assets/icons/Vector.svg" alt="Wallet">
                                         <div class="wallet-name">
                                             <label class="name"><b>{{wallet.walletName}}</b></label>
-                                            <label class="description">{{wallet.description}}</label>
-                                            
+                                            <label class="description">{{wallet.description}}</label>    
                                         </div>
                                         <a>{{wallet.currency}}</a>
                                     </div>
                                     <button *ngIf="wallets && wallets.length >= 1 && wallets.length < 5" class="add-wallet-circle" (click)="OpenCreateMenu()">+</button>
                                 </div>
                             </div>
-                        
                         <div class="last-transactions">  
                             <label class="text1">Your <b>Last Transactions</b></label>
-                            <label class="text2" *ngIf="transactions.length == 0">Looks like you don’t have any transactions!</label>
-
-                            <div *ngFor="let tx of transactions">
-                                <app-transaction-card [transaction]="tx" (transactionDeleted)="removeTransactionFromList($event)" style="width: 100%;"></app-transaction-card>
+                            <div *ngIf="transactions && transactions.length === 0">
+                              <label class="text2" >Looks like you don’t have any transactions!</label>
                             </div>
-
-                            <button class="add-transaction" (click)="OpenMenu()">New Transaction</button>
+                            <button class="add-transaction" (click)="OpenMenu()">New Transaction</button>     
+                        </div>
+                         <div class="transactions-container">
+                          <div class="transaction-row" *ngFor="let transaction of transactions">
+                            <span class="transaction-title">{{transaction.category}}</span>
+                            <span class="transaction-date">{{transaction.date}}</span>
+                            <span class="transaction-amount">{{transaction.amount}}</span>
+                          </div>
                         </div>
                         <div class="bottom-text">Overview</div>
                 </div>  
@@ -51,32 +53,32 @@
                 <div class="corners-add-transaction">
                     <button class="closeMenu" (click)="CloseMenu()">Close</button>
                     
-                    <form class="form" #transactionForm="ngForm" (ngSubmit)="onAddTransaction(transactionForm)">
+                    <form class="form" (ngSubmit)="CreateTransaction()">
                         <div class="top-row-container">
                           <div class="category">
                             <label>Category</label>
-                            <select name="CategoryID" ngModel required>
+                            <select name="Category" [(ngModel)]="transaction.category" ngModel required>
                               <option value="" disabled selected hidden>Category</option>
-                              <option value="1">Food</option>
-                              <option value="2">Healthcare</option>
-                              <option value="3">Income</option>
-                              <option value="4">Travel</option>
+                              <option value="Food">Food</option>
+                              <option value="Healthcare">Healthcare</option>
+                              <option value="Income">Income</option>
+                              <option value="Travel">Travel</option>
                             </select>
                           </div>
                           <div class="date">
                             <label>Date</label>
-                            <input name="Date" ngModel type="text" placeholder="yyyy-mm-dd" required />
+                            <input name="Date" [(ngModel)]="transaction.date" ngModel type="text" placeholder="yyyy-mm-dd" required />
                           </div>
                         </div>
                       
                         <div class="bottom-row-container">
                           <div class="amount">
                             <label>Amount</label>
-                            <input name="Amount" ngModel type="text" placeholder="Amount" required />
+                            <input name="Amount" [(ngModel)]="transaction.amount" ngModel type="text" placeholder="Amount" required />
                           </div>
                           <div class="currency">
                             <label>Currency</label>
-                            <select name="Currency" ngModel required>
+                            <select name="Currency" [(ngModel)]="transaction.currency" ngModel required>
                               <option value="" disabled selected hidden>Currency</option>
                               <option value="USD">United States Dollar</option>
                               <option value="EUR">Euro</option>
