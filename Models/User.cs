@@ -17,5 +17,6 @@ namespace BudgetManagmentServer.Models
         public string Password { get; set; }
 
         public ICollection<Wallet>? Wallets { get; set; }
+        public ICollection<Transaction>? Transactions { get; set; }
     }
 }
