@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -35,16 +35,27 @@ export class OverviewPageComponent implements OnInit{
     private userService: UserService,
   private transactionService: TransactionService) {}
 
-  isMenuVisible = false;
+  isAddTransactionVisible = false;
+  isShowMoreTransactionsVisible = false;
 
   OpenMenu()
   {
-    this.isMenuVisible = true;
+    this.isAddTransactionVisible = true;
+  }
+
+  OpenShowMoreTransactions()
+  {
+    this.isShowMoreTransactionsVisible = true;
   }
 
   CloseMenu()
   {
-    this.isMenuVisible = false;
+    this.isAddTransactionVisible = false;
+  }
+
+  CloseShowMoreTransactions()
+  {
+    this.isShowMoreTransactionsVisible = false;
   }
 
   OpenCreateMenu()
@@ -102,4 +113,31 @@ export class OverviewPageComponent implements OnInit{
       this.transactions = [];
     })
   }
+
+  dropdownOpen = false;
+  selectedCategory = 'All Categories';
+
+  categories = [
+  { label: 'Food', icon: '/BudgetManagment-app/src/icons/food-violet.png' },
+  { label: 'Home', icon: '/BudgetManagment-app/src/icons/home-violet.png' },
+  { label: 'Healthcare', icon: '/BudgetManagment-app/src/icons/healthcare-violet.png' },
+  { label: 'Travel', icon: '/BudgetManagment-app/src/icons/travel-violet.png' },
+  { label: 'Income', icon: '/BudgetManagment-app/src/icons/income-violet.png' }
+];
+
+toggleDropdown(event: Event): void {
+  this.dropdownOpen = !this.dropdownOpen;
+  event.stopPropagation();
+}
+
+selectCategory(category: any): void {
+  this.selectedCategory = category.label;
+  this.dropdownOpen = false;
+}
+
+@HostListener('document:click', ['$event'])
+closeDropdown(event: Event): void {
+  this.dropdownOpen = false;
+}
+
 }

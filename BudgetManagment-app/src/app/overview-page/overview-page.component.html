@@ -35,6 +35,21 @@
                             <div *ngIf="transactions && transactions.length === 0">
                               <label class="text2" >Looks like you don’t have any transactions!</label>
                             </div>
+
+                            <!-- Test!! -->
+
+                            <div class="transactions-container">
+                              <div class="transaction-row">
+                                <span class="transaction-title">{{transaction.category}}</span>
+                                <span class="transaction-date">{{transaction.date}}</span>
+                                <span class="transaction-amount">{{transaction.amount}}</span>
+                              </div>
+                            </div>
+
+                            <button class="show-more-transactions" (click)="OpenShowMoreTransactions()">Show More</button>
+
+                            <!-- Test!! -->
+
                             <button class="add-transaction" (click)="OpenMenu()">New Transaction</button>     
                         </div>
                          <div class="transactions-container">
@@ -48,54 +63,158 @@
                 </div>  
             </div>
         </div>
-        <div class="overlay" *ngIf="isMenuVisible">
-            <div class="centered-add-transaction">
-                <div class="corners-add-transaction">
-                    <button class="closeMenu" (click)="CloseMenu()">Close</button>
-                    
-                    <form class="form" (ngSubmit)="CreateTransaction()">
-                        <div class="top-row-container">
-                          <div class="category">
-                            <label>Category</label>
-                            <select name="Category" [(ngModel)]="transaction.category" ngModel required>
-                              <option value="" disabled selected hidden>Category</option>
-                              <option value="Food">Food</option>
-                              <option value="Healthcare">Healthcare</option>
-                              <option value="Income">Income</option>
-                              <option value="Travel">Travel</option>
-                            </select>
-                          </div>
-                          <div class="date">
-                            <label>Date</label>
-                            <input name="Date" [(ngModel)]="transaction.date" ngModel type="text" placeholder="yyyy-mm-dd" required />
-                          </div>
+
+        <div class="overlay" *ngIf="isAddTransactionVisible">
+          <div class="centered-add-transaction">
+              <div class="corners-add-transaction">
+                  <button class="closeMenu" (click)="CloseMenu()">Close</button>
+                  
+                  <form class="form" (ngSubmit)="CreateTransaction()">
+                      <div class="top-row-container">
+                        <div class="category">
+                          <label>Category</label>
+                          <select name="Category" [(ngModel)]="transaction.category" ngModel required>
+                            <option value="" disabled selected hidden>Category</option>
+                            <option value="Food">Food</option>
+                            <option value="Healthcare">Healthcare</option>
+                            <option value="Income">Income</option>
+                            <option value="Travel">Travel</option>
+                          </select>
                         </div>
-                      
-                        <div class="bottom-row-container">
-                          <div class="amount">
-                            <label>Amount</label>
-                            <input name="Amount" [(ngModel)]="transaction.amount" ngModel type="text" placeholder="Amount" required />
-                          </div>
-                          <div class="currency">
-                            <label>Currency</label>
-                            <select name="Currency" [(ngModel)]="transaction.currency" ngModel required>
-                              <option value="" disabled selected hidden>Currency</option>
-                              <option value="USD">United States Dollar</option>
-                              <option value="EUR">Euro</option>
-                              <option value="PLN">Polish złoty</option>
-                            </select>
-                          </div>
-                          <button type="submit">Add Transaction</button>
+                        <div class="date">
+                          <label>Date</label>
+                          <input name="Date" [(ngModel)]="transaction.date" ngModel type="text" placeholder="yyyy-mm-dd" required />
                         </div>
-                      </form>
-                      
+                      </div>
                     
-                </div>
-                
-            </div>
+                      <div class="bottom-row-container">
+                        <div class="amount">
+                          <label>Amount</label>
+                          <input name="Amount" [(ngModel)]="transaction.amount" ngModel type="text" placeholder="Amount" required />
+                        </div>
+                        <div class="currency">
+                          <label>Currency</label>
+                          <select name="Currency" [(ngModel)]="transaction.currency" ngModel required>
+                            <option value="" disabled selected hidden>Currency</option>
+                            <option value="USD">United States Dollar</option>
+                            <option value="EUR">Euro</option>
+                            <option value="PLN">Polish złoty</option>
+                          </select>
+                        </div>
+                        <button type="submit">Add Transaction</button>
+                      </div>
+                    </form>
+                    
+                  
+              </div>
+              
+          </div>
 
            
         </div>
+
+        <div class="overlay1" *ngIf="isShowMoreTransactionsVisible">
+
+          <div class="centered-showmore-transaction">
+            <div class="corners-showmore-transaction">
+
+                <button class="closeMenu" (click)="CloseShowMoreTransactions()">Close</button>
+
+                <div class="container1">
+
+                <div class="filters-section">
+                  <h2 class="filters-h2">Filters</h2>
+                  <div class="filters">
+                    <div class="filter">
+                      <label class="filter-label">Category</label>
+                      <select class="select-menu">
+                        <option class="category-option">All Categories</option>
+                        <option class="category-option">Food</option>
+                        <option class="category-option">Home</option>
+                        <option class="category-option">Healthcare</option>
+                        <option class="category-option">Travel</option>
+                        <option class="category-option">Income</option>
+                      </select>
+                    </div>
+            
+                    <div class="filter">
+                      <label class="filter-label">Currency</label>
+                      <div class="currency-select">
+                        <select class="select-menu">
+                          <option>United States Dollar</option>
+                          <option>Euro</option>
+                          <option>Polish Złoty</option>
+                        </select>
+                      </div>
+                    </div>
+            
+                    <div class="filter">
+                      <label class="filter-label">From Date</label>
+                      <input class="select-menu" type="date" placeholder="22/02/2025">
+                    </div>
+
+                    <div class="filter">
+                      <label class="filter-label">To Date</label>
+                      <input class="select-menu" type="date" placeholder="22/04/2025">
+                    </div>
+          
+                  </div>
+            
+                  <div class="filter-buttons">
+                    <button class="reset">Reset Filters</button>
+                    <button class="apply">Apply Filters</button>
+                  </div>
+                </div>
+            
+                <div class="transactions-section">
+
+                  <h3 class="transactions-h3">Your Last Transactions</h3>
+
+                  <div class="transaction-row">
+                      <div class="left-group">
+                        <img src="assets/icons/food-violet.png" alt="Food icon" />
+                        <span class="category">Food</span>
+                      </div>
+
+                      <span class="date_transaction_list">09/04/2025</span>
+
+                      <div class="right-group">
+                        <span class="amount negative">-100.00 $</span>
+                        <button class="edit-button" aria-label="Edit transaction">Edit</button>
+                      </div>
+                  </div>
+                
+                  <div class="transaction-row">
+                    <div class="left-group">
+                      <img src="assets/icons/income-violet.png" alt="Food icon" />
+                      <span class="category">Income</span>
+                    </div>
+
+                    <span class="date_transaction_list">09/04/2025</span>
+
+                    <div class="right-group">
+                      <span class="amount positive">+100.00 $</span>
+                      <button class="edit-button" aria-label="Edit transaction">Edit</button>
+                    </div>
+                </div>
+
+                </div>
+            
+                <div class="pagination">
+                  <span class="page-active">1</span>
+                  <span class="page">2</span>
+                  <span class="page">next</span>
+                  <span class="page">last</span>
+                </div>
+                
+              </div>
+
+            </div>
+            
+        </div>
+        </div>
+
+        
 
         
 </body>
