@@ -1,6 +1,7 @@
 
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using System.Transactions;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.Identity.Client;
 
@@ -18,5 +19,7 @@ namespace BudgetManagmentServer.Models
         [JsonIgnore]
         public User? User { get; set; }
         public int userId { get; set; }
+
+        public ICollection<Transaction>? Transactions { get; set; }
     }
 }

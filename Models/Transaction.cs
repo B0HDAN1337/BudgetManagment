@@ -14,7 +14,6 @@ namespace BudgetManagmentServer.Models
 
         public string Category { get; set; }
         [Required]
-        [Range(0.1, 100000)]
         public float amount { get; set; }
         [Required]
         public DateOnly date { get; set; }
@@ -24,6 +23,9 @@ namespace BudgetManagmentServer.Models
         [JsonIgnore]
         public User? User { get; set; }
         public int UserID { get; set; }
+        [JsonIgnore]
+        public Wallet? Wallet { get; set; }
+        public int WalletID { get; set; }
 
         
         

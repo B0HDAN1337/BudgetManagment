@@ -24,6 +24,11 @@ namespace BudgetManagmentServer.Data
             .WithMany(w => w.Wallets)
             .HasForeignKey(w => w.userId)
             .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Wallet>()
+            .HasMany(t => t.Transactions)
+            .WithOne(w => w.Wallet)
+            .HasForeignKey(t => t.WalletID)
+            .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Transaction>().ToTable("Transaction")
             .HasOne(u => u.User)
             .WithMany(t => t.Transactions)

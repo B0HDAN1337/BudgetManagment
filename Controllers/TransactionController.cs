@@ -39,23 +39,32 @@ namespace BudgetManagmentServer.Controllers
             return Ok(transactions);
         }
         [HttpPost]
-        public IActionResult CreateTransaction(Transaction transaction)
+        public IActionResult CreateTransaction([FromBody] Transaction transaction)
         {
             int UserIdClaim = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             var transactionCount = _context.Transactions.Where(w => w.UserID == UserIdClaim).Count();
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             if (UserIdClaim == null)
             {
                 return BadRequest("User ID claim is missing");
             }
-            
-            if (!ModelState.IsValid)
-    {
-        return BadRequest(ModelState);
-    }
+
+            var wallet = _context.Wallets.FirstOrDefault(w => w.WalletID == transaction.WalletID);
+            if (wallet == null)
+            {
+                return BadRequest("Wallet ID missing");
+            }
 
             transaction.UserID = UserIdClaim;
 
             var newTransaction = _repository.CreateTransaction(transaction);
+            wallet.Currency += transaction.amount;
+            _context.SaveChanges();
             return Ok(newTransaction);
         }
     }
