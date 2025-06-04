@@ -25,7 +25,7 @@
                                             <label class="name"><b>{{wallet.walletName}}</b></label>
                                             <label class="description">{{wallet.description}}</label>    
                                         </div>
-                                        <a>{{wallet.currency}}</a>
+                                        <a [ngClass]="{'positive': wallet.currency > 0, 'negative': wallet.currency < 0}">{{wallet.currency}}</a>
                                     </div>
                                     <button *ngIf="wallets && wallets.length >= 1 && wallets.length < 5" class="add-wallet-circle" (click)="OpenCreateMenu()">+</button>
                                 </div>
@@ -46,18 +46,17 @@
                               </div>
                             </div>
 
-                            <button class="show-more-transactions" (click)="OpenShowMoreTransactions()">Show More</button>
-
                             <!-- Test!! -->
 
                             <button class="add-transaction" (click)="OpenMenu()">New Transaction</button>     
                         </div>
                          <div class="transactions-container">
-                          <div class="transaction-row" *ngFor="let transaction of transactions">
+                          <div class="transaction-row" *ngFor="let transaction of transactions | slice:0:3">
                             <span class="transaction-title">{{transaction.category}}</span>
                             <span class="transaction-date">{{transaction.date}}</span>
-                            <span class="transaction-amount">{{transaction.amount}}</span>
+                            <span class="transaction-amount" [ngClass]="{'positive': transaction.amount > 0, 'negative': transaction.amount < 0}" >{{transaction.amount}} {{getCurrencySymbol(transaction.currency)}}</span>
                           </div>
+                          <button class="show-more-transactions" *ngIf="transactions && transactions.length >= 1" (click)="OpenShowMoreTransactions()">Show More</button>
                         </div>
                         <div class="bottom-text">Overview</div>
                 </div>  
@@ -100,6 +99,11 @@
                             <option value="EUR">Euro</option>
                             <option value="PLN">Polish złoty</option>
                           </select>
+                          <select [(ngModel)]="transaction.walletID" name="walletID" required>
+                          <option *ngFor="let wallet of wallets" [value]="wallet.walletID">
+                            {{ wallet.walletName }}
+                          </option>
+                        </select>
                         </div>
                         <button type="submit">Add Transaction</button>
                       </div>
@@ -170,16 +174,16 @@
 
                   <h3 class="transactions-h3">Your Last Transactions</h3>
 
-                  <div class="transaction-row">
+                  <div class="transaction-row" *ngFor="let transaction of transactions">
                       <div class="left-group">
                         <img src="assets/icons/food-violet.png" alt="Food icon" />
-                        <span class="category">Food</span>
+                        <span class="category">{{transaction.category}}</span>
                       </div>
 
-                      <span class="date_transaction_list">09/04/2025</span>
+                      <span class="date_transaction_list">{{transaction.date}}</span>
 
                       <div class="right-group">
-                        <span class="amount negative">-100.00 $</span>
+                        <span class="amount negative" [ngClass]="{'positive': transaction.amount > 0, 'negative': transaction.amount < 0}">{{transaction.amount}} $</span>
                         <button class="edit-button" aria-label="Edit transaction">Edit</button>
                       </div>
                   </div>

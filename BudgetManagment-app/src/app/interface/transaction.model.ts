@@ -5,4 +5,5 @@ export interface Transaction {
     amount: number;
     date: string;
     currency: string;
+    walletID: number;
 }

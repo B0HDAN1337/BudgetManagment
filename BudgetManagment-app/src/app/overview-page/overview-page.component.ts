@@ -27,7 +27,8 @@ export class OverviewPageComponent implements OnInit{
     category: '',
     date: '',
     amount: 0,
-    currency: ''
+    currency: '',
+    walletID: 0
   }
   
   constructor(
@@ -140,4 +141,13 @@ closeDropdown(event: Event): void {
   this.dropdownOpen = false;
 }
 
+
+getCurrencySymbol(currency: string): string {
+  switch (currency) {
+    case 'USD': return '$';
+    case 'EUR': return '€';
+    case 'PLN': return 'zł';
+    default: return currency;
+  }
+}
 }
