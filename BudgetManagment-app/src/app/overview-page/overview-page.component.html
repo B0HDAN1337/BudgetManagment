@@ -174,7 +174,7 @@
 
                   <h3 class="transactions-h3">Your Last Transactions</h3>
 
-                  <div class="transaction-row" *ngFor="let transaction of transactions">
+                  <div class="transaction-row" *ngFor="let transaction of paginatedTransactions">
                       <div class="left-group">
                         <img src="assets/icons/food-violet.png" alt="Food icon" />
                         <span class="category">{{transaction.category}}</span>
@@ -205,10 +205,16 @@
                 </div>
             
                 <div class="pagination">
-                  <span class="page-active">1</span>
-                  <span class="page">2</span>
-                  <span class="page">next</span>
-                  <span class="page">last</span>
+                  <span
+                    class="page"
+                    *ngFor="let page of pages"
+                    [class.page-active]="currentPage === page"
+                    (click)="goToPage(page)">
+                    {{ page }}
+                  </span>
+                  <span class="page" (click)="nextPage()" [class.disabled]="currentPage === totalPages">next</span>
+                  <div class="page-info"> Page: {{ currentPage }} of {{ totalPages }}</div>
+                  <span class="page" (click)="goToPage(totalPages)" [class.disabled]="currentPage === totalPages">last</span>
                 </div>
                 
               </div>

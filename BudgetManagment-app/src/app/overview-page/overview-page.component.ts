@@ -22,6 +22,7 @@ export class OverviewPageComponent implements OnInit{
 
   wallets: Wallet[] =[];
   transactions: Transaction[] = [];
+  paginatedTransactions: Transaction[] = [];
 
   transaction = {
     category: '',
@@ -107,6 +108,7 @@ export class OverviewPageComponent implements OnInit{
     this.transactionService.getUserTransaction().subscribe (transaction =>
     {
       this.transactions = transaction;
+      this.updatePagination();
       console.log(transaction);
     }, error =>
     {
@@ -150,4 +152,37 @@ getCurrencySymbol(currency: string): string {
     default: return currency;
   }
 }
+
+currentPage: number = 1;
+pageSize: number = 5;
+totalPages: number = 0;
+pages: number[] = [];
+
+updatePagination() {
+  this.totalPages = Math.ceil(this.transactions.length / this.pageSize);
+  this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  const startIndex = (this.currentPage - 1) * this.pageSize;
+  const endIndex = startIndex + this.pageSize;
+  this.paginatedTransactions = this.transactions.slice(startIndex, endIndex);
+}
+
+goToPage(page: number) {
+  this.currentPage = page;
+  this.updatePagination();
+}
+
+nextPage() {
+  if (this.currentPage < this.totalPages) {
+    this.currentPage++;
+    this.updatePagination();
+  }
+}
+
+previousPage() {
+  if (this.currentPage > 1) {
+    this.currentPage--;
+    this.updatePagination();
+  }
+}
+
 }
