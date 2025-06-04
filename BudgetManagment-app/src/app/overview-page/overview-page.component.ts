@@ -120,13 +120,21 @@ export class OverviewPageComponent implements OnInit{
   dropdownOpen = false;
   selectedCategory = 'All Categories';
 
-  categories = [
-  { label: 'Food', icon: '/BudgetManagment-app/src/icons/food-violet.png' },
-  { label: 'Home', icon: '/BudgetManagment-app/src/icons/home-violet.png' },
-  { label: 'Healthcare', icon: '/BudgetManagment-app/src/icons/healthcare-violet.png' },
-  { label: 'Travel', icon: '/BudgetManagment-app/src/icons/travel-violet.png' },
-  { label: 'Income', icon: '/BudgetManagment-app/src/icons/income-violet.png' }
-];
+  getCategoryImage(category: string, color: string = 'violet'): string {
+    switch (category) {
+      case 'Food': return `/assets/icons/food-${color}.png`;
+      case 'Home': return `/assets/icons/home-${color}.png`;
+      case 'Healthcare': return `/assets/icons/healthcare-${color}.png` ;
+      case 'Travel': return `/assets/icons/travel-${color}.png`;
+      case 'Income': return `/assets/icons/income-${color}.png`;
+      default: return category;
+    }
+  }
+
+isActiveCategory(category: string): boolean {
+  return this.selectedCategory === category;
+}
+
 
 toggleDropdown(event: Event): void {
   this.dropdownOpen = !this.dropdownOpen;

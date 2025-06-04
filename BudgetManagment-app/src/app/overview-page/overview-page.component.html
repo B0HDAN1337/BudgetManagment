@@ -38,13 +38,13 @@
 
                             <!-- Test!! -->
 
-                            <div class="transactions-container">
+                            <!-- <div class="transactions-container">
                               <div class="transaction-row">
                                 <span class="transaction-title">{{transaction.category}}</span>
                                 <span class="transaction-date">{{transaction.date}}</span>
                                 <span class="transaction-amount">{{transaction.amount}}</span>
                               </div>
-                            </div>
+                            </div> -->
 
                             <!-- Test!! -->
 
@@ -52,6 +52,7 @@
                         </div>
                          <div class="transactions-container">
                           <div class="transaction-row" *ngFor="let transaction of transactions | slice:0:3">
+                            <img [src]="getCategoryImage(transaction.category, isActiveCategory(transaction.category) ? 'violet' : 'green')"/>
                             <span class="transaction-title">{{transaction.category}}</span>
                             <span class="transaction-date">{{transaction.date}}</span>
                             <span class="transaction-amount" [ngClass]="{'positive': transaction.amount > 0, 'negative': transaction.amount < 0}" >{{transaction.amount}} {{getCurrencySymbol(transaction.currency)}}</span>
@@ -176,7 +177,7 @@
 
                   <div class="transaction-row" *ngFor="let transaction of paginatedTransactions">
                       <div class="left-group">
-                        <img src="assets/icons/food-violet.png" alt="Food icon" />
+                        <img [src]="getCategoryImage(transaction.category)"/>
                         <span class="category">{{transaction.category}}</span>
                       </div>
 
