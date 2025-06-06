@@ -19,7 +19,7 @@
                                 <button class="add-wallet" (click)="OpenCreateMenu()">New Wallet</button>
                             </div>
                                 <div class="wallets-row">
-                                    <div class="wallet-card" *ngFor="let wallet of wallets">
+                                    <div class="wallet-card" *ngFor="let wallet of wallets" (click)="goToWallet(wallet.walletID)">
                                         <img width="35" height="35" src="assets/icons/Vector.svg" alt="Wallet">
                                         <div class="wallet-name">
                                             <label class="name"><b>{{wallet.walletName}}</b></label>

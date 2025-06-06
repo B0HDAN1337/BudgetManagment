@@ -39,16 +39,4 @@ export class UserService {
     return this.http.delete<any>(this.userDelete, { headers });
   }
 
-  getUserWallet(): Observable<Wallet[]> {
-  const token = localStorage.getItem('token');
-  if (!token) {
-    throw new Error('Token is missing');
-  }
-
-  const headers = new HttpHeaders({
-    'Authorization': `Bearer ${token}`
-  });
-
-  return this.http.get<Wallet[]>(this.userWallet, { headers });
-}
 }

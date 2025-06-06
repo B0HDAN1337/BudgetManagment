@@ -13,5 +13,5 @@ export const routes: Routes = [
     {path: 'account-overview', component: AccountOverviewComponent, canActivate: [authGuard]},
     {path: 'overview-page', component: OverviewPageComponent, canActivate: [authGuard]},
     {path: 'wallet-creation', component: WalletCreationComponent, canActivate: [authGuard]},
-    {path: 'wallet-main-page', component: WalletMainPageComponent, canActivate: [authGuard]}
+    {path: 'wallet/:id', component: WalletMainPageComponent, canActivate: [authGuard]}
 ];

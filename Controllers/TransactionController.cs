@@ -60,12 +60,35 @@ namespace BudgetManagmentServer.Controllers
                 return BadRequest("Wallet ID missing");
             }
 
+            transaction.Type = transaction.Category == "Income"
+            ? TransactionType.Income
+            : TransactionType.Expense;
+
             transaction.UserID = UserIdClaim;
+
+            // Додаємо або віднімаємо з балансу гаманця
+            if (transaction.Type == TransactionType.Income)
+            {
+                wallet.Currency += transaction.amount;
+            }
+            else
+            {
+                wallet.Currency -= transaction.amount;
+            }
 
             var newTransaction = _repository.CreateTransaction(transaction);
             wallet.Currency += transaction.amount;
             _context.SaveChanges();
             return Ok(newTransaction);
+        }
+
+        [HttpGet("wallet/{walletID}")]
+        public IActionResult GetTransactionByWallet(int walletID)
+        {
+            int userIdClaim = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            var transactions = _context.Transactions.Where(t =>  t.WalletID == walletID).ToList();
+            return Ok(transactions);
         }
     }
 }

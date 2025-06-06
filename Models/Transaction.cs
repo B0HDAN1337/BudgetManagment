@@ -14,6 +14,8 @@ namespace BudgetManagmentServer.Models
 
         public string Category { get; set; }
         [Required]
+        public TransactionType Type { get; set; }
+        [Required]
         public float amount { get; set; }
         [Required]
         public DateOnly date { get; set; }
@@ -26,8 +28,11 @@ namespace BudgetManagmentServer.Models
         [JsonIgnore]
         public Wallet? Wallet { get; set; }
         public int WalletID { get; set; }
+    }
 
-        
-        
+    public enum TransactionType
+    {
+        Income = 0,
+        Expense = 1
     }
 }

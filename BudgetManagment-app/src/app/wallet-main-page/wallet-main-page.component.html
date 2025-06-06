@@ -1,5 +1,5 @@
-<div class="dynamic-name">
-    <label>Welcome Back, <b>walletName</b></label>
+<div class="dynamic-name" *ngIf="wallets">
+    <label>Welcome Back, <b>{{wallets.walletName}}</b></label>
 </div>
 <div class="container">
   <div class="centered">
@@ -7,8 +7,8 @@
       <div class="dashboard">
         <section class="balance-section">
           <label>Current <strong>Balance</strong></label>
-          <p class="balance-amount">100.00 $</p>
-          <button class="btn-add-transaction">Add Transaction</button>
+          <p class="balance-amount" *ngIf="wallets">{{wallets.currency}}$</p>
+          <button class="btn-add-transaction" (click)="OpenMenu()">Add Transaction</button>
         </section>
 
         <section class="period-section">
@@ -38,7 +38,7 @@
             <div class="stat-item">
                  <img width="35" height="35" src="assets/icons/balance.svg">
                 <strong>Total balance</strong>
-                <p class="positive">+1542.18 $</p>
+                <p class="positive" *ngIf="wallets">{{wallets.currency}}$</p>
             </div>
           </div>
         </section>
@@ -72,11 +72,11 @@
         </section>
         <label class="last-transactions-text">Your <strong>Last Transactions</strong></label>
         <div class="transactions-container">
-            <div class="transaction-row" >
+            <div class="transaction-row" *ngFor="let transaction of transactions">
                 <!-- <img [src]="getCategoryImage(transaction.category, isActiveCategory(transaction.category) ? 'violet' : 'green')"/> -->
-                <span class="transaction-title">category</span>
-                <span class="transaction-date">date</span>
-                <span class="transaction-amount" >amount</span>
+                <span class="transaction-title">{{transaction.category}}</span>
+                <span class="transaction-date">{{transaction.date | date:'shortDate'}}</span>
+                <span class="transaction-amount" >{{transaction.amount | currency:transaction.currency}}</span>
             </div>
             <button class="show-more-transactions" >Show More</button>
         </div>
@@ -84,3 +84,54 @@
     </div>
   </div>
 </div>
+
+
+
+ <div class="overlay" *ngIf="isAddTransactionVisible">
+          <div class="centered-add-transaction">
+              <div class="corners-add-transaction">
+                  <button class="closeMenu" (click)="CloseMenu()">Close</button>
+                  
+                  <form class="form" (ngSubmit)="CreateTransaction()">
+                      <div class="top-row-container">
+                        <div class="category">
+                          <label>Category</label>
+                          <select name="Category" [(ngModel)]="transaction.category" ngModel required>
+                            <option value="" disabled selected hidden>Category</option>
+                            <option value="Food">Food</option>
+                            <option value="Healthcare">Healthcare</option>
+                            <option value="Income">Income</option>
+                            <option value="Travel">Travel</option>
+                          </select>
+                        </div>
+                        <div class="date">
+                          <label>Date</label>
+                          <input name="Date" [(ngModel)]="transaction.date" ngModel type="text" placeholder="yyyy-mm-dd" required />
+                        </div>
+                      </div>
+                    
+                      <div class="bottom-row-container">
+                        <div class="amount">
+                          <label>Amount</label>
+                          <input name="Amount" [(ngModel)]="transaction.amount" ngModel type="text" placeholder="Amount" required />
+                        </div>
+                        <div class="currency">
+                          <label>Currency</label>
+                          <select name="Currency" [(ngModel)]="transaction.currency" ngModel required>
+                            <option value="" disabled selected hidden>Currency</option>
+                            <option value="USD">United States Dollar</option>
+                            <option value="EUR">Euro</option>
+                            <option value="PLN">Polish złoty</option>
+                          </select>
+                          <select [(ngModel)]="transaction.walletID" name="walletID" required>
+                          <!-- <option *ngFor="let wallet of wallets" [value]="wallet.walletID">
+                            {{ wallet.walletName }}
+                          </option> -->
+                        </select>
+                        </div>
+                        <button type="submit">Add Transaction</button>
+                      </div>
+                    </form>
+              </div>
+          </div>   
+        </div>

@@ -59,6 +59,14 @@ namespace BudgetManagmentServer.Controllers
             return Ok(newWallet);
         }
 
+        [HttpGet("{id}")]
+        public IActionResult GetWalletById(int id)
+        {
+            var wallet = _walletRepository.GetWalletById(id);
+            if (wallet == null) return NotFound();
+            return Ok(wallet);
+        }
+
         [HttpPost("{id}")]
         public IActionResult UpdateWallet(int id, Wallet wallet)
         {

@@ -7,6 +7,7 @@ import { UserService } from '../services/user.service';
 import { TransactionService } from '../services/transaction.service';
 import { Wallet } from '../interface/wallet.model';
 import { Transaction } from '../interface/transaction.model';
+import { WalletService } from '../services/wallet.service';
 
 
 
@@ -35,6 +36,7 @@ export class OverviewPageComponent implements OnInit{
   constructor(
     private router: Router, 
     private userService: UserService,
+    private walletService: WalletService,
   private transactionService: TransactionService) {}
 
   isAddTransactionVisible = false;
@@ -80,7 +82,7 @@ export class OverviewPageComponent implements OnInit{
   }
 
   loadWallets() {
-    this.userService.getUserWallet().subscribe (wallet =>
+    this.walletService.getUserWallet().subscribe (wallet =>
     {
       this.wallets = wallet;
       console.log(wallet);
@@ -193,4 +195,7 @@ previousPage() {
   }
 }
 
+goToWallet(walletId: number) {
+  this.router.navigate(['/wallet', walletId]);
+}
 }

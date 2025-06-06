@@ -7,8 +7,15 @@ import { Wallet } from '../interface/wallet.model';
   providedIn: 'root'
 })
 export class WalletService {
-    private WalletUrl = 'http://localhost:5142/api/wallets';
+    private WalletUrl = 'http://localhost:5142/api/Wallet';
 
+  constructor(private http: HttpClient) {}
+
+    getWalletDataById(id: number): Observable<Wallet[]> {
+      return this.http.get<Wallet[]>(`${this.WalletUrl}/${id}`);
+    }
     
-    
+    getUserWallet(): Observable<Wallet[]> {
+      return this.http.get<Wallet[]>(this.WalletUrl);
+    }
 }
