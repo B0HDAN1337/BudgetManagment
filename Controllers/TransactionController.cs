@@ -42,17 +42,17 @@ namespace BudgetManagmentServer.Controllers
         public IActionResult CreateTransaction([FromBody] Transaction transaction)
         {
             int UserIdClaim = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            var transactionCount = _context.Transactions.Where(w => w.UserID == UserIdClaim).Count();
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
             if (UserIdClaim == null)
             {
                 return BadRequest("User ID claim is missing");
             }
+
+            var transactionCount = _context.Transactions.Where(w => w.UserID == UserIdClaim).Count();
 
             var wallet = _context.Wallets.FirstOrDefault(w => w.WalletID == transaction.WalletID);
             if (wallet == null)
@@ -60,24 +60,21 @@ namespace BudgetManagmentServer.Controllers
                 return BadRequest("Wallet ID missing");
             }
 
-            transaction.Type = transaction.Category == "Income"
-            ? TransactionType.Income
-            : TransactionType.Expense;
-
-            transaction.UserID = UserIdClaim;
-
-            // Додаємо або віднімаємо з балансу гаманця
-            if (transaction.Type == TransactionType.Income)
+            if (transaction.Category == "Income")
             {
-                wallet.Currency += transaction.amount;
+
+                transaction.Type = TransactionType.Income;
+                transaction.amount = Math.Abs(transaction.amount);
             }
             else
             {
-                wallet.Currency -= transaction.amount;
+                transaction.Type = TransactionType.Expense;
+                transaction.amount = -Math.Abs(transaction.amount);
             }
 
-            var newTransaction = _repository.CreateTransaction(transaction);
+            transaction.UserID = UserIdClaim;
             wallet.Currency += transaction.amount;
+            var newTransaction = _repository.CreateTransaction(transaction);
             _context.SaveChanges();
             return Ok(newTransaction);
         }
@@ -87,8 +84,48 @@ namespace BudgetManagmentServer.Controllers
         {
             int userIdClaim = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-            var transactions = _context.Transactions.Where(t =>  t.WalletID == walletID).ToList();
+            var transactions = _context.Transactions.Where(t => t.WalletID == walletID).ToList();
             return Ok(transactions);
+        }
+
+        [HttpGet("wallet/{walletID}/totals")]
+        public IActionResult GetWalletIncomeTotal(int walletID)
+        {
+            //int userIdClaim = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            var totalIncome = _context.Transactions.Where(t => t.WalletID == walletID && t.Type == TransactionType.Income).Sum(t => t.amount);
+            var totalExpense = _context.Transactions.Where(t => t.WalletID == walletID && t.Type == TransactionType.Expense).Sum(t => t.amount);
+            return Ok(new
+            {
+                income = totalIncome,
+                expense = totalExpense
+            });
+        }
+
+        [HttpGet("{transactionID}")]
+        public IActionResult GetTransactionById(int transactionID)
+        {
+            var transaction = _repository.GetTransactionById(transactionID);
+            return Ok(transaction);
+        }
+
+        [HttpPost("{transactionID}")]
+        public IActionResult UpdateTransactionById(int transactionID, Transaction transaction)
+        {
+            var transactions = _repository.UpdateTransaction(transactionID, transaction);
+            if (transactions == null)
+            {
+                return NotFound($"Transaction with id {transactionID} not found.");
+            }
+
+            return Ok(transaction);
+        }
+
+        [HttpDelete("{transactionID}")]
+        public IActionResult DeleteTransactionById(int transactionID)
+        {
+            var transaction = _repository.DeleteTransaction(transactionID);
+            return Ok(transaction);
         }
     }
 }
