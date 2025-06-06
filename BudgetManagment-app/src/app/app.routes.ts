@@ -11,6 +11,7 @@ export const routes: Routes = [
     {path: 'user-log-in', component: UserLogInComponent},
     {path: 'user-sign-up', component: UserSignUpComponent},
     {path: 'account-overview', component: AccountOverviewComponent, canActivate: [authGuard]},
+    {path: 'wallet-main-page', component: WalletMainPageComponent},
     {path: 'overview-page', component: OverviewPageComponent, canActivate: [authGuard]},
     {path: 'wallet-creation', component: WalletCreationComponent, canActivate: [authGuard]},
     {path: 'wallet/:id', component: WalletMainPageComponent, canActivate: [authGuard]}

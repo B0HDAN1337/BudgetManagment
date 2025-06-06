@@ -1,5 +1,5 @@
-<<<<<<< HEAD
 import { Component, OnInit, ErrorHandler, Type } from '@angular/core';
+
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -13,18 +13,11 @@ import { Transaction, TransactionType } from '../interface/transaction.model';
 @Component({
   selector: 'app-wallet-main-page',
   imports: [FormsModule, CommonModule],
-=======
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-@Component({
-  selector: 'app-wallet-main-page',
-  imports: [CommonModule],
->>>>>>> 2d81d80 (added the rest of wallet overview page, transaction edit overlay, savings adding overlay, savings overview overlay)
   templateUrl: './wallet-main-page.component.html',
   styleUrl: './wallet-main-page.component.css'
 })
-export class WalletMainPageComponent implements OnInit{
+export class WalletMainPageComponent implements OnInit {
+
   walletId!: number;
   wallets: any;
 
@@ -121,6 +114,7 @@ export class WalletMainPageComponent implements OnInit{
   OpenAddSavingsMenu(){
     this.isAddSavingsVisible = true;
   }
+  
   OpenSavingsOverview(){
     this.isSavingsOverviewVisible = true;
   }
