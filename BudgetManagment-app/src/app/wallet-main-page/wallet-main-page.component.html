@@ -27,12 +27,12 @@
             <div class="stat-item">
                 <img width="35" height="35" src="assets/icons/income.svg">
                 <strong>Total income</strong>
-                <p class="positive">+3500.00 $</p>
+                <p class="positive" *ngIf="totalIncome >= 0">+{{totalIncome | number:'1.2-2'}} $</p>
             </div>
             <div class="stat-item">
                  <img width="35" height="35" src="assets/icons/expenses.svg">
                 <strong>Total expenses</strong>
-                <p class="negative">-1838.42 $</p>
+                <p class="negative"  *ngIf="totalExpense <= 0">{{totalExpense | number:'1.2-2'}} $</p>
             </div>
             <div class="stat-item">
                  <img width="35" height="35" src="assets/icons/change.svg">

@@ -30,7 +30,8 @@ export class OverviewPageComponent implements OnInit{
     date: '',
     amount: 0,
     currency: '',
-    walletID: 0
+    walletID: 0,
+    type: 0
   }
   
   constructor(
@@ -108,6 +109,8 @@ export class OverviewPageComponent implements OnInit{
     {
         console.log("Success transaction", success);
         alert("Success created transaction");
+        this.loadTransaction();
+        this.isAddTransactionVisible = false;
     }, error =>
     {
         console.log("Error transaction", error);
@@ -206,5 +209,17 @@ previousPage() {
 
 goToWallet(walletId: number) {
   this.router.navigate(['/wallet', walletId]);
+}
+
+deleteTransaction(transactionID: number) {
+  this.transactionService.deleteTransactionById(transactionID).subscribe(success =>
+  {
+    console.log("Success deleted Transaction", success);
+    this.loadTransaction();
+  }, error => 
+  {
+    console.log("Error delete Transaction", error);
+  }
+  )
 }
 }

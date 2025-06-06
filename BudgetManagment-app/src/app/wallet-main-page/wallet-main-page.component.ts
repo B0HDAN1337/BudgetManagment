@@ -47,6 +47,7 @@ export class WalletMainPageComponent implements OnInit {
       this.transaction.walletID = this.walletId;
       this.loadWalletsName(this.walletId);
       this.loadTransactionByWallet(this.walletId);
+      this.totalIncomeAmount();
     }
 
   OpenMenu()
@@ -96,17 +97,19 @@ export class WalletMainPageComponent implements OnInit {
     )
   }
 
-  get totalExpensesAmount(): number {
-  return this.transactions
-    .filter(t => t.type === TransactionType.Expense)
-    .reduce((sum, t) => sum + t.amount, 0);
-}
+  totalIncome: number = 0;
+  totalExpense: number = 0;
 
- get totalIncomeAmount(): number {
-  return this.transactions
-    .filter(t => t.type === TransactionType.Income)
-    .reduce((sum, t) => sum + t.amount, 0);
-}
+  totalIncomeAmount() {
+    this.transactionService.getWalletIncomeTotal(this.walletId).subscribe( total =>
+    {
+      this.totalIncome = total.income;
+      this.totalExpense = total.expense;
+    }, error =>
+    {
+      console.error('Error whee load: ', error);
+    })
+  }
 
   isAddSavingsVisible = false;
   isSavingsOverviewVisible = false;
