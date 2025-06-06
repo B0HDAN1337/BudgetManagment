@@ -2,9 +2,13 @@
     <label>Welcome Back, <b>{{wallets.walletName}}</b></label>
 </div>
 <div class="container">
+
   <div class="centered">
+
     <div class="corners">
+
       <div class="dashboard">
+
         <section class="balance-section">
           <label>Current <strong>Balance</strong></label>
           <p class="balance-amount" *ngIf="wallets">{{wallets.currency}}$</p>
@@ -41,24 +45,29 @@
                 <p class="positive" *ngIf="wallets">{{wallets.currency}}$</p>
             </div>
           </div>
+
         </section>
 
         <section class="charts">
+
           <div class="chart-box">
              <img width="35" height="35" src="assets/icons/income.svg">
             <h3> Total income</h3>
             <div class="placeholder-bar">[Bar Chart]</div>
           </div>
+
           <div class="chart-box">
              <img width="35" height="35" src="assets/icons/income.svg">
             <h3>Total income</h3>
             <div class="placeholder-pie">Income 100%</div>
           </div>
+
           <div class="chart-box">
              <img width="35" height="35" src="assets/icons/expenses.svg">
             <h3>Total expenses</h3>
             <div class="placeholder-bar">[Bar Chart]</div>
           </div>
+
           <div class="chart-box">
              <img width="35" height="35" src="assets/icons/expenses.svg">
             <h3>Total expenses</h3>
@@ -70,7 +79,9 @@
           </div>
            
         </section>
+
         <label class="last-transactions-text">Your <strong>Last Transactions</strong></label>
+
         <div class="transactions-container">
             <div class="transaction-row" *ngFor="let transaction of transactions">
                 <!-- <img [src]="getCategoryImage(transaction.category, isActiveCategory(transaction.category) ? 'violet' : 'green')"/> -->
@@ -80,9 +91,226 @@
             </div>
             <button class="show-more-transactions" >Show More</button>
         </div>
+
+        <label class="last-savings-text">Your <strong>Savings</strong></label>
+
+        <div class="savings-container">
+
+          <div class="no-savings-container">
+            <label class="no-savings-text">Looks like you don't have any savings!</label>
+            <button class="add-savings-button" (click)="OpenAddSavingsMenu()">Add Savings</button>
+          </div>
+
+          <div class="existing-savings-conatainer">
+
+            <button class="savings-box" (click)="OpenSavingsOverview()">
+
+              <div class="savings-box-inside">
+
+                <div class="savings-info">
+                  <div class="image-div-savings-box">
+                    <img src="assets/icons/attach_money.png" width="45px" height="45px">
+                  </div>
+                  <div class="savings-name-descr">
+                    <label class="savings-name">Savings Name</label>
+                    <label class="savings-description">Description</label>
+                  </div>
+                  
+                </div>
+
+                <div class="savings-money-info">
+                  <label class="savings-goal">goal <label class="goal-amount">100.00$</label></label>
+                  <label class="savings-completed">completed <label class="completed-percantage">20%</label></label>
+                </div>
+
+              </div>
+
+            </button>
+
+            <button class="plus-savings-button" (click)="OpenAddSavingsMenu()">+</button>
+
+          </div>
+          
+          <div>
+
+          
+        </div>
+
       </div>
+
     </div>
   </div>
+</div>
+
+
+<!-- overlay -->
+
+<div class="overlay_savings_creation" *ngIf="isAddSavingsVisible">
+  <div class="centered-add-savings">
+      <div class="corners-add-savings">
+          <button class="closeMenu" (click)="CloseAddSavingsMenu()">Close</button>
+          
+          <form class="form-add-savings">
+            
+              <div class="main-container_add_savings">
+
+                <div class="inputs_add_savings">
+                    <div class="name-add-savings">
+                         <label>Name</label>
+                         <input name="Name" placeholder="Name" required />
+                    </div>
+                    <div class="description_add_savings">
+                         <label>Description</label>
+                         <input name="Description" placeholder="Description(optional)" />
+                    </div>
+                    <div class="date-add-savings">
+                        <label>Goal date</label>
+                        <input name="Date" type="date" placeholder="yyyy-mm-dd" required />
+                    </div>
+                    <div class="amount-currency-addsavingsbutton-container">
+                        <div class="amount-add-savings">
+                            <label>Amount</label>
+                            <input name="Amount" placeholder="Amount" required />
+                        </div>
+                        <div class="currency-add-savings">
+                          <label class="filter-label">Currency</label>
+                          <div class="currency-select">
+                            <select class="select-menu">
+                              <option>United States Dollar</option>
+                              <option>Euro</option>
+                              <option>Polish Złoty</option>
+                            </select>
+                          </div>
+                        </div>
+                        
+                            <button class="button-add-savings">Add Savings</button>
+                        
+                    </div>
+                </div>
+
+              </div>
+
+          </form>
+            
+          
+      </div>
+      
+  </div>
+
+   
+</div>
+
+<div class="overlay-savings-overview" *ngIf="isSavingsOverviewVisible">
+  <div class="centered-savings-overview">
+      <div class="corners-savings-overview">
+          <button class="closeMenu" (click)="CloseSavingsOverview()">Close</button>
+          
+          <form class="form-savings-overview">
+            
+              <div class="main-container">
+                
+                <div class="top-part-panel">
+
+                    <div class="left-side-panel">
+
+                        <div class="info">
+                            <div class="name-savings-overview">
+                                <label>Name</label>
+                                <input name="Savings name" placeholder="Savings name" />
+                            </div>
+                            <div class="description-savings-overview">
+                                <label>Description</label>
+                                <input name="Description" placeholder="Savings Description" />
+                            </div>
+
+                            <div class="date-daysleft-part">
+
+                              <label class="date-savings-overview-label">Goal date</label>
+
+                              <div class="date-daysleft-part-inside">
+
+                                <div class="date-savings-overview">
+                                  <label>Goal date</label>
+                                  <input name="Date" type="date" placeholder="2025-01-01" style="margin-left: 15px;" />
+                              </div>
+
+                              <div class="days-left-savings-overview">
+                                  <label>Days left: </label>
+                                  <span>21</span>
+                              </div>
+
+                              </div>
+                                
+
+                            </div>
+
+                            <div class="amount-to-save-currency-part">
+
+                                <div class="amount-to-save-savings-overview">
+                                    <label>Amount to save</label>
+                                    <input name="amount to save" placeholder="100" />
+                                </div>
+
+                                <div class="currency-savings-overview">
+                                    <label>Currency</label>
+                                    <select name="Currency" required>
+                                        <option value="" disabled selected hidden>Currency</option>
+                                        <option value="USD">United States Dollar</option>
+                                        <option value="EUR">Euro</option>
+                                        <option value="PLN">Polish złoty</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="buttons-part">
+                                <button type="submit" class="button-save-money">Save money</button>
+                                <button type="submit" class="button-mark-as-complete">Mark as complete</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                <div class="right-side-panel">
+
+                  <div class="circle-part">
+
+                    <div class="progress-circle">
+                    </div>
+
+                    <div class="under-circle-statistics">
+                      <label class="completed-amount">25.00%  <label class="separator">/ </label> <label class="to-many-left">100.00%</label></label>
+                    </div>
+
+                  </div>
+
+                  <div class="completed-part">
+                    <label class="completed-text">completed</label>
+                    <label class="completed-percantage-big">25.00%</label>
+                    <label class="keep-it-up-text">Keep it up!</label>
+                  </div>
+
+                </div>
+
+                </div>
+                
+                <div class="bottom-part-panel">
+                    <button type="submit" class="button-delete-savings">Delete Savings</button>
+                    <button type="submit" class="button-save-changes">Save Changes</button>
+                </div>
+                
+
+              </div>
+
+          </form>
+            
+          
+      </div>
+      
+  </div>
+
+   
 </div>
 
 

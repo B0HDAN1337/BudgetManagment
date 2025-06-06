@@ -41,6 +41,7 @@ export class OverviewPageComponent implements OnInit{
 
   isAddTransactionVisible = false;
   isShowMoreTransactionsVisible = false;
+  isEditTransactionVisible = false;
 
   OpenMenu()
   {
@@ -52,6 +53,10 @@ export class OverviewPageComponent implements OnInit{
     this.isShowMoreTransactionsVisible = true;
   }
 
+  ShowEditTransactionMenu(){
+    this.isEditTransactionVisible = true;
+  }
+
   CloseMenu()
   {
     this.isAddTransactionVisible = false;
@@ -60,6 +65,10 @@ export class OverviewPageComponent implements OnInit{
   CloseShowMoreTransactions()
   {
     this.isShowMoreTransactionsVisible = false;
+  }
+
+  CloseEditTransactionMenu(){
+    this.isEditTransactionVisible = false;
   }
 
   OpenCreateMenu()

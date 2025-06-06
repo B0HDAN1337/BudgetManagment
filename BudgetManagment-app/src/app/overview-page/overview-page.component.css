@@ -271,122 +271,91 @@
   }
 
 
-
-   form {
+  form {
     margin: 0 auto;
     padding: 2rem;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    align-items: center;
-    justify-content: center;
+    gap: 2rem;
+    max-width: 960px; /* fixed width for alignment */
+    width: 100%;
   }
-
-  .top-row-container, .bottom-row-container {
+  
+  .row {
     display: flex;
-    flex-direction: row;
-    justify-items: center;
+    justify-content: flex-start;
+    width: 100%;
   }
-
-  .category {
-    display: flex;
-    flex-direction: column;
-    padding-right: 20px;
-    font-family: Poppins;
-    font-size: 22px;
-  }
-
+  
+  .category,
   .date {
     display: flex;
     flex-direction: column;
     font-family: Poppins;
     font-size: 22px;
+    flex: 1;
   }
-
-  .amount {
+  
+  .amount,
+  .currency,
+  .wallet_in_creation_menu {
     display: flex;
     flex-direction: column;
-    padding-right: 20px;
     font-family: Poppins;
     font-size: 22px;
+    /* flex: 1; */
+    width: 100px;
+    max-width: 300px;
   }
-
-  .currency {
-    display: flex;
-    flex-direction: column;
-    padding-right: 20px;
-    padding-left: 20px;
-    font-family: Poppins;
-    font-size: 22px;
-  }
-
-  .category select {
-    background-color: #FAF9F6;
-    padding: 10px;
-    width: 30rem;
-    font-size: 1rem;
-    border-radius: 8px;
-    border: 3px solid #EEEEEE;
-    background-color: #FAF9F6;
-    font-family: Poppins;
-    font-size: 24px;
-    font-style: italic;
-  }
-
+  
+  .category select,
   .date input {
     background-color: #FAF9F6;
     padding: 10px;
     width: 100%;
-    max-width: 250px;
     font-size: 1rem;
     border-radius: 8px;
     border: 3px solid #EEEEEE;
-    background-color: #FAF9F6;
     font-family: Poppins;
-    font-size: 24px;
+    font-size: 22px;
     font-style: italic;
   }
 
+  .wallet_in_creation_menu select,
+  .currency select,
   .amount input {
     background-color: #FAF9F6;
     padding: 10px;
+    max-width: 300px;
     width: 100%;
-    max-width: 250px;
     font-size: 1rem;
     border-radius: 8px;
     border: 3px solid #EEEEEE;
-    background-color: #FAF9F6;
     font-family: Poppins;
-    font-size: 24px;
+    font-size: 22px;
     font-style: italic;
   }
-
-  .currency select {
-    background-color: #FAF9F6;
-    padding: 10px;
-    width: 15rem;
-    font-size: 1rem;
-    border-radius: 8px;
-    border: 3px solid #EEEEEE;
-    background-color: #FAF9F6;
-    font-family: Poppins;
-    font-size: 24px;
-    font-style: italic;
+  
+  .button-row {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
   }
 
-  .bottom-row-container button {
+
+  
+  .button-row button {
     background-color: #4DB6AC;
     color: #FAF9F6;
     border: 0;
     border-radius: 8px;
     text-align: center;
     font-family: Poppins;
-    margin-top: 2rem;
     font-size: 24px;
     height: 63px;
-    width: 100%;
-    max-width: 280px;
+    width: 280px;
   }
+  
 
 
 .transaction-row {
@@ -738,4 +707,604 @@
   border-radius: 8px;
   line-height: 41px;
   display: inline-block;
+}
+
+
+.corners {
+  position: relative;
+  display: flex; 
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1400px;
+  height: 756px;
+  flex-direction: column;
+  background-color: #FAF9F6;
+  border-top-right-radius: 100px;
+  border-bottom-left-radius: 100px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 8px;
+}
+
+.centered {
+  background-color: #4DB6AC;
+  width: 100%;
+  max-width: 1400px;
+  height: 100%;
+  border-radius: 8px;
+  display: flex;
+  padding: auto;
+}
+.overlay, .overlay1 {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0,0,0,0.75); 
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 1rem;
+z-index: 1000;
+}
+
+.centered-add-transaction {
+  background-color: #5C6AC4;
+  width: 100%;
+  max-width: 1077px;
+  height: auto;
+  border-radius: 8px;
+  display: flex;
+  padding: auto;
+}
+
+.corners-add-transaction {
+  position: relative;
+  display: flex; 
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  max-width: 1077px;
+  height: 382px;
+  flex-direction: column;
+  background-color: #FAF9F6;
+  border-top-right-radius: 100px;
+  border-bottom-left-radius: 100px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 8px;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.corners-add-transaction .closeMenu {
+  position: absolute;
+  background-color: #FF6F61;
+  color: #FAF9F6;
+  border: 0;
+  border-radius: 8px;
+  text-align: center;
+  font-family: Poppins;
+  font-weight: 600;
+  top: -1.15rem;
+  margin-left: 2rem;
+  font-size: 24px;
+  height: 36px;
+  width: 100%;
+  max-width: 113px;
+}
+
+
+
+ form {
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.top-row-container_edit, .bottom-row-container_edit {
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+  vertical-align: top;
+}
+
+.top-row-container_edit {
+  gap: 3rem;
+  width: 100%;
+}
+
+.bottom-row-container_edit{
+  align-items: flex-start;
+}
+
+.amount,
+.currency,
+.buttons-div-edit-transactions {
+display: flex;
+flex-direction: row;
+align-items: flex-start;
+}
+
+.category {
+  display: flex;
+  flex-direction: column;
+  padding-right: 20px;
+  font-family: Poppins;
+  font-size: 22px;
+}
+
+.date {
+  display: flex;
+  flex-direction: column;
+  font-family: Poppins;
+  font-size: 22px;
+}
+
+.amount {
+  display: flex;
+  flex-direction: column;
+  padding-right: 10px;
+  font-family: Poppins;
+  font-size: 22px;
+  margin-top: 6px;
+}
+
+.currency {
+  display: flex;
+  flex-direction: column;
+  padding-right: 20px;
+  padding-left: 20px;
+  font-family: Poppins;
+  font-size: 22px;
+  margin-top: 6px;
+}
+
+.category select {
+  background-color: #FAF9F6;
+  padding: 10px;
+  width: 30rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 3px solid #EEEEEE;
+  background-color: #FAF9F6;
+  font-family: Poppins;
+  font-size: 24px;
+  font-style: italic;
+  height: 63px;
+}
+
+.date input {
+  background-color: #FAF9F6;
+  padding: 10px;
+  width: 100%;
+  max-width: 250px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 3px solid #EEEEEE;
+  background-color: #FAF9F6;
+  font-family: Poppins;
+  font-size: 24px;
+  font-style: italic;
+  height: 38px;
+}
+
+.amount input {
+  background-color: #FAF9F6;
+  padding: 10px;
+  width: 100%;
+  max-width: 250px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 3px solid #EEEEEE;
+  background-color: #FAF9F6;
+  font-family: Poppins;
+  font-size: 24px;
+  font-style: italic;
+}
+
+.currency select {
+  background-color: #FAF9F6;
+  padding: 10px;
+  width: 15rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 3px solid #EEEEEE;
+  background-color: #FAF9F6;
+  font-family: Poppins;
+  font-size: 24px;
+  font-style: italic;
+}
+
+/* .bottom-row-container button {
+  background-color: #4DB6AC;
+  color: #FAF9F6;
+  
+  height: 63px;
+  width: 100%;
+  max-width: 280px;
+} */
+
+/* Адаптивні стилі */
+@media (max-width: 1024px) {
+/* Зменшення ширини для середніх екранів */
+.category select,
+.currency select {
+  width: 20rem;
+}
+}
+
+@media (max-width: 768px) {
+/* Для екранів середнього розміру */
+.category select,
+.currency select {
+  width: 100%; /* Створення адаптивних селектів */
+}
+
+.category,
+.date,
+.amount,
+.currency {
+  font-size: 18px; /* Зменшення шрифтів */
+}
+
+.bottom-row-container button {
+  font-size: 20px; /* Зменшення шрифтів кнопок */
+  height: 50px;
+  max-width: 200px; /* Зменшення розміру кнопки */
+}
+}
+
+@media (max-width: 480px) {
+/* Для мобільних екранів */
+.category select,
+.currency select {
+  width: 100%;
+  font-size: 16px; /* Зменшення розміру шрифтів */
+}
+
+.category,
+.date,
+.amount,
+.currency {
+  font-size: 16px; 
+  padding-right: 10px;
+}
+
+
+}
+
+.buttons-div-edit-transactions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 8px;
+}
+
+.button-delete-edit-transaction{
+  width: 123px;
+  height: 52px;
+  background-color: #EEEEEE;
+  color: #FF6F61;
+  border: 0;
+  border-radius: 8px;
+  text-align: center;
+  font-family: Poppins;
+  margin-top: 2rem;
+  font-size: 24px;
+}
+
+.button-save-edit-transaction {
+  width: 123px;
+  height: 52px;
+  background-color: #5C6AC4;
+  color: #FAF9F6;
+  border: 0;
+  border-radius: 8px;
+  text-align: center;
+  font-family: Poppins;
+  margin-top: 2rem;
+  font-size: 24px;
+}
+
+
+.corners {
+  position: relative;
+  display: flex; 
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1400px;
+  height: 756px;
+  flex-direction: column;
+  background-color: #FAF9F6;
+  border-top-right-radius: 100px;
+  border-bottom-left-radius: 100px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 8px;
+}
+
+.centered {
+  background-color: #4DB6AC;
+  width: 100%;
+  max-width: 1400px;
+  height: 100%;
+  border-radius: 8px;
+  display: flex;
+  padding: auto;
+}
+.overlay_edit {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0,0,0,0.75); 
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 1rem;
+z-index: 1000;
+}
+
+.centered-add-transaction {
+  background-color: #5C6AC4;
+  width: 100%;
+  max-width: 1077px;
+  height: auto;
+  border-radius: 8px;
+  display: flex;
+  padding: auto;
+}
+
+.corners-add-transaction {
+  position: relative;
+  display: flex; 
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  max-width: 1077px;
+  height: 382px;
+  flex-direction: column;
+  background-color: #FAF9F6;
+  border-top-right-radius: 100px;
+  border-bottom-left-radius: 100px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 8px;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.corners-add-transaction .closeMenu {
+  position: absolute;
+  background-color: #FF6F61;
+  color: #FAF9F6;
+  border: 0;
+  border-radius: 8px;
+  text-align: center;
+  font-family: Poppins;
+  font-weight: 600;
+  top: -1.15rem;
+  margin-left: 2rem;
+  font-size: 24px;
+  height: 36px;
+  width: 100%;
+  max-width: 113px;
+}
+
+
+
+ .form_edit {
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.top-row-container_edit, .bottom-row-container_edit {
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+  vertical-align: top;
+}
+
+.top-row-container_edit {
+  gap: 0rem;
+  width: 100%;
+  margin-left: 140px;
+}
+
+.bottom-row-container_edit{
+  align-items: flex-start;
+}
+
+.amount_edit,
+.currency_edit,
+.buttons-div-edit-transactions_edit {
+display: flex;
+flex-direction: row;
+align-items: flex-start;
+}
+
+.category_edit {
+  display: flex;
+  flex-direction: column;
+  padding-right: 20px;
+  font-family: Poppins;
+  font-size: 22px;
+}
+
+.date_edit {
+  display: flex;
+  flex-direction: column;
+  font-family: Poppins;
+  font-size: 22px;
+}
+
+.amount_edit {
+  display: flex;
+  flex-direction: column;
+  padding-right: 10px;
+  font-family: Poppins;
+  font-size: 22px;
+  margin-top: 6px;
+}
+
+.currency_edit {
+  display: flex;
+  flex-direction: column;
+  padding-right: 20px;
+  padding-left: 20px;
+  font-family: Poppins;
+  font-size: 22px;
+  margin-top: 6px;
+}
+
+.category_edit select {
+  background-color: #FAF9F6;
+  padding: 10px;
+  width: 30rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 3px solid #EEEEEE;
+  background-color: #FAF9F6;
+  font-family: Poppins;
+  font-size: 24px;
+  font-style: italic;
+  height: 63px;
+}
+
+.date_edit input {
+  background-color: #FAF9F6;
+  padding: 10px;
+  width: 100%;
+  max-width: 250px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 3px solid #EEEEEE;
+  background-color: #FAF9F6;
+  font-family: Poppins;
+  font-size: 24px;
+  font-style: italic;
+  height: 38px;
+}
+
+.amount_edit input {
+  background-color: #FAF9F6;
+  padding: 10px;
+  width: 100%;
+  max-width: 250px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 3px solid #EEEEEE;
+  background-color: #FAF9F6;
+  font-family: Poppins;
+  font-size: 24px;
+  font-style: italic;
+}
+
+.currency_edit select {
+  background-color: #FAF9F6;
+  padding: 10px;
+  width: 15rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 3px solid #EEEEEE;
+  background-color: #FAF9F6;
+  font-family: Poppins;
+  font-size: 24px;
+  font-style: italic;
+}
+
+/* .bottom-row-container button {
+  background-color: #4DB6AC;
+  color: #FAF9F6;
+  
+  height: 63px;
+  width: 100%;
+  max-width: 280px;
+} */
+
+/* Адаптивні стилі */
+@media (max-width: 1024px) {
+/* Зменшення ширини для середніх екранів */
+.category_edit select,
+.currency_edit select {
+  width: 20rem;
+}
+}
+
+@media (max-width: 768px) {
+/* Для екранів середнього розміру */
+.category_edit select,
+.currency_edit select {
+  width: 100%; /* Створення адаптивних селектів */
+}
+
+.category_edit,
+.date_edit,
+.amount_edit,
+.currency_edit {
+  font-size: 18px; /* Зменшення шрифтів */
+}
+
+.bottom-row-container button {
+  font-size: 20px; /* Зменшення шрифтів кнопок */
+  height: 50px;
+  max-width: 200px; /* Зменшення розміру кнопки */
+}
+}
+
+@media (max-width: 480px) {
+/* Для мобільних екранів */
+.category_edit select,
+.currency_edit select {
+  width: 100%;
+  font-size: 16px; /* Зменшення розміру шрифтів */
+}
+
+.category_edit,
+.date_edit,
+.amount_edit,
+.currency_edit {
+  font-size: 16px; 
+  padding-right: 10px;
+}
+
+
+}
+
+.buttons-div-edit-transactions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.button-delete-edit-transaction{
+  width: 123px;
+  height: 52px;
+  background-color: #EEEEEE;
+  color: #FF6F61;
+  border: 0;
+  border-radius: 8px;
+  text-align: center;
+  font-family: Poppins;
+  margin-top: 2rem;
+  font-size: 24px;
+}
+
+.button-save-edit-transaction {
+  width: 123px;
+  height: 52px;
+  background-color: #5C6AC4;
+  color: #FAF9F6;
+  border: 0;
+  border-radius: 8px;
+  text-align: center;
+  font-family: Poppins;
+  margin-top: 2rem;
+  font-size: 24px;
 }

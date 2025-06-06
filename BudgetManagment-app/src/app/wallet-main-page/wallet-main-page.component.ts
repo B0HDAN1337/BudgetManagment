@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Component, OnInit, ErrorHandler, Type } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -12,6 +13,14 @@ import { Transaction, TransactionType } from '../interface/transaction.model';
 @Component({
   selector: 'app-wallet-main-page',
   imports: [FormsModule, CommonModule],
+=======
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-wallet-main-page',
+  imports: [CommonModule],
+>>>>>>> 2d81d80 (added the rest of wallet overview page, transaction edit overlay, savings adding overlay, savings overview overlay)
   templateUrl: './wallet-main-page.component.html',
   styleUrl: './wallet-main-page.component.css'
 })
@@ -105,5 +114,24 @@ export class WalletMainPageComponent implements OnInit{
     .filter(t => t.type === TransactionType.Income)
     .reduce((sum, t) => sum + t.amount, 0);
 }
+
+  isAddSavingsVisible = false;
+  isSavingsOverviewVisible = false;
+
+  OpenAddSavingsMenu(){
+    this.isAddSavingsVisible = true;
+  }
+  OpenSavingsOverview(){
+    this.isSavingsOverviewVisible = true;
+  }
+
+  CloseAddSavingsMenu()
+  {
+    this.isAddSavingsVisible = false;
+  }
+
+  CloseSavingsOverview(){
+    this.isSavingsOverviewVisible = false;
+  }
 
 }

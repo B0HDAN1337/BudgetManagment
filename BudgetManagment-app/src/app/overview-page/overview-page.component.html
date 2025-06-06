@@ -46,9 +46,18 @@
                               </div>
                             </div> -->
 
+                            <button class="show-more-transactions" (click)="OpenShowMoreTransactions()">Show More</button>
+
                             <!-- Test!! -->
 
-                            <button class="add-transaction" (click)="OpenMenu()">New Transaction</button>     
+                            <button class="add-transaction" (click)="OpenMenu()">New Transaction</button>  
+
+                            
+                            
+                            
+
+                           
+
                         </div>
                          <div class="transactions-container">
                           <div class="transaction-row" *ngFor="let transaction of transactions | slice:0:3">
@@ -70,45 +79,55 @@
                   <button class="closeMenu" (click)="CloseMenu()">Close</button>
                   
                   <form class="form" (ngSubmit)="CreateTransaction()">
-                      <div class="top-row-container">
-                        <div class="category">
-                          <label>Category</label>
-                          <select name="Category" [(ngModel)]="transaction.category" ngModel required>
-                            <option value="" disabled selected hidden>Category</option>
-                            <option value="Food">Food</option>
-                            <option value="Healthcare">Healthcare</option>
-                            <option value="Income">Income</option>
-                            <option value="Travel">Travel</option>
-                          </select>
-                        </div>
-                        <div class="date">
-                          <label>Date</label>
-                          <input name="Date" [(ngModel)]="transaction.date" ngModel type="text" placeholder="yyyy-mm-dd" required />
-                        </div>
-                      </div>
                     
-                      <div class="bottom-row-container">
-                        <div class="amount">
-                          <label>Amount</label>
-                          <input name="Amount" [(ngModel)]="transaction.amount" ngModel type="text" placeholder="Amount" required />
-                        </div>
-                        <div class="currency">
-                          <label>Currency</label>
-                          <select name="Currency" [(ngModel)]="transaction.currency" ngModel required>
-                            <option value="" disabled selected hidden>Currency</option>
-                            <option value="USD">United States Dollar</option>
-                            <option value="EUR">Euro</option>
-                            <option value="PLN">Polish złoty</option>
-                          </select>
-                          <select [(ngModel)]="transaction.walletID" name="walletID" required>
+                    <div class="top-row-container row">
+                      <div class="category">
+                        <label>Category</label>
+                        <select name="Category" [(ngModel)]="transaction.category" required>
+                          <option value="" disabled selected hidden>Category</option>
+                          <option value="Food">Food</option>
+                          <option value="Healthcare">Healthcare</option>
+                          <option value="Income">Income</option>
+                          <option value="Travel">Travel</option>
+                        </select>
+                      </div>
+                      <div class="date">
+                        <label>Date</label>
+                        <input name="Date" [(ngModel)]="transaction.date" type="text" placeholder="yyyy-mm-dd" required />
+                      </div>
+                    </div>
+                  
+                    
+                    <div class="bottom-row-container row">
+                      <div class="amount">
+                        <label>Amount</label>
+                        <input name="Amount" [(ngModel)]="transaction.amount" type="text" placeholder="Amount" required />
+                      </div>
+                      <div class="currency">
+                        <label>Currency</label>
+                        <select name="Currency" [(ngModel)]="transaction.currency" required>
+                          <option value="" disabled selected hidden>Currency</option>
+                          <option value="USD">United States Dollar</option>
+                          <option value="EUR">Euro</option>
+                          <option value="PLN">Polish złoty</option>
+                        </select>
+                      </div>
+                      <div class="currency" style="margin-left: 105px;">
+                        <label>Wallet</label>
+                        <select [(ngModel)]="transaction.walletID" name="walletID" required>
                           <option *ngFor="let wallet of wallets" [value]="wallet.walletID">
                             {{ wallet.walletName }}
                           </option>
                         </select>
-                        </div>
-                        <button type="submit">Add Transaction</button>
                       </div>
-                    </form>
+                    </div>
+                  
+                    
+                    <div class="button-row">
+                      <button type="submit">Add Transaction</button>
+                    </div>
+                  </form>
+                  
                     
                   
               </div>
@@ -185,7 +204,7 @@
 
                       <div class="right-group">
                         <span class="amount negative" [ngClass]="{'positive': transaction.amount > 0, 'negative': transaction.amount < 0}">{{transaction.amount}} $</span>
-                        <button class="edit-button" aria-label="Edit transaction">Edit</button>
+                        <button class="edit-button" aria-label="Edit transaction" (click)="ShowEditTransactionMenu()">Edit</button>
                       </div>
                   </div>
                 
@@ -199,7 +218,7 @@
 
                     <div class="right-group">
                       <span class="amount positive">+100.00 $</span>
-                      <button class="edit-button" aria-label="Edit transaction">Edit</button>
+                      <button class="edit-button" aria-label="Edit transaction" (click)="ShowEditTransactionMenu()" >Edit</button>
                     </div>
                 </div>
 
@@ -225,6 +244,56 @@
         </div>
         </div>
 
+        <div class="overlay_edit" *ngIf="isEditTransactionVisible">
+          <div class="centered-add-transaction">
+              <div class="corners-add-transaction">
+                  <button class="closeMenu" (click)="CloseEditTransactionMenu()">Close</button>
+                  
+                  <form class="form_edit">
+                      <div class="top-row-container_edit">
+                        <div class="category_edit">
+                          <label>Category</label>
+                          <select name="Category" [(ngModel)]="transaction.category" ngModel required>
+                            <option value="" disabled selected hidden>Category</option>
+                            <option value="Food">Food</option>
+                            <option value="Healthcare">Healthcare</option>
+                            <option value="Income">Income</option>
+                            <option value="Travel">Travel</option>
+                          </select>
+                        </div>
+                        <div class="date_edit">
+                          <label>Date</label>
+                          <input name="Date" [(ngModel)]="transaction.date" ngModel type="text" placeholder="yyyy-mm-dd" required />
+                        </div>
+                      </div>
+                    
+                      <div class="bottom-row-container_edit">
+                        <div class="amount_edit">
+                          <label>Amount</label>
+                          <input name="Amount" [(ngModel)]="transaction.amount" ngModel type="text" placeholder="Amount" required />
+                        </div>
+                        <div class="currency_edit">
+                          <label>Currency</label>
+                          <select name="Currency" [(ngModel)]="transaction.currency" ngModel required>
+                            <option value="" disabled selected hidden>Currency</option>
+                            <option value="USD">United States Dollar</option>
+                            <option value="EUR">Euro</option>
+                            <option value="PLN">Polish złoty</option>
+                          </select>
+                        </div>
+                        <div class="buttons-div-edit-transactions">
+                            <button type="submit" class="button-delete-edit-transaction">Delete</button>
+                            <button type="submit" class="button-save-edit-transaction">Save</button>
+                        </div>
+                        
+                      </div>
+                    </form>
+                    
+                  
+              </div>
+              
+          </div>
+        </div>
         
 
         
