@@ -51,4 +51,8 @@ export class TransactionService {
   GetExpenseByDate(walletID: number): Observable<{date: string, amount: number}[]> {
     return this.http.get<{date: string, amount: number}[]>(`${this.transactionUrl}/wallet/${walletID}/expense-by-date`);
   }
+
+  GetExpenseByCategory(walletID: number) {
+    return this.http.get<{ category: string, amount: number, percentage: number }[]>(`${this.transactionUrl}/wallet/${walletID}/expense-by-category`);
+  }
 }

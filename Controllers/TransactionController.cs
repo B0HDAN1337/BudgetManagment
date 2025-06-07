@@ -151,5 +151,27 @@ namespace BudgetManagmentServer.Controllers
                                 }).OrderBy(x => x.date).ToList();
             return Ok(expenseByDate);
         }
+
+        [HttpGet("wallet/{walletID}/expense-by-category")]
+        public IActionResult GetExpenseByCategory(int walletID)
+        {
+            var expenseByCategory = _context.Transactions.Where(t => t.WalletID == walletID && t.Type == TransactionType.Expense)
+                                    .GroupBy(t => t.Category)
+                                    .Select(g => new
+                                    {
+                                        category = g.Key,
+                                        amount = g.Sum(t => t.amount)
+                                    }).ToList();
+            var totalExpense = expenseByCategory.Sum(x => x.amount);
+
+            var result = expenseByCategory.Select(x => new
+            {
+                category = x.category,
+                amount = x.amount,
+                percentage = totalExpense == 0 ? 0 : (x.amount / totalExpense) * 100
+            });
+
+            return Ok(result);
+        }
     }
 }

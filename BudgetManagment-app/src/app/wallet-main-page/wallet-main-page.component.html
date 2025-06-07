@@ -71,11 +71,9 @@
           <div class="chart-box">
              <img width="35" height="35" src="assets/icons/expenses.svg">
             <h3>Total expenses</h3>
-            <ul class="expenses-pie">
-              <li><span style="color: #f87171;">🍽 Food</span> 50%</li>
-              <li><span style="color: #34d399;">🏥 Healthcare</span> 25%</li>
-              <li><span style="color: #fbbf24;">✈️ Travel</span> 25%</li>
-            </ul>
+            <div style="width: 300px; height: 300px;">
+             <canvas baseChart [data]="expenseByCategoryData" [type]="expenseByCategoryType" [options]="expenseByCategoryOptions"></canvas>
+           </div>
           </div>
            
         </section>

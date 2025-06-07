@@ -50,6 +50,7 @@ export class WalletMainPageComponent implements OnInit {
       this.loadWalletsName(this.walletId);
       this.loadTransactionByWallet(this.walletId);
       this.totalIncomeAmount();
+      this.loadExpenseByCategory(this.walletId);
     }
 
   OpenMenu()
@@ -229,4 +230,69 @@ ExpensebarChartOptions: ChartOptions = {
     };
   });
   }
+
+  expenseByCategoryData: ChartData<'doughnut'> = {
+  labels: [],
+  datasets: [
+    {
+      data: [],
+      backgroundColor: []
+    }
+  ]
+};
+
+expenseByCategoryOptions: ChartOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  layout: {
+    padding: {top: 0, bottom: 0, left: 0, right: 0 }
+  },
+  plugins: {
+    legend: {
+      position: 'right'
+    },
+    tooltip: {
+      callbacks: {
+        label: (context) => {
+          const label = context.label ?? '';
+          const value = context.parsed ?? 0;
+          return `${label}: ${value.toFixed(2)}%`;
+        }
+      }
+    }
+  },
+  cutout: '70%'
+} as ChartOptions<'doughnut'>;
+
+expenseByCategoryType: ChartType = 'doughnut';
+
+generateRandomColor() {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+loadExpenseByCategory(walletId: number) {
+  this.transactionService.GetExpenseByCategory(walletId).subscribe(data => {
+    const labels = this.expenseByCategoryData.labels = data.map(d => d.category);
+    const percentages = this.expenseByCategoryData.datasets[0].data = data.map(d => d.percentage);
+
+    // Генеруємо кольори для кожної категорії
+    const colors = this.expenseByCategoryData.datasets[0].backgroundColor = data.map(_ => this.generateRandomColor());
+
+    this.expenseByCategoryData = {
+      labels: labels,
+      datasets: [
+        {
+          data: percentages,
+          backgroundColor: colors,
+        }
+      ]
+    };
+  });
+}
+
 }
