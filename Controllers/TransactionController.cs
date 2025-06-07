@@ -127,5 +127,29 @@ namespace BudgetManagmentServer.Controllers
             var transaction = _repository.DeleteTransaction(transactionID);
             return Ok(transaction);
         }
+
+        [HttpGet("wallet/{walletID}/income-by-date")]
+        public IActionResult GetIncomeByDate(int walletID)
+        {
+            var incomeByDate = _context.Transactions.Where(t => t.WalletID == walletID && t.Type == TransactionType.Income).AsEnumerable()
+                                .GroupBy(t => t.date).Select(g => new
+                                {
+                                    date = g.Key.ToString("yyyy-MM-dd"),
+                                    amount = g.Sum(t => t.amount)
+                                }).OrderBy(x => x.date).ToList();
+            return Ok(incomeByDate);
+        }
+
+        [HttpGet("wallet/{walletID}/expense-by-date")]
+        public IActionResult GetExpenseByDate(int walletID)
+        {
+            var expenseByDate = _context.Transactions.Where(t => t.WalletID == walletID && t.Type == TransactionType.Expense).AsEnumerable()
+                                .GroupBy(t => t.date).Select(g => new
+                                {
+                                    date = g.Key.ToString("yyyy-MM-dd"),
+                                    amount = g.Sum(t => t.amount)
+                                }).OrderBy(x => x.date).ToList();
+            return Ok(expenseByDate);
+        }
     }
 }

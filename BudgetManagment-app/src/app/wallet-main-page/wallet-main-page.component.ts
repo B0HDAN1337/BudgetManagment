@@ -9,10 +9,12 @@ import { WalletService } from '../services/wallet.service';
 import { Wallet } from '../interface/wallet.model';
 import { ActivatedRoute } from '@angular/router';
 import { Transaction, TransactionType } from '../interface/transaction.model';
+import { BaseChartDirective } from 'ng2-charts';
+import { ChartType, ChartData, ChartOptions } from 'chart.js';
 
 @Component({
   selector: 'app-wallet-main-page',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, BaseChartDirective],
   templateUrl: './wallet-main-page.component.html',
   styleUrl: './wallet-main-page.component.css'
 })
@@ -77,6 +79,8 @@ export class WalletMainPageComponent implements OnInit {
     {
       this.transactions = transaction;
       console.log('Transactions: ', transaction);
+      this.loadIncomeByDate(walletId);
+      this.loadExpenseByDate(walletId);
     }, error => {
       console.error('Error loading transactions: ', error);
       this.transactions = [];
@@ -131,4 +135,98 @@ export class WalletMainPageComponent implements OnInit {
     this.isSavingsOverviewVisible = false;
   }
 
+
+  barChartData: ChartData<'bar'> = {
+  labels: [],
+  datasets: [
+    {
+      data: [],
+      label: 'Income by Date',
+      backgroundColor: '#42A5F5'
+    }
+  ]
+};
+
+barChartType: ChartType = 'bar';
+
+barChartOptions: ChartOptions = {
+  responsive: true,
+  plugins: {
+    legend: {
+      display: false
+    }
+  },
+  scales: {
+    x: {},
+    y: {
+      beginAtZero: true
+    }
+  }
+};
+
+
+  loadIncomeByDate(walletId: number) {
+    this.transactionService.GetIncomeByDate(this.walletId).subscribe(data => {
+    const labels = data.map(entry => entry.date);
+    const amounts = data.map(entry => entry.amount);
+
+    this.barChartData = {
+      labels,
+      datasets: [
+        {
+          data: amounts,
+          label: 'Income',
+          backgroundColor: '#4DB6AC'
+        }
+      ]
+    };
+  });
+  }
+
+  ExpensebarChartData: ChartData<'bar'> = {
+  labels: [],
+  datasets: [
+    {
+      data: [],
+      label: 'Expense by Date',
+      backgroundColor: '#42A5F5'
+    }
+  ]
+};
+
+ExpensebarChartType: ChartType = 'bar';
+
+ExpensebarChartOptions: ChartOptions = {
+  responsive: true,
+  plugins: {
+    legend: {
+      display: false
+    }
+  },
+  scales: {
+    x: {},
+    y: {
+      beginAtZero: true
+    }
+  }
+};
+
+
+  loadExpenseByDate(walletId: number) {
+    this.transactionService.GetExpenseByDate(this.walletId).subscribe(data => {
+    const labels = data.map(entry => entry.date);
+    const amounts = data.map(entry => Math.abs(entry.amount));
+
+    this.ExpensebarChartData = {
+      labels,
+      datasets: [
+        {
+          data: amounts,
+          label: 'Expense',
+          backgroundColor: '#4DB6AC'
+        }
+      ]
+    };
+  });
+  }
 }

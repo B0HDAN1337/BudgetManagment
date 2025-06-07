@@ -53,7 +53,7 @@
           <div class="chart-box">
              <img width="35" height="35" src="assets/icons/income.svg">
             <h3> Total income</h3>
-            <div class="placeholder-bar">[Bar Chart]</div>
+            <canvas baseChart [data]="barChartData" [type]="barChartType" [options]="barChartOptions"></canvas>
           </div>
 
           <div class="chart-box">
@@ -65,7 +65,7 @@
           <div class="chart-box">
              <img width="35" height="35" src="assets/icons/expenses.svg">
             <h3>Total expenses</h3>
-            <div class="placeholder-bar">[Bar Chart]</div>
+             <canvas baseChart [data]="ExpensebarChartData" [type]="ExpensebarChartType" [options]="ExpensebarChartOptions"></canvas>
           </div>
 
           <div class="chart-box">
