@@ -127,5 +127,51 @@ namespace BudgetManagmentServer.Controllers
             var transaction = _repository.DeleteTransaction(transactionID);
             return Ok(transaction);
         }
+
+        [HttpGet("wallet/{walletID}/income-by-date")]
+        public IActionResult GetIncomeByDate(int walletID)
+        {
+            var incomeByDate = _context.Transactions.Where(t => t.WalletID == walletID && t.Type == TransactionType.Income).AsEnumerable()
+                                .GroupBy(t => t.date).Select(g => new
+                                {
+                                    date = g.Key.ToString("yyyy-MM-dd"),
+                                    amount = g.Sum(t => t.amount)
+                                }).OrderBy(x => x.date).ToList();
+            return Ok(incomeByDate);
+        }
+
+        [HttpGet("wallet/{walletID}/expense-by-date")]
+        public IActionResult GetExpenseByDate(int walletID)
+        {
+            var expenseByDate = _context.Transactions.Where(t => t.WalletID == walletID && t.Type == TransactionType.Expense).AsEnumerable()
+                                .GroupBy(t => t.date).Select(g => new
+                                {
+                                    date = g.Key.ToString("yyyy-MM-dd"),
+                                    amount = g.Sum(t => t.amount)
+                                }).OrderBy(x => x.date).ToList();
+            return Ok(expenseByDate);
+        }
+
+        [HttpGet("wallet/{walletID}/expense-by-category")]
+        public IActionResult GetExpenseByCategory(int walletID)
+        {
+            var expenseByCategory = _context.Transactions.Where(t => t.WalletID == walletID && t.Type == TransactionType.Expense)
+                                    .GroupBy(t => t.Category)
+                                    .Select(g => new
+                                    {
+                                        category = g.Key,
+                                        amount = g.Sum(t => t.amount)
+                                    }).ToList();
+            var totalExpense = expenseByCategory.Sum(x => x.amount);
+
+            var result = expenseByCategory.Select(x => new
+            {
+                category = x.category,
+                amount = x.amount,
+                percentage = totalExpense == 0 ? 0 : (x.amount / totalExpense) * 100
+            });
+
+            return Ok(result);
+        }
     }
 }

@@ -9,10 +9,12 @@ import { WalletService } from '../services/wallet.service';
 import { Wallet } from '../interface/wallet.model';
 import { ActivatedRoute } from '@angular/router';
 import { Transaction, TransactionType } from '../interface/transaction.model';
+import { BaseChartDirective } from 'ng2-charts';
+import { ChartType, ChartData, ChartOptions } from 'chart.js';
 
 @Component({
   selector: 'app-wallet-main-page',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, BaseChartDirective],
   templateUrl: './wallet-main-page.component.html',
   styleUrl: './wallet-main-page.component.css'
 })
@@ -48,6 +50,7 @@ export class WalletMainPageComponent implements OnInit {
       this.loadWalletsName(this.walletId);
       this.loadTransactionByWallet(this.walletId);
       this.totalIncomeAmount();
+      this.loadExpenseByCategory(this.walletId);
     }
 
   OpenMenu()
@@ -77,6 +80,8 @@ export class WalletMainPageComponent implements OnInit {
     {
       this.transactions = transaction;
       console.log('Transactions: ', transaction);
+      this.loadIncomeByDate(walletId);
+      this.loadExpenseByDate(walletId);
     }, error => {
       console.error('Error loading transactions: ', error);
       this.transactions = [];
@@ -130,5 +135,164 @@ export class WalletMainPageComponent implements OnInit {
   CloseSavingsOverview(){
     this.isSavingsOverviewVisible = false;
   }
+
+
+  barChartData: ChartData<'bar'> = {
+  labels: [],
+  datasets: [
+    {
+      data: [],
+      label: 'Income by Date',
+      backgroundColor: '#42A5F5'
+    }
+  ]
+};
+
+barChartType: ChartType = 'bar';
+
+barChartOptions: ChartOptions = {
+  responsive: true,
+  plugins: {
+    legend: {
+      display: false
+    }
+  },
+  scales: {
+    x: {},
+    y: {
+      beginAtZero: true
+    }
+  }
+};
+
+
+  loadIncomeByDate(walletId: number) {
+    this.transactionService.GetIncomeByDate(this.walletId).subscribe(data => {
+    const labels = data.map(entry => entry.date);
+    const amounts = data.map(entry => entry.amount);
+
+    this.barChartData = {
+      labels,
+      datasets: [
+        {
+          data: amounts,
+          label: 'Income',
+          backgroundColor: '#4DB6AC'
+        }
+      ]
+    };
+  });
+  }
+
+  ExpensebarChartData: ChartData<'bar'> = {
+  labels: [],
+  datasets: [
+    {
+      data: [],
+      label: 'Expense by Date',
+      backgroundColor: '#42A5F5'
+    }
+  ]
+};
+
+ExpensebarChartType: ChartType = 'bar';
+
+ExpensebarChartOptions: ChartOptions = {
+  responsive: true,
+  plugins: {
+    legend: {
+      display: false
+    }
+  },
+  scales: {
+    x: {},
+    y: {
+      beginAtZero: true
+    }
+  }
+};
+
+
+  loadExpenseByDate(walletId: number) {
+    this.transactionService.GetExpenseByDate(this.walletId).subscribe(data => {
+    const labels = data.map(entry => entry.date);
+    const amounts = data.map(entry => Math.abs(entry.amount));
+
+    this.ExpensebarChartData = {
+      labels,
+      datasets: [
+        {
+          data: amounts,
+          label: 'Expense',
+          backgroundColor: '#4DB6AC'
+        }
+      ]
+    };
+  });
+  }
+
+  expenseByCategoryData: ChartData<'doughnut'> = {
+  labels: [],
+  datasets: [
+    {
+      data: [],
+      backgroundColor: []
+    }
+  ]
+};
+
+expenseByCategoryOptions: ChartOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  layout: {
+    padding: {top: 0, bottom: 0, left: 0, right: 0 }
+  },
+  plugins: {
+    legend: {
+      position: 'right'
+    },
+    tooltip: {
+      callbacks: {
+        label: (context) => {
+          const label = context.label ?? '';
+          const value = context.parsed ?? 0;
+          return `${label}: ${value.toFixed(2)}%`;
+        }
+      }
+    }
+  },
+  cutout: '70%'
+} as ChartOptions<'doughnut'>;
+
+expenseByCategoryType: ChartType = 'doughnut';
+
+generateRandomColor() {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+loadExpenseByCategory(walletId: number) {
+  this.transactionService.GetExpenseByCategory(walletId).subscribe(data => {
+    const labels = this.expenseByCategoryData.labels = data.map(d => d.category);
+    const percentages = this.expenseByCategoryData.datasets[0].data = data.map(d => d.percentage);
+
+    // Генеруємо кольори для кожної категорії
+    const colors = this.expenseByCategoryData.datasets[0].backgroundColor = data.map(_ => this.generateRandomColor());
+
+    this.expenseByCategoryData = {
+      labels: labels,
+      datasets: [
+        {
+          data: percentages,
+          backgroundColor: colors,
+        }
+      ]
+    };
+  });
+}
 
 }

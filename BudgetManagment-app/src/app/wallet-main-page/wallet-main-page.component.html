@@ -51,31 +51,29 @@
         <section class="charts">
 
           <div class="chart-box">
+            <div class="chart-box-row">
              <img width="35" height="35" src="assets/icons/income.svg">
-            <h3> Total income</h3>
-            <div class="placeholder-bar">[Bar Chart]</div>
+              <h3> Total income</h3>
+            </div>
+            <canvas baseChart [data]="barChartData" [type]="barChartType" [options]="barChartOptions"></canvas>
           </div>
 
           <div class="chart-box">
-             <img width="35" height="35" src="assets/icons/income.svg">
-            <h3>Total income</h3>
-            <div class="placeholder-pie">Income 100%</div>
+            <div class="chart-box-row">
+              <img width="35" height="35" src="assets/icons/expenses.svg">
+              <h3>Total expenses</h3>
+            </div>
+             <canvas baseChart [data]="ExpensebarChartData" [type]="ExpensebarChartType" [options]="ExpensebarChartOptions"></canvas>
           </div>
 
           <div class="chart-box">
-             <img width="35" height="35" src="assets/icons/expenses.svg">
-            <h3>Total expenses</h3>
-            <div class="placeholder-bar">[Bar Chart]</div>
-          </div>
-
-          <div class="chart-box">
-             <img width="35" height="35" src="assets/icons/expenses.svg">
-            <h3>Total expenses</h3>
-            <ul class="expenses-pie">
-              <li><span style="color: #f87171;">🍽 Food</span> 50%</li>
-              <li><span style="color: #34d399;">🏥 Healthcare</span> 25%</li>
-              <li><span style="color: #fbbf24;">✈️ Travel</span> 25%</li>
-            </ul>
+            <div class="chart-box-row">
+              <img width="35" height="35" src="assets/icons/expenses.svg">
+              <h3>Total expenses</h3>
+            </div>
+            <div style="width: 300px; height: 300px;">
+             <canvas baseChart [data]="expenseByCategoryData" [type]="expenseByCategoryType" [options]="expenseByCategoryOptions"></canvas>
+           </div>
           </div>
            
         </section>
