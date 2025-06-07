@@ -51,26 +51,26 @@
         <section class="charts">
 
           <div class="chart-box">
+            <div class="chart-box-row">
              <img width="35" height="35" src="assets/icons/income.svg">
-            <h3> Total income</h3>
+              <h3> Total income</h3>
+            </div>
             <canvas baseChart [data]="barChartData" [type]="barChartType" [options]="barChartOptions"></canvas>
           </div>
 
           <div class="chart-box">
-             <img width="35" height="35" src="assets/icons/income.svg">
-            <h3>Total income</h3>
-            <div class="placeholder-pie">Income 100%</div>
-          </div>
-
-          <div class="chart-box">
-             <img width="35" height="35" src="assets/icons/expenses.svg">
-            <h3>Total expenses</h3>
+            <div class="chart-box-row">
+              <img width="35" height="35" src="assets/icons/expenses.svg">
+              <h3>Total expenses</h3>
+            </div>
              <canvas baseChart [data]="ExpensebarChartData" [type]="ExpensebarChartType" [options]="ExpensebarChartOptions"></canvas>
           </div>
 
           <div class="chart-box">
-             <img width="35" height="35" src="assets/icons/expenses.svg">
-            <h3>Total expenses</h3>
+            <div class="chart-box-row">
+              <img width="35" height="35" src="assets/icons/expenses.svg">
+              <h3>Total expenses</h3>
+            </div>
             <div style="width: 300px; height: 300px;">
              <canvas baseChart [data]="expenseByCategoryData" [type]="expenseByCategoryType" [options]="expenseByCategoryOptions"></canvas>
            </div>
