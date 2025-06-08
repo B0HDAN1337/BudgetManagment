@@ -1,4 +1,5 @@
 using BudgetManagmentServer.Models;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 
 namespace BudgetManagmentServer.Repository
@@ -10,5 +11,7 @@ namespace BudgetManagmentServer.Repository
         Transaction CreateTransaction(Transaction transaction);
         Transaction UpdateTransaction(int id, Transaction transaction);
         Transaction DeleteTransaction(int id);
+
+        float Convert(float amount, string fromCurrency, string toCurrency);
     }
 }
