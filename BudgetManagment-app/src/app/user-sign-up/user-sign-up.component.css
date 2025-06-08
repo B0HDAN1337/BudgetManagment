@@ -117,6 +117,21 @@
     font-size: 24px;
     height: 63px;
     width: 300px;
+
+    background-position: right;
+    background: linear-gradient(to left, #EEEEEE 50%, #4DB6AC 50%);
+    background-size: 200% 100%;
+    background-position: left;
+    transition: 0.4s ease-in-out;
+}
+
+.button-container button:hover {
+    background-color: #EEEEEE;
+  color: #4DB6AC;
+  font-weight: 400;
+  cursor: pointer;
+
+  background-position: right;
 }
 
 

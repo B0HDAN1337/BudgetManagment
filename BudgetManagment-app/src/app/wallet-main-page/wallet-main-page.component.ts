@@ -27,6 +27,7 @@ export class WalletMainPageComponent implements OnInit {
 
   isAddTransactionVisible = false;
   isShowMoreTransactionsVisible = false;
+  isSaveMoneyOverviewVisible = false;
 
   constructor(
     private router: Router, 
@@ -127,6 +128,10 @@ export class WalletMainPageComponent implements OnInit {
     this.isSavingsOverviewVisible = true;
   }
 
+  OpenSaveMoneyOverview(){
+    this.isSaveMoneyOverviewVisible = true;
+  }
+
   CloseAddSavingsMenu()
   {
     this.isAddSavingsVisible = false;
@@ -134,6 +139,10 @@ export class WalletMainPageComponent implements OnInit {
 
   CloseSavingsOverview(){
     this.isSavingsOverviewVisible = false;
+  }
+
+  CloseSaveMoneyOverview(){
+    this.isSaveMoneyOverviewVisible = false;
   }
 
 

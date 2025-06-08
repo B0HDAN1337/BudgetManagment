@@ -80,6 +80,21 @@
     height: 63px;
     width: 100%;
     max-width: 240px;
+
+    background-position: right;
+    background: linear-gradient(to left, #EEEEEE 50%, #4DB6AC 50%);
+    background-size: 200% 100%;
+    background-position: left;
+    transition: 0.4s ease-in-out;
+}
+
+.btn-apply:hover {
+  background-color: #EEEEEE;
+  color: #4DB6AC;
+  font-weight: 400;
+  cursor: pointer;
+
+  background-position: right;
 }
 
 .btn-add-transaction {
@@ -94,6 +109,22 @@
     height: 46px;
     width: 100%;
     max-width: 240px;
+
+    background-position: right;
+    background: linear-gradient(to left, #4DB6AC 50%, #EEEEEE 50%);
+    background-size: 200% 100%;
+    background-position: left;
+    transition: 0.4s ease-in-out;
+}
+
+.btn-add-transaction:hover {
+  background-color: #EEEEEE;
+  color: #EEEEEE;
+  font-weight: 400;
+  margin-left: 20px;
+  cursor: pointer;
+
+  background-position: right;
 }
 
 .period-section {
@@ -287,6 +318,21 @@
     width: 100%;
     max-width: 240px;
     margin: 1rem auto 0 auto;
+
+    background-position: right;
+    background: linear-gradient(to left, #4DB6AC 50%, #EEEEEE 50%);
+    background-size: 200% 100%;
+    background-position: left;
+    transition: 0.4s ease-in-out;
+  }
+
+  .show-more-transactions:hover {
+    background-color: #EEEEEE;
+  color: #EEEEEE;
+  font-weight: 400;
+  cursor: pointer;
+
+  background-position: right;
   }
 
   .no-savings-text {
@@ -306,6 +352,22 @@
     font-weight: bolder;
     margin-top: 20px;
     cursor: pointer;
+
+    background-position: right;
+    background: linear-gradient(to left, #EEEEEE 50%, #4DB6AC 50%);
+    background-size: 200% 100%;
+    background-position: left;
+    transition: 0.4s ease-in-out;
+  }
+
+  .add-savings-button:hover {
+    background-color: #EEEEEE;
+    color: #4DB6AC;
+    font-weight: 600;
+    margin-left: 20px;
+    cursor: pointer;
+
+    background-position: right;
   }
 
   .no-savings-container {
@@ -328,6 +390,16 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     border: none;
     cursor: pointer;
+
+    transition: 0.4s ease-in-out;
+  }
+
+  .savings-box:hover {
+
+    box-shadow: 0 4px 12px rgba(77, 182, 172, 1);
+    margin-left: 20px;
+    cursor: pointer;
+
   }
 
   .savings-box-inside 
@@ -345,6 +417,7 @@
   .savings-name-descr{
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
   }
 
   .savings-money-info{
@@ -407,6 +480,15 @@
     cursor: pointer;
     margin-left: 20px;
     padding: 5px;
+
+    transition: 0.4s ease-in-out;
+  }
+
+  .plus-savings-button:hover {
+    background-color: #EEEEEE;
+  color: #4DB6AC;
+  font-weight: 600;
+
   }
 
   /* Add savings overlay */
@@ -493,8 +575,16 @@ z-index: 1000;
   height: 36px;
   width: 100%;
   max-width: 113px;
+
+  transition: 0.4s ease-in-out;
 }
 
+.corners-add-savings .closeMenu:hover {
+  background-color: #EEEEEE;
+  color: #FF6F61;
+  font-weight: 600;
+  cursor: pointer;
+}
 
 
  .form-add-savings {
@@ -592,6 +682,21 @@ z-index: 1000;
   align-items: center;
   justify-content: center;
   margin-left: 64px;
+
+  background-position: right;
+    background: linear-gradient(to left, #EEEEEE 50%, #5C6AC4 50%);
+    background-size: 200% 100%;
+    background-position: left;
+    transition: 0.4s ease-in-out;
+}
+
+.button-add-savings:hover {
+  background-color: #EEEEEE;
+  color: #5C6AC4;
+  font-weight: 400;
+  cursor: pointer;
+
+  background-position: right;
 }
 
 .amount-currency-addsavingsbutton-container{
@@ -683,9 +788,14 @@ z-index: 1000;
   height: 36px;
   width: 100%;
   max-width: 113px;
+
+  transition: 0.4s ease-in-out;
 }
 
-
+.corners-savings-overview .closeMenu:hover {
+  background-color: #FAF9F6;
+  color: #FF6F61;
+}
 
  .form-savings-overview {
   margin: 0 auto;
@@ -802,6 +912,23 @@ z-index: 1000;
   font-weight: 700;
   border-radius: 8px;
   border: none;
+
+  background-position: right;
+    background: linear-gradient(to left, #5C6AC4 50%, #EEEEEE 50%);
+    background-size: 200% 100%;
+    background-position: left;
+    transition: 0.4s ease-in-out;
+}
+
+.button-save-money:hover,
+.button-mark-as-complete:hover {
+  background-color: #EEEEEE;
+  color: #EEEEEE;
+  font-weight: 600;
+  margin-left: 20px;
+  cursor: pointer;
+
+  background-position: right;
 }
 
 .button-delete-savings,
@@ -818,11 +945,41 @@ z-index: 1000;
 .button-delete-savings {
   color: #FF6F61;
   background-color: #EEEEEE;
+
+  background-position: right;
+    background: linear-gradient(to left, #FF6F61 50%, #EEEEEE 50%);
+    background-size: 200% 100%;
+    background-position: left;
+    transition: 0.4s ease-in-out;
+}
+
+.button-delete-savings:hover {
+  background-color: #EEEEEE;
+  color: #EEEEEE;
+  font-weight: 600;
+  cursor: pointer;
+
+  background-position: right;
 }
 
 .button-save-changes {
   color: #FAF9F6;
   background-color: #5C6AC4;
+
+  background-position: right;
+    background: linear-gradient(to left, #EEEEEE 50%, #5C6AC4 50%);
+    background-size: 200% 100%;
+    background-position: left;
+    transition: 0.4s ease-in-out;
+}
+
+.button-save-changes:hover{
+  background-color: #EEEEEE;
+  color: #5C6AC4;
+  font-weight: 600;
+  cursor: pointer;
+
+  background-position: right;
 }
 
 .bottom-part-panel {
@@ -990,6 +1147,13 @@ z-index: 1000;
     height: 36px;
     width: 100%;
     max-width: 113px;
+
+    transition: 0.4s ease-in-out;
+  }
+
+  .corners-add-transaction .closeMenu:hover, .corners-showmore-transaction .closeMenu:hover {
+    background-color: #FAF9F6;
+    color: #FF6F61;
   }
 
 
@@ -1031,6 +1195,106 @@ z-index: 1000;
     font-family: Poppins;
     font-size: 22px;
   }
+
+  .button-row {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+
+  
+  .row {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+  }
+  
+  .category,
+  .date {
+    display: flex;
+    flex-direction: column;
+    font-family: Poppins;
+    font-size: 22px;
+    flex: 1;
+  }
+  
+  .amount,
+  .currency,
+  .wallet_in_creation_menu {
+    display: flex;
+    flex-direction: column;
+    font-family: Poppins;
+    font-size: 22px;
+    /* flex: 1; */
+    width: 100px;
+    max-width: 300px;
+  }
+  
+  .category select,
+  .date input {
+    background-color: #FAF9F6;
+    padding: 10px;
+    width: 100%;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 3px solid #EEEEEE;
+    font-family: Poppins;
+    font-size: 22px;
+    font-style: italic;
+  }
+
+  .wallet_in_creation_menu select,
+  .currency select,
+  .amount input {
+    background-color: #FAF9F6;
+    padding: 10px;
+    max-width: 300px;
+    width: 100%;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 3px solid #EEEEEE;
+    font-family: Poppins;
+    font-size: 22px;
+    font-style: italic;
+  }
+  
+  .button-row {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+
+  
+  .button-row button {
+    background-color: #4DB6AC;
+    color: #FAF9F6;
+    border: 0;
+    border-radius: 8px;
+    text-align: center;
+    font-family: Poppins;
+    font-size: 24px;
+    height: 63px;
+    width: 280px;
+
+    background-position: right;
+    background: linear-gradient(to left, #EEEEEE 50%, #4DB6AC 50%);
+    background-size: 200% 100%;
+    background-position: left;
+    transition: 0.4s ease-in-out;
+  }
+  
+  .button-row button:hover {
+    background-color: #EEEEEE;
+  color: #4DB6AC;
+  font-weight: 400;
+  margin-right: 20px;
+  cursor: pointer;
+
+  background-position: right;
+  }
+
 
   .currency {
     display: flex;
@@ -1108,3 +1372,213 @@ z-index: 1000;
     width: 100%;
     max-width: 280px;
   }
+
+  /* save money overview layout */
+
+.corners-save-money {
+  position: relative;
+  display: flex; 
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1400px;
+  height: 756px;
+  flex-direction: column;
+  background-color: #FAF9F6;
+  border-top-right-radius: 100px;
+  border-bottom-left-radius: 100px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 8px;
+}
+
+.centered-save-money {
+  background-color: #4DB6AC;
+  width: 100%;
+  max-width: 1400px;
+  height: 100%;
+  border-radius: 8px;
+  display: flex;
+  padding: auto;
+}
+.overlay-save-money {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0,0,0,0.75); 
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 1rem;
+z-index: 1000;
+}
+
+.centered-save-money {
+  background-color: #5C6AC4;
+  width: 100%;
+  max-width: 1077px;
+  height: auto;
+  border-radius: 8px;
+  display: flex;
+  padding: auto;
+}
+
+.corners-save-money {
+  position: relative;
+  display: flex; 
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  max-width: 1077px;
+  height: 387px;
+  flex-direction: column;
+  background-color: #FAF9F6;
+  border-top-right-radius: 100px;
+  border-bottom-left-radius: 100px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 8px;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.corners-save-money .closeMenu {
+  position: absolute;
+  background-color: #FF6F61;
+  color: #FAF9F6;
+  border: 0;
+  border-radius: 8px;
+  text-align: center;
+  font-family: Poppins;
+  font-weight: 600;
+  top: -1.15rem;
+  margin-left: 2rem;
+  font-size: 24px;
+  height: 36px;
+  width: 100%;
+  max-width: 113px;
+
+  transition: 0.4s ease-in-out;
+}
+
+.corners-save-money .closeMenu:hover {
+  background-color: #FAF9F6;
+  color: #FF6F61;
+}
+
+.save-money-main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.save-money-text {
+  font-size: 22px;
+  font-weight: 400;
+  font-style: italic;
+  color: #5E5B5B;
+}
+
+.save-money-amount-label,
+.save-money-currency-label {
+  font-size: 22px;
+  font-weight: 300;
+  color: #5E5B5B;
+}
+
+.save-money-top-text {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.save-money-currency-div select,
+.save-money-amount-div input {
+  background-color: #FAF9F6;
+  padding: 10px;
+  width: 100%;
+  width: 150px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 3px solid #EEEEEE;
+  background-color: #FAF9F6;
+  color: #BABABA;
+  font-family: Poppins;
+  font-size: 24px;
+  font-style: italic;
+}
+
+.save-money-currency-div,
+.save-money-amount-div {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  align-items: flex-start;
+}
+
+.save-money-amount-currency-container{
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.save-money-buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.save-money-save-money-button {
+  width: 250px;
+  height: 63px;
+  border-radius: 8px;
+  color: #FAF9F6;
+  background-color: #5C6AC4;
+  border: none;
+  font-size: 24px;
+  font-weight: 700;
+
+  background-position: right;
+    background: linear-gradient(to left, #EEEEEE 50%, #5C6AC4 50%);
+    background-size: 200% 100%;
+    background-position: left;
+    transition: 0.4s ease-in-out;
+}
+
+.save-money-save-money-button:hover {
+  background-color: #EEEEEE;
+  color: #5C6AC4;
+  font-weight: 600;
+  cursor: pointer;
+
+  background-position: right;
+}
+
+.save-money-cancel-button {
+  width: 143px;
+  height: 42px;
+  border-radius: 8px;
+  color: #5C6AC4;
+  background-color: #EEEEEE;
+  border: none;
+  font-size: 17px;
+  font-weight: 600;
+
+  background-position: right;
+    background: linear-gradient(to left, #5C6AC4 50%, #EEEEEE 50%);
+    background-size: 200% 100%;
+    background-position: left;
+    transition: 0.4s ease-in-out;
+}
+
+.save-money-cancel-button:hover {
+  background-color: #EEEEEE;
+  color: #EEEEEE;
+  font-weight: 600;
+  cursor: pointer;
+
+  background-position: right;
+}

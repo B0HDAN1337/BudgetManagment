@@ -1,0 +1,131 @@
+
+    <div class="overlay-notification">
+        <div class="centered-notification">
+          <div class="corners-notification">
+            <button class="closeMenu" (click)="closeMenu()">Close</button>
+      
+            <div class="Form-container">
+
+              <h1>
+                Notifications
+              </h1>
+              
+              <div class="all-notifications-container">
+
+                <button class="active-single-notification-container" (click)="ShowActiveNotificationContent()">
+
+                    <div class="notification-image-active">
+                        <img src="assets/icons/Notifications_violet.png" alt="" width="56px" height="56px">
+                    </div>
+
+                    <div class="notification-header-active">
+                        <label class="notification-header-text-active">Notification header active</label>
+                    </div>
+
+                </button>
+
+                <button class="non-active-single-notification-container" (click)="ShowNonActiveNotificationContent()">
+
+                    <div class="notification-image-non-active">
+                        <img src="assets/icons/Notifications_white.png" alt="" width="56px" height="56px">
+                    </div>
+
+                    <div class="notification-header-non-active">
+                        <label class="notification-header-text-non-active">Notification header non-active</label>
+                    </div>
+
+                </button>
+
+                <button class="non-active-single-notification-container" (click)="ShowNonActiveNotificationContent()">
+
+                    <div class="notification-image-non-active">
+                        <img src="assets/icons/Notifications_white.png" alt="" width="56px" height="56px">
+                    </div>
+
+                    <div class="notification-header-non-active">
+                        <label class="notification-header-text-non-active">Notification header non-active 2</label>
+                    </div>
+
+                </button>
+
+              </div>
+
+
+            </div>
+            
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- overlays -->
+    
+    <div class="overlay-notification-content" *ngIf="isActiveNotificationContentVisible" >
+        <div class="centered-notifications-content">
+
+            <div class="corners-notification-content">
+
+            <button class="closeMenu" (click)="HideActiveNotificationContent()">Close</button>
+
+                <div class="inside-of-notification">
+
+                    <div class="notification-content">
+    
+                        <img src="assets/icons/Notifications_violet.png" alt="" width="56px" height="56px">
+    
+                        <label class="notification-content-header">Notification header</label>
+    
+                        <label class="notification-content-text">Notification information</label>
+    
+                    </div>
+
+                    <button class="notification-content-go-back-button" (click)="HideActiveNotificationContent()">Back</button>
+    
+                </div>
+
+            
+
+            </div>
+
+            
+            
+        </div>
+
+    </div>
+
+    <div class="overlay-notification-content-non-active" *ngIf="isNonActiveNotificationContentVisible" >
+        <div class="centered-notifications-content-non-active">
+
+            <div class="corners-notification-content-non-active">
+
+            <button class="closeMenu" (click)="HideNonActiveNotificationContent()">Close</button>
+
+                <div class="inside-of-notification-non-active">
+
+                    <div class="notification-content-non-active">
+    
+                        <img src="assets/icons/Notifications_white.png" alt="" width="56px" height="56px">
+    
+                        <label class="notification-content-header-non-active">Notification header</label>
+    
+                        <label class="notification-content-text-non-active">Notification information</label>
+    
+                    </div>
+
+                    <button class="notification-content-go-back-button-non-active" (click)="HideNonActiveNotificationContent()">Back</button>
+    
+                </div>
+
+            
+
+            </div>
+
+            
+            
+        </div>
+
+    </div>
+
+    

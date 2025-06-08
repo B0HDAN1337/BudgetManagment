@@ -30,6 +30,23 @@ header {
     margin-right: 13px;
 }
 
+.circle:hover {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;            
+    height: 50px;           
+    background-color: #F2F0EB;  
+    border-radius: 50%;     
+    text-align: center;    
+    line-height: 50px;     
+    color: #EAE7E1;          
+    font-size: 20px;        
+    opacity: 0.75;
+    margin-left: 13px;
+    margin-right: 13px;
+}
+
 .header-navigation nav {
     display: flex;
     justify-content: space-between;
@@ -51,6 +68,19 @@ header {
     font-weight: 400;
 }
 
+.log-out-nav-label:hover {
+    margin-right: 0px;
+    width: 118px;
+    border: 0;
+    background-color: #4DB6AC;
+    color: #EAE7E1;
+    font-family: Poppins;
+    font-size: 24px;
+    text-align: center;
+    font-weight: 400;
+    cursor: pointer;
+}
+
 .header-buttons-reg-log {
     margin-right: 29px;
     width: 125px;
@@ -62,6 +92,15 @@ header {
     font-size: 24px;
     text-align: center;
     font-weight: 400;
+
+    cursor: pointer;
+    transition: 0.4s ease-in-out;
+}
+
+.header-buttons-reg-log:hover {
+    background-color: #4DB6AC;
+    color: #FAF9F6;
+    cursor: pointer;
 }
 
 .left-navigation {

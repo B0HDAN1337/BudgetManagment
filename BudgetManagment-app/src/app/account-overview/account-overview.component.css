@@ -215,23 +215,84 @@
 
 .button-container .save-changes {
     background-color: #4DB6AC;
+    cursor: pointer;
+
+    background-position: right;
+    background: linear-gradient(to left, #EEEEEE 50%, #4DB6AC 50%);
+    background-size: 200% 100%;
+    background-position: left;
+    transition: 0.4s ease-in-out;
+}
+
+.button-container .save-changes:hover {
+    background-color: #EEEEEE;
+    color: #4DB6AC;
+    font-weight: 500;
+    cursor: pointer;
+
+    background-position: right;
 }
 
 .button-container .cancel-deleting {
     background-color: #EEEEEE;
-    color: #FF6F61;
+    color: #4DB6AC;
+
+    background-position: right;
+    background: linear-gradient(to left, #4DB6AC 50%, #EEEEEE 50%);
+    background-size: 200% 100%;
+    background-position: left;
+    transition: 0.4s ease-in-out;
+}
+
+.button-container .cancel-deleting:hover {
+    background-color: #EEEEEE;
+    color: #EEEEEE;
+    font-weight: 400;
+    cursor: pointer;
+
+    background-position: right;
 }
 
 .button-container .delete-account {
     background-color: #EEEEEE;
     color: #FF6F61;
     margin-left: 10px;
+
+    background-position: right;
+    background: linear-gradient(to left, #FF6F61 50%, #EEEEEE 50%);
+    background-size: 200% 100%;
+    background-position: left;
+    transition: 0.4s ease-in-out;
+}
+
+.button-container .delete-account:hover {
+    background-color: #EEEEEE;
+    color: #EEEEEE;
+    font-weight: 400;
+    cursor: pointer;
+
+    background-position: right;
 }
 
 .button-container .delete-account-confirm {
     background-color: #FF6F61;
     color: #EEEEEE;
     margin-left: 10px;
+
+    background-position: right;
+    background: linear-gradient(to left, #EEEEEE 50%, #FF6F61 50%);
+    background-size: 200% 100%;
+    background-position: left;
+    transition: 0.4s ease-in-out;
+}
+
+.button-container .delete-account-confirm:hover {
+    background-color: #EEEEEE;
+    color: #FF6F61;
+    font-weight: 400;
+    cursor: pointer;
+
+    background-position: right;
 }
 
 @media (max-width: 1200px) {
@@ -325,6 +386,13 @@
     height: 36px;
     width: 100%;
     max-width: 113px;
+
+    transition: 0.4s ease-in-out;
+  }
+
+  .corners-add-transaction .closeMenu:hover {
+    background-color: #FAF9F6;
+    color: #FF6F61;
   }
 
 

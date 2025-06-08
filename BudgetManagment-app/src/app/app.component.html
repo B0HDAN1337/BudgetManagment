@@ -27,7 +27,7 @@
           <span class="circle" style="cursor:pointer;" (click)="goToSupportForm()">
             <img width="38px" height="38px" src="assets/icons/contact_support.png">
           </span>
-          <span class="circle">
+          <span class="circle" style="cursor:pointer;" (click)="goToNotifications()">
             <img width="27px" height="33px" src="assets/icons/Vector.png">
           </span>
           <span class="circle" style="cursor:pointer;" (click)="goToAccountOverview()">
@@ -42,5 +42,6 @@
 
 
 <app-support-help-form-overlay *ngIf="isSupportVisible" (close)="isSupportVisible = false"></app-support-help-form-overlay>
+<app-notifications-overlay *ngIf="isNotificationsVisible" (close)="isNotificationsVisible = false"></app-notifications-overlay>
 
 <router-outlet></router-outlet>

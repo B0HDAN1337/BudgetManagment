@@ -262,7 +262,7 @@
                             </div>
 
                             <div class="buttons-part">
-                                <button type="submit" class="button-save-money">Save money</button>
+                                <button type="submit" class="button-save-money" (click)="OpenSaveMoneyOverview()">Save money</button>
                                 <button type="submit" class="button-mark-as-complete">Mark as complete</button>
                             </div>
 
@@ -311,53 +311,129 @@
    
 </div>
 
+<div class="overlay-save-money" *ngIf="isSaveMoneyOverviewVisible">
+  <div class="centered-save-money">
+      <div class="corners-save-money">
+          <button class="closeMenu" (click)="CloseSaveMoneyOverview()">Close</button>
+          
+          <form class="form-save-money">
 
+            <div class="save-money-main-container">
 
- <div class="overlay" *ngIf="isAddTransactionVisible">
-          <div class="centered-add-transaction">
-              <div class="corners-add-transaction">
-                  <button class="closeMenu" (click)="CloseMenu()">Close</button>
-                  
-                  <form class="form" (ngSubmit)="CreateTransaction()">
-                      <div class="top-row-container">
-                        <div class="category">
-                          <label>Category</label>
-                          <select name="Category" [(ngModel)]="transaction.category" ngModel required>
-                            <option value="" disabled selected hidden>Category</option>
-                            <option value="Food">Food</option>
-                            <option value="Healthcare">Healthcare</option>
-                            <option value="Income">Income</option>
-                            <option value="Travel">Travel</option>
-                          </select>
-                        </div>
-                        <div class="date">
-                          <label>Date</label>
-                          <input name="Date" [(ngModel)]="transaction.date" ngModel type="text" placeholder="yyyy-mm-dd" required />
-                        </div>
-                      </div>
-                    
-                      <div class="bottom-row-container">
-                        <div class="amount">
-                          <label>Amount</label>
-                          <input name="Amount" [(ngModel)]="transaction.amount" ngModel type="text" placeholder="Amount" required />
-                        </div>
-                        <div class="currency">
-                          <label>Currency</label>
-                          <select name="Currency" [(ngModel)]="transaction.currency" ngModel required>
-                            <option value="" disabled selected hidden>Currency</option>
-                            <option value="USD">United States Dollar</option>
-                            <option value="EUR">Euro</option>
-                            <option value="PLN">Polish złoty</option>
-                          </select>
-                          <select [(ngModel)]="transaction.walletID" name="walletID" required>
-                          <!-- <option *ngFor="let wallet of wallets" [value]="wallet.walletID">
-                            {{ wallet.walletName }}
-                          </option> -->
-                        </select>
-                        </div>
-                        <button type="submit">Add Transaction</button>
-                      </div>
-                    </form>
+              <div class="save-money-top-text">
+
+                <label class="save-money-text">How much money do you want to save?</label>
+
               </div>
-          </div>   
-        </div>
+
+              <div class="save-money-amount-currency-container">
+
+                <div class="save-money-amount-div">
+
+                  <label class="save-money-amount-label">Amount to save</label>
+                  <input type="text" placeholder="100">
+
+                </div>
+
+                <div class="save-money-currency-div">
+
+                  <label class="save-money-currency-label">Currency</label>
+
+                  <select name="Currency" required>
+                    <option value="" disabled selected hidden>Currency</option>
+                    <option value="USD">United States Dollar</option>
+                    <option value="EUR">Euro</option>
+                    <option value="PLN">Polish złoty</option>
+                  </select>
+
+                </div>
+
+              </div>
+
+              <div class="save-money-buttons-container">
+
+                <button class="save-money-save-money-button">Save money</button>
+                <button class="save-money-cancel-button" (click)="CloseSaveMoneyOverview()">Cancel</button>
+
+              </div>
+
+            </div>
+
+          </form>
+            
+          
+      </div>
+      
+  </div>
+
+   
+</div>
+
+
+
+
+
+
+<div class="overlay" *ngIf="isAddTransactionVisible">
+  <div class="centered-add-transaction">
+      <div class="corners-add-transaction">
+          <button class="closeMenu" (click)="CloseMenu()">Close</button>
+          
+          <form class="form" (ngSubmit)="CreateTransaction()">
+            
+            <div class="top-row-container row">
+              <div class="category">
+                <label>Category</label>
+                <select name="Category" [(ngModel)]="transaction.category" required>
+                  <option value="" disabled selected hidden>Category</option>
+                  <option value="Food">Food</option>
+                  <option value="Healthcare">Healthcare</option>
+                  <option value="Income">Income</option>
+                  <option value="Travel">Travel</option>
+                </select>
+              </div>
+              <div class="date">
+                <label>Date</label>
+                <input name="Date" [(ngModel)]="transaction.date" type="text" placeholder="yyyy-mm-dd" required />
+              </div>
+            </div>
+          
+            
+            <div class="bottom-row-container row">
+              <div class="amount">
+                <label>Amount</label>
+                <input name="Amount" [(ngModel)]="transaction.amount" type="text" placeholder="Amount" required />
+              </div>
+              <div class="currency">
+                <label>Currency</label>
+                <select name="Currency" [(ngModel)]="transaction.currency" required>
+                  <option value="" disabled selected hidden>Currency</option>
+                  <option value="USD">United States Dollar</option>
+                  <option value="EUR">Euro</option>
+                  <option value="PLN">Polish złoty</option>
+                </select>
+              </div>
+              <div class="currency" style="margin-left: 105px;">
+                <label>Wallet</label>
+                <select [(ngModel)]="transaction.walletID" name="walletID" required>
+                  <option *ngFor="let wallet of wallets" [value]="wallet.walletID">
+                    {{ wallet.walletName }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          
+            
+            <div class="button-row">
+              <button type="submit">Add Transaction</button>
+            </div>
+          </form>
+          
+            
+          
+      </div>
+      
+  </div>
+
+   
+</div>
