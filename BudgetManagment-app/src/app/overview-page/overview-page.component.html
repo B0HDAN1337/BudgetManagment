@@ -151,7 +151,7 @@
                   <div class="filters">
                     <div class="filter">
                       <label class="filter-label">Category</label>
-                      <select class="select-menu">
+                      <select class="select-menu" [(ngModel)]="selectedCategory">
                         <option class="category-option">All Categories</option>
                         <option class="category-option">Food</option>
                         <option class="category-option">Home</option>
@@ -164,29 +164,29 @@
                     <div class="filter">
                       <label class="filter-label">Currency</label>
                       <div class="currency-select">
-                        <select class="select-menu">
-                          <option>United States Dollar</option>
-                          <option>Euro</option>
-                          <option>Polish Złoty</option>
+                        <select class="select-menu" [(ngModel)]="selectedCurrency">
+                          <option value="USD">United States Dollar</option>
+                          <option value="EUR">Euro</option>
+                          <option value="PLN">Polish Złoty</option>
                         </select>
                       </div>
                     </div>
             
                     <div class="filter">
                       <label class="filter-label">From Date</label>
-                      <input class="select-menu" type="date" placeholder="22/02/2025">
+                      <input class="select-menu" type="date" [(ngModel)]="fromDate" placeholder="22/02/2025">
                     </div>
 
                     <div class="filter">
                       <label class="filter-label">To Date</label>
-                      <input class="select-menu" type="date" placeholder="22/04/2025">
+                      <input class="select-menu" type="date" [(ngModel)]="toDate" placeholder="22/04/2025">
                     </div>
           
                   </div>
             
                   <div class="filter-buttons">
-                    <button class="reset">Reset Filters</button>
-                    <button class="apply">Apply Filters</button>
+                    <button class="reset" (click)="resetFilters()">Reset Filters</button>
+                    <button class="apply" (click)="applyFilters()">Apply Filters</button>
                   </div>
                 </div>
             
