@@ -203,12 +203,12 @@
                       <span class="date_transaction_list">{{transaction.date}}</span>
 
                       <div class="right-group">
-                        <span class="amount negative" [ngClass]="{'positive': transaction.amount > 0, 'negative': transaction.amount < 0}">{{transaction.amount}} $</span>
+                        <span class="amount negative" [ngClass]="{'positive': transaction.amount > 0, 'negative': transaction.amount < 0}">{{transaction.amount}} {{getCurrencySymbol(transaction.currency)}}</span>
                         <button class="edit-button" aria-label="Edit transaction" (click)="ShowEditTransactionMenu()">Edit</button>
                       </div>
                   </div>
                 
-                  <div class="transaction-row">
+                  <!-- <div class="transaction-row">
                     <div class="left-group">
                       <img src="assets/icons/income-violet.png" alt="Food icon" />
                       <span class="category">Income</span>
@@ -220,7 +220,7 @@
                       <span class="amount positive">+100.00 $</span>
                       <button class="edit-button" aria-label="Edit transaction" (click)="ShowEditTransactionMenu()" >Edit</button>
                     </div>
-                </div>
+                </div> -->
 
                 </div>
             

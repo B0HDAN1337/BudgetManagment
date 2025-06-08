@@ -82,10 +82,10 @@
 
         <div class="transactions-container">
             <div class="transaction-row" *ngFor="let transaction of transactions">
-                <!-- <img [src]="getCategoryImage(transaction.category, isActiveCategory(transaction.category) ? 'violet' : 'green')"/> -->
+                <img [src]="getCategoryImage(transaction.category, isActiveCategory(transaction.category) ? 'violet' : 'green')"/> 
                 <span class="transaction-title">{{transaction.category}}</span>
                 <span class="transaction-date">{{transaction.date | date:'shortDate'}}</span>
-                <span class="transaction-amount" >{{transaction.amount | currency:transaction.currency}}</span>
+                <span class="transaction-amount" [ngClass]="{'positive': transaction.amount > 0, 'negative': transaction.amount < 0}">{{transaction.amount}} {{getCurrencySymbol(transaction.currency)}}</span>
             </div>
             <button class="show-more-transactions" >Show More</button>
         </div>

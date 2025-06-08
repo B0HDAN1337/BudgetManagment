@@ -102,6 +102,32 @@ export class WalletMainPageComponent implements OnInit {
     )
   }
 
+  getCurrencySymbol(currency: string): string {
+  switch (currency) {
+    case 'USD': return '$';
+    case 'EUR': return '€';
+    case 'PLN': return 'zł';
+    default: return currency;
+  }
+}
+
+selectedCategory = 'All Categories';
+
+getCategoryImage(category: string, color: string = 'violet'): string {
+    switch (category) {
+      case 'Food': return `/assets/icons/food-${color}.png`;
+      case 'Home': return `/assets/icons/home-${color}.png`;
+      case 'Healthcare': return `/assets/icons/healthcare-${color}.png` ;
+      case 'Travel': return `/assets/icons/travel-${color}.png`;
+      case 'Income': return `/assets/icons/income-${color}.png`;
+      default: return category;
+    }
+  }
+
+  isActiveCategory(category: string): boolean {
+  return this.selectedCategory === category;
+}
+
   totalIncome: number = 0;
   totalExpense: number = 0;
 
