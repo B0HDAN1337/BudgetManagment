@@ -6,6 +6,7 @@ import { filter } from 'rxjs/operators';
 import { AuthService } from './services/auth.service';
 import { OverlayService } from './services/overlay.service'; 
 import { SupportHelpFormOverlayComponent } from './support-help-form-overlay/support-help-form-overlay.component';
+import { NotificationsOverlayComponent } from './notifications-overlay/notifications-overlay.component';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,8 @@ import { SupportHelpFormOverlayComponent } from './support-help-form-overlay/sup
   imports: [
     CommonModule,
     RouterModule,
-    SupportHelpFormOverlayComponent 
+    SupportHelpFormOverlayComponent,
+    NotificationsOverlayComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
@@ -23,6 +25,7 @@ export class AppComponent {
   isLoggedIn = false;
   isLoginOrRegisterPage = false;
   isSupportVisible = false;
+  isNotificationsVisible = false;
 
   constructor(
     private router: Router,
@@ -45,6 +48,10 @@ export class AppComponent {
     this.overlayService.supportOverlayVisible$.subscribe((visible: boolean) => {
       this.isSupportVisible = visible;
     });
+
+    this.overlayService.notificationsOverlayVisible$.subscribe((visible: boolean) => {
+      this.isNotificationsVisible = visible;
+    });
   }
 
   btnClickLogin() {
@@ -60,7 +67,11 @@ export class AppComponent {
   }
 
   goToSupportForm() {
-    this.overlayService.showSupport(); // ✅ THIS replaces router navigation
+    this.overlayService.showSupport(); 
+  }
+
+  goToNotifications() {
+    this.overlayService.showNotifications(); 
   }
 
   logout() {
