@@ -11,7 +11,7 @@
 
         <section class="balance-section">
           <label>Current <strong>Balance</strong></label>
-          <p class="balance-amount" *ngIf="wallets">{{wallets.currency}}$</p>
+          <p class="balance-amount" *ngIf="wallets">{{wallets.currency}} {{getCurrencySymbol(wallets.walletCurrency)}}</p>
           <button class="btn-add-transaction" (click)="OpenMenu()">Add Transaction</button>
         </section>
 
@@ -19,30 +19,31 @@
           
           <div class="date-filter">
             <label>Period <strong>Info</strong></label>
-            <input type="text" placeholder="22/02/2025 - 22/04/2025" />
-            <button class="btn-apply">Apply period</button>
+            <input type="date" [(ngModel)]="fromDate" placeholder="22/02/2025"/>
+             <input type="date" [(ngModel)]="toDate" placeholder="22/02/2025"/>
+            <button class="btn-apply" (click)="applyFilters()">Apply period</button>
           </div>
 
           <div class="stats-grid">
             <div class="stat-item">
                 <img width="35" height="35" src="assets/icons/income.svg">
                 <strong>Total income</strong>
-                <p class="positive" *ngIf="totalIncome >= 0">+{{totalIncome | number:'1.2-2'}} $</p>
+                <p class="positive" *ngIf="totalIncome >= 0">+{{totalIncome | number:'1.2-2'}} {{getCurrencySymbol(wallets.walletCurrency)}}</p>
             </div>
             <div class="stat-item">
                  <img width="35" height="35" src="assets/icons/expenses.svg">
                 <strong>Total expenses</strong>
-                <p class="negative"  *ngIf="totalExpense <= 0">{{totalExpense | number:'1.2-2'}} $</p>
+                <p class="negative"  *ngIf="totalExpense <= 0">{{totalExpense | number:'1.2-2'}} {{getCurrencySymbol(wallets.walletCurrency)}}</p>
             </div>
             <div class="stat-item">
                  <img width="35" height="35" src="assets/icons/change.svg">
                 <strong>Total change</strong>
-                <p class="positive">+1661.58 $</p>
+                <p [ngClass]="{'positive': (totalIncome + totalExpense) > 0, 'negative': (totalIncome + totalExpense) < 0}">{{totalIncome + totalExpense}} {{getCurrencySymbol(wallets.walletCurrency)}}</p>
             </div>
             <div class="stat-item">
                  <img width="35" height="35" src="assets/icons/balance.svg">
                 <strong>Total balance</strong>
-                <p class="positive" *ngIf="wallets">{{wallets.currency}}$</p>
+                <p class="positive" *ngIf="wallets">{{wallets.currency}} {{getCurrencySymbol(wallets.walletCurrency)}}</p>
             </div>
           </div>
 
