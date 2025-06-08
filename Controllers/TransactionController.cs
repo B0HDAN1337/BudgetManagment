@@ -42,17 +42,14 @@ namespace BudgetManagmentServer.Controllers
         public IActionResult CreateTransaction([FromBody] Transaction transaction)
         {
             int UserIdClaim = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            transaction.UserID = UserIdClaim;
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             if (UserIdClaim == null)
             {
                 return BadRequest("User ID claim is missing");
             }
 
-            var transactionCount = _context.Transactions.Where(w => w.UserID == UserIdClaim).Count();
+            
 
             var wallet = _context.Wallets.FirstOrDefault(w => w.WalletID == transaction.WalletID);
             if (wallet == null)
@@ -72,8 +69,21 @@ namespace BudgetManagmentServer.Controllers
                 transaction.amount = -Math.Abs(transaction.amount);
             }
 
-            transaction.UserID = UserIdClaim;
-            wallet.Currency += transaction.amount;
+           float convertedAmount = transaction.amount;
+            if (transaction.currency != wallet.WalletCurrency)
+            {
+                convertedAmount = _repository.Convert(
+                    Math.Abs(transaction.amount), 
+                    transaction.currency,
+                    wallet.WalletCurrency
+                );
+
+                convertedAmount = transaction.amount < 0 ? -convertedAmount : convertedAmount;
+            }
+
+
+            
+            wallet.Currency += convertedAmount;
             var newTransaction = _repository.CreateTransaction(transaction);
             _context.SaveChanges();
             return Ok(newTransaction);

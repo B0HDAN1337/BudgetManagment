@@ -18,7 +18,8 @@ export class WalletCreationComponent {
   {
   "WalletName": "",
   "Description": "",
-  "Currency": ""
+  "Currency": "",
+  "WalletCurrency": ""
   }
   
   //url requests to database server 

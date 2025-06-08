@@ -83,6 +83,7 @@ export class WalletMainPageComponent implements OnInit {
       console.log('Transactions: ', transaction);
       this.loadIncomeByDate(walletId);
       this.loadExpenseByDate(walletId);
+
     }, error => {
       console.error('Error loading transactions: ', error);
       this.transactions = [];
@@ -103,8 +104,35 @@ export class WalletMainPageComponent implements OnInit {
     )
   }
 
+  getCurrencySymbol(currency: string): string {
+  switch (currency) {
+    case 'USD': return '$';
+    case 'EUR': return '€';
+    case 'PLN': return 'zł';
+    default: return currency;
+  }
+}
+
+selectedCategory = 'All Categories';
+
+getCategoryImage(category: string, color: string = 'violet'): string {
+    switch (category) {
+      case 'Food': return `/assets/icons/food-${color}.png`;
+      case 'Home': return `/assets/icons/home-${color}.png`;
+      case 'Healthcare': return `/assets/icons/healthcare-${color}.png` ;
+      case 'Travel': return `/assets/icons/travel-${color}.png`;
+      case 'Income': return `/assets/icons/income-${color}.png`;
+      default: return category;
+    }
+  }
+
+  isActiveCategory(category: string): boolean {
+  return this.selectedCategory === category;
+}
+
   totalIncome: number = 0;
   totalExpense: number = 0;
+  totalBalance: number = 0;
 
   totalIncomeAmount() {
     this.transactionService.getWalletIncomeTotal(this.walletId).subscribe( total =>
@@ -216,7 +244,8 @@ ExpensebarChartOptions: ChartOptions = {
   scales: {
     x: {},
     y: {
-      beginAtZero: true
+      beginAtZero: true,
+
     }
   }
 };
@@ -302,6 +331,74 @@ loadExpenseByCategory(walletId: number) {
       ]
     };
   });
+}
+
+filteredTransactions: Transaction[] = [];
+fromDate: string = '';
+toDate: string = '';
+
+applyFilters() {
+    this.filteredTransactions = this.transactions.filter(t => {
+      const dateFromMatch = !this.fromDate || new Date(t.date) >= new Date(this.fromDate);
+      const dateToMatch = !this.toDate || new Date(t.date) <= new Date(this.toDate);
+      return dateFromMatch && dateToMatch;
+    });
+
+    this.totalIncome = this.filteredTransactions
+      .filter(t => t.type === 0) 
+      .reduce((sum, t) => sum + t.amount, 0);
+
+    this.totalExpense = this.filteredTransactions
+      .filter(t => t.type === 1) 
+      .reduce((sum, t) => sum + t.amount, 0);
+
+      this.updateCharts();
+  }
+
+  updateCharts() {
+  const incomeByDateMap = new Map<string, number>();
+  this.filteredTransactions
+    .filter(t => t.type === 0)
+    .forEach(t => {
+      const date = t.date;
+      incomeByDateMap.set(date, (incomeByDateMap.get(date) || 0) + t.amount);
+    });
+
+  const incomeLabels = Array.from(incomeByDateMap.keys()).sort();
+  const incomeAmounts = incomeLabels.map(date => incomeByDateMap.get(date) || 0);
+
+  this.barChartData = {
+    labels: incomeLabels,
+    datasets: [
+      {
+        data: incomeAmounts,
+        label: 'Income',
+        backgroundColor: '#4DB6AC'
+      }
+    ]
+  };
+
+  const expenseByDateMap = new Map<string, number>();
+  this.filteredTransactions
+    .filter(t => t.type === 1)
+    .forEach(t => {
+      const date = t.date;
+      expenseByDateMap.set(date, (expenseByDateMap.get(date) || 0) + t.amount);
+    });
+
+  const expenseLabels = Array.from(expenseByDateMap.keys()).sort();
+  const expenseAmounts = expenseLabels.map(date => expenseByDateMap.get(date) || 0);
+
+  this.ExpensebarChartData = {
+    labels: expenseLabels,
+    datasets: [
+      {
+        data: expenseAmounts,
+        label: 'Expense',
+        backgroundColor: '#4DB6AC'
+      }
+    ]
+  };
 }
 
 }

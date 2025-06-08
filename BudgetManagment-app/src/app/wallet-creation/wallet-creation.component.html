@@ -29,8 +29,18 @@
                                     <input type="text" name="Description" [(ngModel)]="WalletObj.Description" placeholder="Description">
                                 </div>
                                 <div class="form-group">
+                                    <label>Amount</label>
+                                    <input type="number" name="Currency" required [(ngModel)]="WalletObj.Currency" #currency="ngModel" placeholder="Amount">
+                                    <span *ngIf="isSubmitted && currency.invalid" style="color: red; font-family: Poppins;">Amount is reqiured</span>
+                                </div>
+                                 <div class="form-group">
                                     <label>Currency</label>
-                                    <input type="number" name="Currency" required [(ngModel)]="WalletObj.Currency" #currency="ngModel" placeholder="Currency">
+                                     <select name="WalletCurrency" required [(ngModel)]="WalletObj.WalletCurrency" #currency="ngModel">
+                                        <option value="" disabled>Choose currency</option>
+                                        <option value="USD">USD</option>
+                                        <option value="EUR">EUR</option>
+                                        <option value="PLN">PLN</option>
+                                    </select>
                                     <span *ngIf="isSubmitted && currency.invalid" style="color: red; font-family: Poppins;">Currency is reqiured</span>
                                 </div>
                                 <div class="button-container">
