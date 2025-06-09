@@ -14,5 +14,13 @@ export class SavingService {
   CreateSaving(saving: Saving): Observable<Saving> {
     return this.http.post<Saving>(this.SavingUrl, saving);
   }
+
+  GetSaving(): Observable<Saving[]> {
+    return this.http.get<Saving[]>(this.SavingUrl);
+  }
+   
+  DeleteSavings(savingID: number): Observable<Saving[]> {
+    return this.http.delete<Saving[]>(`${this.SavingUrl}/${savingID}`);
+  }
    
 }

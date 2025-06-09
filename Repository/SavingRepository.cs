@@ -45,7 +45,8 @@ namespace BudgetManagmentServer.Repository
         {
             var existSaving = _context.Savings.Find(id);
 
-            _context.Remove(existSaving);
+            _context.Savings.Remove(existSaving);
+            _context.SaveChanges();
 
             return existSaving;
         } 

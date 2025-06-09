@@ -48,9 +48,9 @@ namespace BudgetManagmentServer.Controllers
             {
                 return BadRequest("User ID claim is missing");
             }
-            else if (savingCount >= 5)
+            else if (savingCount >= 3)
             {
-                return BadRequest("Max saving 5");
+                return BadRequest("Max saving 3");
             }
 
             saving.UserID = UserIdClaim;

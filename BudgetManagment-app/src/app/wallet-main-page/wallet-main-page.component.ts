@@ -56,6 +56,7 @@ export class WalletMainPageComponent implements OnInit {
       this.loadTransactionByWallet(this.walletId);
       this.totalIncomeAmount();
       this.loadExpenseByCategory(this.walletId);
+      this.loadSavings();
     }
 
   OpenMenu()
@@ -156,7 +157,10 @@ getCategoryImage(category: string, color: string = 'violet'): string {
     this.isAddSavingsVisible = true;
   }
   
-  OpenSavingsOverview(){
+  selectedSaving: Saving | null = null;
+
+  OpenSavingsOverview(savingID: number){
+    this.selectedSaving = this.savings.find(s => s.savingID == savingID) || null;
     this.isSavingsOverviewVisible = true;
   }
 
@@ -408,6 +412,7 @@ applyFilters() {
 // ---------- Saving ----------
 
 newSaving: Saving = {
+  savingID: 0,
   savingName: '',
   description: '',
   goalDate: '',
@@ -416,6 +421,8 @@ newSaving: Saving = {
   walletID: 0
 };
 
+savings: Saving[] = [];
+
 addSaving() {
   this.savingService.CreateSaving(this.newSaving).subscribe( success =>
   {
@@ -423,6 +430,26 @@ addSaving() {
   }, error =>
   {
     console.log('Error create Saving', error);
+  }
+  )
+}
+
+loadSavings() {
+  this.savingService.GetSaving().subscribe(data => {
+    this.savings = data;
+  }
+  )
+}
+
+deleteSavings(savingID: number) {
+  this.savingService.DeleteSavings(savingID).subscribe(success =>
+  {
+    console.log("Success Deleted Saving", success);
+   this.savings = this.savings.filter(s => s.savingID !== savingID);
+    this.loadSavings();
+  }, error =>
+  {
+    console.log("Error Deleted Saving", error);
   }
   )
 }

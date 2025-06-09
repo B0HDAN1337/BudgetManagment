@@ -1,4 +1,5 @@
 export interface Saving {
+    savingID: number;
     savingName: string;
     description?: string;
     goalDate: string;

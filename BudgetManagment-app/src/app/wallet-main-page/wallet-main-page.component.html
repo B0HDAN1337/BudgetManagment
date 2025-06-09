@@ -90,14 +90,14 @@
 
         <div class="savings-container">
 
-          <div class="no-savings-container">
+          <div class="no-savings-container" *ngIf="savings && savings.length ==  0">
             <label class="no-savings-text">Looks like you don't have any savings!</label>
             <button class="add-savings-button" (click)="OpenAddSavingsMenu()">Add Savings</button>
           </div>
 
           <div class="existing-savings-conatainer">
 
-            <button class="savings-box" (click)="OpenSavingsOverview()">
+            <button class="savings-box" *ngFor="let saving of savings" (click)="OpenSavingsOverview(saving.savingID)">
 
               <div class="savings-box-inside">
 
@@ -106,14 +106,14 @@
                     <img src="assets/icons/attach_money.png" width="45px" height="45px">
                   </div>
                   <div class="savings-name-descr">
-                    <label class="savings-name">Savings Name</label>
-                    <label class="savings-description">Description</label>
+                    <label class="savings-name">{{saving.savingName}}</label>
+                    <label class="savings-description">{{saving.description}}</label>
                   </div>
                   
                 </div>
 
                 <div class="savings-money-info">
-                  <label class="savings-goal">goal <label class="goal-amount">100.00$</label></label>
+                  <label class="savings-goal">goal <label class="goal-amount">{{saving.amountSave}}$</label></label>
                   <label class="savings-completed">completed <label class="completed-percantage">20%</label></label>
                 </div>
 
@@ -121,7 +121,7 @@
 
             </button>
 
-            <button class="plus-savings-button" (click)="OpenAddSavingsMenu()">+</button>
+            <button *ngIf="savings && savings.length >= 1 && savings.length < 3" class="plus-savings-button" (click)="OpenAddSavingsMenu()">+</button>
 
           </div>
           
@@ -210,11 +210,11 @@
                         <div class="info">
                             <div class="name-savings-overview">
                                 <label>Name</label>
-                                <input name="Savings name" placeholder="Savings name" />
+                                <input name="Savings name" placeholder="{{selectedSaving?.savingName}}" />
                             </div>
                             <div class="description-savings-overview">
                                 <label>Description</label>
-                                <input name="Description" placeholder="Savings Description" />
+                                <input name="Description" placeholder="{{selectedSaving?.description}}" />
                             </div>
 
                             <div class="date-daysleft-part">
@@ -224,7 +224,7 @@
                               <div class="date-daysleft-part-inside">
 
                                 <div class="date-savings-overview">
-                                  <label>Goal date</label>
+                                  <label>Goal date {{selectedSaving?.goalDate}}</label>
                                   <input name="Date" type="date" placeholder="2025-01-01" style="margin-left: 15px;" />
                               </div>
 
@@ -242,13 +242,13 @@
 
                                 <div class="amount-to-save-savings-overview">
                                     <label>Amount to save</label>
-                                    <input name="amount to save" placeholder="100" />
+                                    <input name="amount to save" placeholder="{{selectedSaving?.amountSave}}" />
                                 </div>
 
                                 <div class="currency-savings-overview">
                                     <label>Currency</label>
                                     <select name="Currency" required>
-                                        <option value="" disabled selected hidden>Currency</option>
+                                        <option value="" disabled selected hidden>{{selectedSaving?.currency}}</option>
                                         <option value="USD">United States Dollar</option>
                                         <option value="EUR">Euro</option>
                                         <option value="PLN">Polish złoty</option>
@@ -289,8 +289,8 @@
 
                 </div>
                 
-                <div class="bottom-part-panel">
-                    <button type="submit" class="button-delete-savings">Delete Savings</button>
+                <div class="bottom-part-panel" *ngFor="let saving of savings">
+                    <button type="submit" class="button-delete-savings" (click)="deleteSavings(saving.savingID)">Delete Savings</button>
                     <button type="submit" class="button-save-changes">Save Changes</button>
                 </div>
                 
