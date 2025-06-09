@@ -9,6 +9,8 @@ import { WalletService } from '../services/wallet.service';
 import { Wallet } from '../interface/wallet.model';
 import { ActivatedRoute } from '@angular/router';
 import { Transaction, TransactionType } from '../interface/transaction.model';
+import { Saving } from '../interface/saving.model';
+import { SavingService } from '../services/saving.service';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartType, ChartData, ChartOptions } from 'chart.js';
 
@@ -34,7 +36,8 @@ export class WalletMainPageComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private transactionService: TransactionService,
-    private walletService: WalletService) {}
+    private walletService: WalletService,
+    private savingService: SavingService) {}
 
   transaction = {
       category: '',
@@ -48,10 +51,12 @@ export class WalletMainPageComponent implements OnInit {
     ngOnInit() {
       this.walletId = +this.route.snapshot.paramMap.get('id')!;
       this.transaction.walletID = this.walletId;
+      this.newSaving.walletID = this.walletId;
       this.loadWalletsName(this.walletId);
       this.loadTransactionByWallet(this.walletId);
       this.totalIncomeAmount();
       this.loadExpenseByCategory(this.walletId);
+      this.loadSavings();
     }
 
   OpenMenu()
@@ -152,7 +157,10 @@ getCategoryImage(category: string, color: string = 'violet'): string {
     this.isAddSavingsVisible = true;
   }
   
-  OpenSavingsOverview(){
+  selectedSaving: Saving | null = null;
+
+  OpenSavingsOverview(savingID: number){
+    this.selectedSaving = this.savings.find(s => s.savingID == savingID) || null;
     this.isSavingsOverviewVisible = true;
   }
 
@@ -399,6 +407,51 @@ applyFilters() {
       }
     ]
   };
+}
+
+// ---------- Saving ----------
+
+newSaving: Saving = {
+  savingID: 0,
+  savingName: '',
+  description: '',
+  goalDate: '',
+  amountSave: 0,
+  currency: '',
+  walletID: 0
+};
+
+savings: Saving[] = [];
+
+addSaving() {
+  this.savingService.CreateSaving(this.newSaving).subscribe( success =>
+  {
+    console.log('Successfull created saving', success);
+  }, error =>
+  {
+    console.log('Error create Saving', error);
+  }
+  )
+}
+
+loadSavings() {
+  this.savingService.GetSaving().subscribe(data => {
+    this.savings = data;
+  }
+  )
+}
+
+deleteSavings(savingID: number) {
+  this.savingService.DeleteSavings(savingID).subscribe(success =>
+  {
+    console.log("Success Deleted Saving", success);
+   this.savings = this.savings.filter(s => s.savingID !== savingID);
+    this.loadSavings();
+  }, error =>
+  {
+    console.log("Error Deleted Saving", error);
+  }
+  )
 }
 
 }

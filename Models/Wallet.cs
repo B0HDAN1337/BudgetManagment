@@ -23,5 +23,7 @@ namespace BudgetManagmentServer.Models
         public int userId { get; set; }
 
         public ICollection<Transaction>? Transactions { get; set; }
+
+        public ICollection<Saving>? Savings { get; set; }
     }
 }
