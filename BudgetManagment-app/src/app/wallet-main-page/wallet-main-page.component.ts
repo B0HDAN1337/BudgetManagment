@@ -9,6 +9,8 @@ import { WalletService } from '../services/wallet.service';
 import { Wallet } from '../interface/wallet.model';
 import { ActivatedRoute } from '@angular/router';
 import { Transaction, TransactionType } from '../interface/transaction.model';
+import { Saving } from '../interface/saving.model';
+import { SavingService } from '../services/saving.service';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartType, ChartData, ChartOptions } from 'chart.js';
 
@@ -34,7 +36,8 @@ export class WalletMainPageComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private transactionService: TransactionService,
-    private walletService: WalletService) {}
+    private walletService: WalletService,
+    private savingService: SavingService) {}
 
   transaction = {
       category: '',
@@ -48,6 +51,7 @@ export class WalletMainPageComponent implements OnInit {
     ngOnInit() {
       this.walletId = +this.route.snapshot.paramMap.get('id')!;
       this.transaction.walletID = this.walletId;
+      this.newSaving.walletID = this.walletId;
       this.loadWalletsName(this.walletId);
       this.loadTransactionByWallet(this.walletId);
       this.totalIncomeAmount();
@@ -399,6 +403,28 @@ applyFilters() {
       }
     ]
   };
+}
+
+// ---------- Saving ----------
+
+newSaving: Saving = {
+  savingName: '',
+  description: '',
+  goalDate: '',
+  amountSave: 0,
+  currency: '',
+  walletID: 0
+};
+
+addSaving() {
+  this.savingService.CreateSaving(this.newSaving).subscribe( success =>
+  {
+    console.log('Successfull created saving', success);
+  }, error =>
+  {
+    console.log('Error create Saving', error);
+  }
+  )
 }
 
 }

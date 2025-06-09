@@ -144,40 +144,40 @@
       <div class="corners-add-savings">
           <button class="closeMenu" (click)="CloseAddSavingsMenu()">Close</button>
           
-          <form class="form-add-savings">
+          <form class="form-add-savings" (submit)="addSaving()">
             
               <div class="main-container_add_savings">
 
                 <div class="inputs_add_savings">
                     <div class="name-add-savings">
                          <label>Name</label>
-                         <input name="Name" placeholder="Name" required />
+                         <input [(ngModel)]="newSaving.savingName" name="Name" placeholder="Name" required />
                     </div>
                     <div class="description_add_savings">
                          <label>Description</label>
-                         <input name="Description" placeholder="Description(optional)" />
+                         <input [(ngModel)]="newSaving.description" name="Description" placeholder="Description(optional)" />
                     </div>
                     <div class="date-add-savings">
                         <label>Goal date</label>
-                        <input name="Date" type="date" placeholder="yyyy-mm-dd" required />
+                        <input [(ngModel)]="newSaving.goalDate" name="Date" type="date" placeholder="yyyy-mm-dd" required />
                     </div>
                     <div class="amount-currency-addsavingsbutton-container">
                         <div class="amount-add-savings">
                             <label>Amount</label>
-                            <input name="Amount" placeholder="Amount" required />
+                            <input [(ngModel)]="newSaving.amountSave" name="Amount" placeholder="Amount" required />
                         </div>
                         <div class="currency-add-savings">
                           <label class="filter-label">Currency</label>
                           <div class="currency-select">
-                            <select class="select-menu">
-                              <option>United States Dollar</option>
-                              <option>Euro</option>
-                              <option>Polish Złoty</option>
+                            <select name="currency" [(ngModel)]="newSaving.currency" class="select-menu">
+                              <option value="USD">United States Dollar</option>
+                              <option value="EUR">Euro</option>
+                              <option value="PLN">Polish Złoty</option>
                             </select>
                           </div>
                         </div>
                         
-                            <button class="button-add-savings">Add Savings</button>
+                            <button type="submit" class="button-add-savings">Add Savings</button>
                         
                     </div>
                 </div>

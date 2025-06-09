@@ -13,6 +13,7 @@ namespace BudgetManagmentServer.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Wallet> Wallets {get; set;}
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<Saving> Savings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,11 +25,19 @@ namespace BudgetManagmentServer.Data
             .WithMany(w => w.Wallets)
             .HasForeignKey(w => w.userId)
             .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<Wallet>()
             .HasMany(t => t.Transactions)
             .WithOne(w => w.Wallet)
             .HasForeignKey(t => t.WalletID)
             .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Wallet>()
+            .HasMany(s => s.Savings)
+            .WithOne(w => w.Wallet)
+            .HasForeignKey(s => s.WalletID)
+            .OnDelete(DeleteBehavior.Cascade);
+            
             modelBuilder.Entity<Transaction>().ToTable("Transaction")
             .HasOne(u => u.User)
             .WithMany(t => t.Transactions)
