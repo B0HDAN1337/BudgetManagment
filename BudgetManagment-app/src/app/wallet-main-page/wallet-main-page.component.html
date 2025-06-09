@@ -40,11 +40,6 @@
                 <strong>Total change</strong>
                 <p [ngClass]="{'positive': (totalIncome + totalExpense) > 0, 'negative': (totalIncome + totalExpense) < 0}">{{totalIncome + totalExpense}} {{getCurrencySymbol(wallets.walletCurrency)}}</p>
             </div>
-            <div class="stat-item">
-                 <img width="35" height="35" src="assets/icons/balance.svg">
-                <strong>Total balance</strong>
-                <p class="positive" *ngIf="wallets">{{wallets.currency}} {{getCurrencySymbol(wallets.walletCurrency)}}</p>
-            </div>
           </div>
 
         </section>
@@ -82,7 +77,7 @@
         <label class="last-transactions-text">Your <strong>Last Transactions</strong></label>
 
         <div class="transactions-container">
-            <div class="transaction-row" *ngFor="let transaction of transactions">
+            <div class="transaction-row" *ngFor="let transaction of transactions | slice:0:5" >
                 <img [src]="getCategoryImage(transaction.category, isActiveCategory(transaction.category) ? 'violet' : 'green')"/> 
                 <span class="transaction-title">{{transaction.category}}</span>
                 <span class="transaction-date">{{transaction.date | date:'shortDate'}}</span>
