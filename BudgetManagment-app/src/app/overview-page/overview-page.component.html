@@ -53,6 +53,8 @@
 
                             <button class="add-transaction" (click)="OpenMenu()">New Transaction</button>  
 
+                            <!-- <button class="show-more-transactions" (click)="OpenShowMoreTransactions()">Show More</button> -->
+
                             
                             
                             
@@ -194,6 +196,8 @@
                 <div class="transactions-section">
 
                   <h3 class="transactions-h3">Your Last Transactions</h3>
+
+                 
 
                   <div class="transaction-row" *ngFor="let transaction of paginatedTransactions">
                       <div class="left-group">

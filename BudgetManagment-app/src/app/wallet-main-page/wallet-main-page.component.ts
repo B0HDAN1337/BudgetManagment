@@ -24,10 +24,12 @@ export class WalletMainPageComponent implements OnInit {
   wallets: any;
 
   transactions: Transaction[] = [];
+  paginatedTransactions: Transaction[] = [];
 
   isAddTransactionVisible = false;
   isShowMoreTransactionsVisible = false;
   isSaveMoneyOverviewVisible = false;
+  isEditTransactionVisible = false;
 
   constructor(
     private router: Router, 
@@ -103,6 +105,67 @@ export class WalletMainPageComponent implements OnInit {
     )
   }
 
+<<<<<<< Updated upstream
+=======
+  getCurrencySymbol(currency: string): string {
+  switch (currency) {
+    case 'USD': return '$';
+    case 'EUR': return '€';
+    case 'PLN': return 'zł';
+    default: return currency;
+  }
+}
+
+currentPage: number = 1;
+pageSize: number = 5;
+totalPages: number = 0;
+pages: number[] = [];
+
+updatePagination() {
+  this.totalPages = Math.ceil(this.transactions.length / this.pageSize);
+  this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  const startIndex = (this.currentPage - 1) * this.pageSize;
+  const endIndex = startIndex + this.pageSize;
+  this.paginatedTransactions = this.filteredTransactions.slice(startIndex, endIndex);
+}
+
+goToPage(page: number) {
+  this.currentPage = page;
+  this.updatePagination();
+}
+
+nextPage() {
+  if (this.currentPage < this.totalPages) {
+    this.currentPage++;
+    this.updatePagination();
+  }
+}
+
+previousPage() {
+  if (this.currentPage > 1) {
+    this.currentPage--;
+    this.updatePagination();
+  }
+}
+
+selectedCategory = 'All Categories';
+
+getCategoryImage(category: string, color: string = 'violet'): string {
+    switch (category) {
+      case 'Food': return `/assets/icons/food-${color}.png`;
+      case 'Home': return `/assets/icons/home-${color}.png`;
+      case 'Healthcare': return `/assets/icons/healthcare-${color}.png` ;
+      case 'Travel': return `/assets/icons/travel-${color}.png`;
+      case 'Income': return `/assets/icons/income-${color}.png`;
+      default: return category;
+    }
+  }
+
+  isActiveCategory(category: string): boolean {
+  return this.selectedCategory === category;
+}
+
+>>>>>>> Stashed changes
   totalIncome: number = 0;
   totalExpense: number = 0;
 
@@ -120,6 +183,8 @@ export class WalletMainPageComponent implements OnInit {
   isAddSavingsVisible = false;
   isSavingsOverviewVisible = false;
 
+  
+
   OpenAddSavingsMenu(){
     this.isAddSavingsVisible = true;
   }
@@ -130,6 +195,15 @@ export class WalletMainPageComponent implements OnInit {
 
   OpenSaveMoneyOverview(){
     this.isSaveMoneyOverviewVisible = true;
+  }
+
+  OpenShowMoreTransactions()
+  {
+    this.isShowMoreTransactionsVisible = true;
+  }
+
+  ShowEditTransactionMenu(){
+    this.isEditTransactionVisible = true;
   }
 
   CloseAddSavingsMenu()
@@ -143,6 +217,15 @@ export class WalletMainPageComponent implements OnInit {
 
   CloseSaveMoneyOverview(){
     this.isSaveMoneyOverviewVisible = false;
+  }
+
+  CloseShowMoreTransactions()
+  {
+    this.isShowMoreTransactionsVisible = false;
+  }
+
+  CloseEditTransactionMenu(){
+    this.isEditTransactionVisible = false;
   }
 
 
@@ -304,4 +387,131 @@ loadExpenseByCategory(walletId: number) {
   });
 }
 
+<<<<<<< Updated upstream
+=======
+filteredTransactions: Transaction[] = [];
+fromDate: string = '';
+toDate: string = '';
+
+applyFilters() {
+    this.filteredTransactions = this.transactions.filter(t => {
+      const dateFromMatch = !this.fromDate || new Date(t.date) >= new Date(this.fromDate);
+      const dateToMatch = !this.toDate || new Date(t.date) <= new Date(this.toDate);
+      return dateFromMatch && dateToMatch;
+    });
+
+    this.totalIncome = this.filteredTransactions
+      .filter(t => t.type === 0) 
+      .reduce((sum, t) => sum + t.convertedAmount, 0);
+
+    this.totalExpense = this.filteredTransactions
+      .filter(t => t.type === 1) 
+      .reduce((sum, t) => sum + t.convertedAmount, 0);
+
+      this.updateCharts();
+  }
+
+  updateCharts() {
+  const incomeByDateMap = new Map<string, number>();
+  this.filteredTransactions
+    .filter(t => t.type === 0)
+    .forEach(t => {
+      const date = t.date;
+      incomeByDateMap.set(date, (incomeByDateMap.get(date) || 0) + t.amount);
+    });
+
+  const incomeLabels = Array.from(incomeByDateMap.keys()).sort();
+  const incomeAmounts = incomeLabels.map(date => incomeByDateMap.get(date) || 0);
+
+  this.barChartData = {
+    labels: incomeLabels,
+    datasets: [
+      {
+        data: incomeAmounts,
+        label: 'Income',
+        backgroundColor: '#4DB6AC'
+      }
+    ]
+  };
+
+  const expenseByDateMap = new Map<string, number>();
+  this.filteredTransactions
+    .filter(t => t.type === 1)
+    .forEach(t => {
+      const date = t.date;
+      expenseByDateMap.set(date, (expenseByDateMap.get(date) || 0) + t.amount);
+    });
+
+  const expenseLabels = Array.from(expenseByDateMap.keys()).sort();
+  const expenseAmounts = expenseLabels.map(date => expenseByDateMap.get(date) || 0);
+
+  this.ExpensebarChartData = {
+    labels: expenseLabels,
+    datasets: [
+      {
+        data: expenseAmounts,
+        label: 'Expense',
+        backgroundColor: '#4DB6AC'
+      }
+    ]
+  };
+}
+
+// ---------- Saving ----------
+
+newSaving: Saving = {
+  savingID: 0,
+  savingName: '',
+  description: '',
+  goalDate: '',
+  amountSave: 0,
+  currency: '',
+  walletID: 0
+};
+
+savings: Saving[] = [];
+
+addSaving() {
+  this.savingService.CreateSaving(this.newSaving).subscribe( success =>
+  {
+    console.log('Successfull created saving', success);
+  }, error =>
+  {
+    console.log('Error create Saving', error);
+  }
+  )
+}
+
+loadSavings() {
+  this.savingService.GetSaving().subscribe(data => {
+    this.savings = data;
+  }
+  )
+}
+
+deleteSavings(savingID: number) {
+  this.savingService.DeleteSavings(savingID).subscribe(success =>
+  {
+    console.log("Success Deleted Saving", success);
+   this.savings = this.savings.filter(s => s.savingID !== savingID);
+    this.loadSavings();
+  }, error =>
+  {
+    console.log("Error Deleted Saving", error);
+  }
+  )
+}
+
+selectedCurrency: string = 'All';
+
+resetFilters() {
+  this.selectedCategory = 'All Categories';
+  this.selectedCurrency = 'All';
+  this.fromDate = '';
+  this.toDate = '';
+  this.filteredTransactions = [...this.transactions];
+  this.updatePagination();
+}
+
+>>>>>>> Stashed changes
 }
