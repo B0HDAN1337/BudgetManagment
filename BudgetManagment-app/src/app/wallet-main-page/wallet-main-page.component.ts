@@ -76,6 +76,8 @@ export class WalletMainPageComponent implements OnInit {
     {
         console.log("Success transaction", success);
         alert("Success created transaction");
+        this.ngOnInit();
+        this.isAddTransactionVisible = false;
     }, error =>
     {
         console.log("Error transaction", error);

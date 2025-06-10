@@ -110,7 +110,7 @@ export class OverviewPageComponent implements OnInit{
     {
         console.log("Success transaction", success);
         alert("Success created transaction");
-        this.loadTransaction();
+        this.ngOnInit();
         this.isAddTransactionVisible = false;
     }, error =>
     {
