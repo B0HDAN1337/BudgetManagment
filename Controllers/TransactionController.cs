@@ -82,7 +82,7 @@ namespace BudgetManagmentServer.Controllers
             }
 
 
-            
+            transaction.ConvertedAmount = convertedAmount;
             wallet.Currency += convertedAmount;
             var newTransaction = _repository.CreateTransaction(transaction);
             _context.SaveChanges();
@@ -103,8 +103,8 @@ namespace BudgetManagmentServer.Controllers
         {
             //int userIdClaim = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-            var totalIncome = _context.Transactions.Where(t => t.WalletID == walletID && t.Type == TransactionType.Income).Sum(t => t.amount);
-            var totalExpense = _context.Transactions.Where(t => t.WalletID == walletID && t.Type == TransactionType.Expense).Sum(t => t.amount);
+            var totalIncome = _context.Transactions.Where(t => t.WalletID == walletID && t.Type == TransactionType.Income).Sum(t => t.ConvertedAmount);
+            var totalExpense = _context.Transactions.Where(t => t.WalletID == walletID && t.Type == TransactionType.Expense).Sum(t => t.ConvertedAmount);
             return Ok(new
             {
                 income = totalIncome,

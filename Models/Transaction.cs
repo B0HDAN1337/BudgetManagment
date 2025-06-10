@@ -21,6 +21,7 @@ namespace BudgetManagmentServer.Models
         public DateOnly date { get; set; }
         [Required]
         public string currency { get; set; }
+        public float ConvertedAmount { get; set; }
 
         [JsonIgnore]
         public User? User { get; set; }
