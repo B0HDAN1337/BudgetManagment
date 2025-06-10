@@ -44,8 +44,13 @@ namespace BudgetManagmentServer.Repository
 
         public Transaction DeleteTransaction(int id)
         {
-            var transactionDelete = _context.Transactions.Find(id);
+            var transactionDelete = _context.Transactions.FirstOrDefault(t => t.TransactionID == id);
+            var wallet = _context.Wallets.FirstOrDefault(w => w.WalletID == transactionDelete.WalletID);
+
+            wallet.Currency -= transactionDelete.ConvertedAmount;            
+            
             _context.Transactions.Remove(transactionDelete);
+            _context.SaveChanges();
 
             return transactionDelete;
         }

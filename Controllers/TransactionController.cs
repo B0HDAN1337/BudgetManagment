@@ -126,15 +126,46 @@ namespace BudgetManagmentServer.Controllers
         }
 
         [HttpPost("{transactionID}")]
-        public IActionResult UpdateTransactionById(int transactionID, Transaction transaction)
+        public IActionResult UpdateTransactionById(int transactionID, Transaction updatedTransaction)
         {
-            var transactions = _repository.UpdateTransaction(transactionID, transaction);
-            if (transactions == null)
-            {
+            var existingTransaction = _context.Transactions.FirstOrDefault(t => t.TransactionID == transactionID);
+            if (existingTransaction == null)
                 return NotFound($"Transaction with id {transactionID} not found.");
-            }
 
-            return Ok(transaction);
+            var wallet = _context.Wallets.FirstOrDefault(w => w.WalletID == existingTransaction.WalletID);
+            if (wallet == null)
+                return BadRequest("Wallet not found.");
+
+            wallet.Currency -= existingTransaction.ConvertedAmount;
+
+            updatedTransaction.Type = updatedTransaction.Category == "Income" ? TransactionType.Income : TransactionType.Expense;
+            updatedTransaction.amount = updatedTransaction.Type == TransactionType.Income
+                ? Math.Abs(updatedTransaction.amount)
+                : -Math.Abs(updatedTransaction.amount);
+
+            float newConvertedAmount = updatedTransaction.amount;
+            if (updatedTransaction.currency != wallet.WalletCurrency)
+            {
+                newConvertedAmount = _repository.Convert(
+                    Math.Abs(updatedTransaction.amount),
+                    updatedTransaction.currency,
+                    wallet.WalletCurrency
+                );
+                newConvertedAmount = updatedTransaction.amount < 0 ? -newConvertedAmount : newConvertedAmount;
+            }
+            updatedTransaction.ConvertedAmount = newConvertedAmount;
+
+            wallet.Currency += newConvertedAmount;
+
+            existingTransaction.amount = updatedTransaction.amount;
+            existingTransaction.ConvertedAmount = updatedTransaction.ConvertedAmount;
+            existingTransaction.Category = updatedTransaction.Category;
+            existingTransaction.currency = updatedTransaction.currency;
+            existingTransaction.date = updatedTransaction.date;
+            existingTransaction.Type = updatedTransaction.Type;
+
+            _context.SaveChanges();
+            return Ok(existingTransaction);
         }
 
         [HttpDelete("{transactionID}")]

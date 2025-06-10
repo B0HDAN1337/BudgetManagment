@@ -42,13 +42,16 @@ export class WalletMainPageComponent implements OnInit {
     private savingService: SavingService) {}
 
   transaction = {
-      category: '',
-      date: '',
-      amount: 0,
-      currency: '',
-      walletID: 0,
-      type: 0
-    }
+    transactionID: 0,
+    category: '',
+    date: '',
+    amount: 0,
+    currency: '',
+    walletID: 0,
+    type: 0,
+    userID: 0,
+    convertedAmount: 0
+  }
 
     ngOnInit() {
       this.walletId = +this.route.snapshot.paramMap.get('id')!;
@@ -210,7 +213,8 @@ export class WalletMainPageComponent implements OnInit {
     this.isShowMoreTransactionsVisible = true;
   }
 
-  ShowEditTransactionMenu(){
+  ShowEditTransactionMenu(transaction: Transaction){
+    this.transaction = { ...transaction }; 
     this.isEditTransactionVisible = true;
   }
 
@@ -532,5 +536,35 @@ resetFilters() {
   this.toDate = '';
   this.filteredTransactions = [...this.transactions];
   this.updatePagination();
+}
+
+
+updateTransaction() {
+  this.transactionService.updateTransaction(this.transaction.transactionID, this.transaction).subscribe(
+    success => {
+      console.log("Transaction updated successfully", success);
+      alert("Transaction updated successfully");
+      this.CloseEditTransactionMenu();
+      this.ngOnInit();
+      this.updatePagination();
+    },
+    error => {
+      console.error("Error updating transaction", error);
+      alert("Error updating transaction");
+    }
+  );
+}
+
+deleteTransaction(transactionID: number) {
+  this.transactionService.deleteTransactionById(transactionID).subscribe(success =>
+  {
+    console.log("Success deleted Transaction", success);
+    this.ngOnInit();
+    this.updatePagination();
+  }, error => 
+  {
+    console.log("Error delete Transaction", error);
+  }
+  )
 }
 }

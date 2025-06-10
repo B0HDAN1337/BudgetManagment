@@ -526,7 +526,7 @@
 
               <div class="right-group">
                 <span class="amount negative" [ngClass]="{'positive': transaction.amount > 0, 'negative': transaction.amount < 0}">{{transaction.amount}} {{getCurrencySymbol(transaction.currency)}}</span>
-                <button class="edit-button" aria-label="Edit transaction" (click)="ShowEditTransactionMenu()">Edit</button>
+                <button class="edit-button" aria-label="Edit transaction" (click)="ShowEditTransactionMenu(transaction)">Edit</button>
               </div>
           </div>
         
@@ -571,7 +571,7 @@
       <div class="corners-add-transaction">
           <button class="closeMenu" (click)="CloseEditTransactionMenu()">Close</button>
           
-          <form class="form_edit">
+          <form class="form_edit" (ngSubmit)="updateTransaction()">
               <div class="top-row-container_edit">
                 <div class="category_edit">
                   <label>Category</label>
@@ -604,7 +604,7 @@
                   </select>
                 </div>
                 <div class="buttons-div-edit-transactions">
-                    <button type="submit" class="button-delete-edit-transaction">Delete</button>
+                    <button type="button" class="button-delete-edit-transaction" (click)="deleteTransaction(transaction.transactionID)">Delete</button>
                     <button type="submit" class="button-save-edit-transaction">Save</button>
                 </div>
                 

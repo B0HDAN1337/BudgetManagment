@@ -27,12 +27,15 @@ export class OverviewPageComponent implements OnInit{
   filteredTransactions: Transaction[] = [];
 
   transaction = {
+    transactionID: 0,
     category: '',
     date: '',
     amount: 0,
     currency: '',
     walletID: 0,
-    type: 0
+    type: 0,
+    userID: 0,
+    convertedAmount: 0
   }
   
   constructor(
@@ -55,7 +58,8 @@ export class OverviewPageComponent implements OnInit{
     this.isShowMoreTransactionsVisible = true;
   }
 
-  ShowEditTransactionMenu(){
+  ShowEditTransactionMenu(transaction: Transaction){
+    this.transaction = { ...transaction }; 
     this.isEditTransactionVisible = true;
   }
 
@@ -217,6 +221,9 @@ deleteTransaction(transactionID: number) {
   {
     console.log("Success deleted Transaction", success);
     this.loadTransaction();
+    this.ngOnInit();
+    this.loadWallets();
+    this.updatePagination();
   }, error => 
   {
     console.log("Error delete Transaction", error);
@@ -248,5 +255,23 @@ resetFilters() {
   this.filteredTransactions = [...this.transactions];
   this.updatePagination();
 }
+
+updateTransaction() {
+  this.transactionService.updateTransaction(this.transaction.transactionID, this.transaction).subscribe(
+    success => {
+      console.log("Transaction updated successfully", success);
+      alert("Transaction updated successfully");
+      this.loadTransaction();
+      this.CloseEditTransactionMenu();
+      this.ngOnInit();
+      this.updatePagination();
+    },
+    error => {
+      console.error("Error updating transaction", error);
+      alert("Error updating transaction");
+    }
+  );
+}
+
 
 }
