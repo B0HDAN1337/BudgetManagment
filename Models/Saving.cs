@@ -17,6 +17,7 @@ namespace BudgetManagmentServer.Models
         [Required]
         public DateOnly GoalDate { get; set; }
         [Required]
+        public float amountGoal { get; set; }
         public float amountSave { get; set; }
         [Required]
         public string Currency { get; set; }

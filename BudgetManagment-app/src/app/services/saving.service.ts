@@ -11,8 +11,8 @@ export class SavingService {
 
   constructor(private http: HttpClient) {}
 
-  CreateSaving(saving: Saving): Observable<Saving> {
-    return this.http.post<Saving>(this.SavingUrl, saving);
+  CreateSaving(walletId: number, saving: Saving): Observable<Saving> {
+    return this.http.post<Saving>(`${this.SavingUrl}/wallet/${walletId}/save`, saving);
   }
 
   GetSaving(): Observable<Saving[]> {

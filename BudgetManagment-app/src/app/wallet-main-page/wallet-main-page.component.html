@@ -144,7 +144,7 @@
       <div class="corners-add-savings">
           <button class="closeMenu" (click)="CloseAddSavingsMenu()">Close</button>
           
-          <form class="form-add-savings" (submit)="addSaving()">
+          <form class="form-add-savings" (submit)="addSaving(wallets.walletID)">
             
               <div class="main-container_add_savings">
 
@@ -164,7 +164,7 @@
                     <div class="amount-currency-addsavingsbutton-container">
                         <div class="amount-add-savings">
                             <label>Amount</label>
-                            <input [(ngModel)]="newSaving.amountSave" name="Amount" placeholder="Amount" required />
+                            <input [(ngModel)]="newSaving.amountGoal" name="Amount" placeholder="Amount" required />
                         </div>
                         <div class="currency-add-savings">
                           <label class="filter-label">Currency</label>

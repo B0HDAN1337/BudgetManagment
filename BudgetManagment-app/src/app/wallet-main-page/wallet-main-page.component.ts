@@ -417,14 +417,15 @@ newSaving: Saving = {
   description: '',
   goalDate: '',
   amountSave: 0,
+  amountGoal: 0,
   currency: '',
   walletID: 0
 };
 
 savings: Saving[] = [];
 
-addSaving() {
-  this.savingService.CreateSaving(this.newSaving).subscribe( success =>
+addSaving(walletId: number) {
+  this.savingService.CreateSaving(walletId, this.newSaving).subscribe( success =>
   {
     console.log('Successfull created saving', success);
   }, error =>
@@ -437,6 +438,7 @@ addSaving() {
 loadSavings() {
   this.savingService.GetSaving().subscribe(data => {
     this.savings = data;
+    console.log(data);
   }
   )
 }

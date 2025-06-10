@@ -39,8 +39,8 @@ namespace BudgetManagmentServer.Controllers
             return Ok(savings);
         }
 
-        [HttpPost]
-        public IActionResult CreateSaving([FromBody] Saving saving)
+        [HttpPost("wallet/{walletId}/save")]
+        public IActionResult CreateSaving([FromBody] Saving saving, int walletId)
         {
             int UserIdClaim = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             var savingCount = _context.Savings.Where(s => s.UserID == UserIdClaim).Count();
@@ -53,7 +53,16 @@ namespace BudgetManagmentServer.Controllers
                 return BadRequest("Max saving 3");
             }
 
+            var wallet = _context.Wallets.FirstOrDefault(w => w.WalletID == walletId);
+            if (wallet == null)
+            {
+                return BadRequest("Wallet not found or does not belong to the user.");
+            }
+
+            wallet.Currency -= saving.amountSave;
+
             saving.UserID = UserIdClaim;
+            saving.WalletID = walletId;
 
             var newSaving = _savingRepository.CreateSaving(saving);
 
