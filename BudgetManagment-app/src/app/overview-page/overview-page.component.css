@@ -93,8 +93,9 @@
   position: absolute;
   right: 1rem;
   bottom: 1rem;
-  margin: 0;
-  font-family: 'Poppins';
+  font-family: 'Poppins'; 
+  font-weight: bold;
+  font-size: 18px;
 }
 .wallets-row {
   display: flex;     

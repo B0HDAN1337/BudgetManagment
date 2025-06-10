@@ -1,5 +1,6 @@
 using BudgetManagmentServer.Data;
 using BudgetManagmentServer.Models;
+using Microsoft.VisualBasic;
 
 namespace BudgetManagmentServer.Repository
 {
@@ -13,7 +14,7 @@ namespace BudgetManagmentServer.Repository
         }
         public IEnumerable<Transaction> GetAllTransaction(int userId)
         {
-            return _context.Transactions.Where(t => t.UserID == userId );
+            return _context.Transactions.Where(t => t.UserID == userId);
         }
         public Transaction GetTransactionById(int id)
         {
@@ -49,5 +50,27 @@ namespace BudgetManagmentServer.Repository
             return transactionDelete;
         }
 
+
+        public float Convert(float amount, string fromCurrency, string toCurrency)
+        {
+            if (fromCurrency == toCurrency)
+                return amount;
+
+            float rate;
+
+            if (fromCurrency == "EUR" && toCurrency == "PLN") rate = 4.29f;
+            else if (fromCurrency == "USD" && toCurrency == "PLN") rate = 3.76f;
+            else if (fromCurrency == "PLN" && toCurrency == "EUR") rate = 1f / 4.29f;
+            else if (fromCurrency == "PLN" && toCurrency == "USD") rate = 1f / 3.76f;
+            else if (fromCurrency == "EUR" && toCurrency == "USD") rate = 1.14f;
+            else if (fromCurrency == "USD" && toCurrency == "EUR") rate = 1f / 1.14f;
+            else
+                throw new Exception("Unsupported currency pair");
+
+            return amount * rate;
+
+
+
+        }
     }
 }

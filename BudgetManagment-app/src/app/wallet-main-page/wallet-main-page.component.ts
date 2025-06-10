@@ -9,6 +9,8 @@ import { WalletService } from '../services/wallet.service';
 import { Wallet } from '../interface/wallet.model';
 import { ActivatedRoute } from '@angular/router';
 import { Transaction, TransactionType } from '../interface/transaction.model';
+import { Saving } from '../interface/saving.model';
+import { SavingService } from '../services/saving.service';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartType, ChartData, ChartOptions } from 'chart.js';
 
@@ -36,7 +38,8 @@ export class WalletMainPageComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private transactionService: TransactionService,
-    private walletService: WalletService) {}
+    private walletService: WalletService,
+    private savingService: SavingService) {}
 
   transaction = {
       category: '',
@@ -50,10 +53,12 @@ export class WalletMainPageComponent implements OnInit {
     ngOnInit() {
       this.walletId = +this.route.snapshot.paramMap.get('id')!;
       this.transaction.walletID = this.walletId;
+      this.newSaving.walletID = this.walletId;
       this.loadWalletsName(this.walletId);
       this.loadTransactionByWallet(this.walletId);
       this.totalIncomeAmount();
       this.loadExpenseByCategory(this.walletId);
+      this.loadSavings();
     }
 
   OpenMenu()
@@ -66,8 +71,8 @@ export class WalletMainPageComponent implements OnInit {
     this.isAddTransactionVisible = false;
   }
 
-  CreateTransaction() {
-    this.transactionService.addTransaction(this.transaction).subscribe( success =>
+  CreateTransaction(walletID: number) {
+    this.transactionService.addTransactionByWallet(walletID, this.transaction).subscribe( success =>
     {
         console.log("Success transaction", success);
         alert("Success created transaction");
@@ -85,6 +90,7 @@ export class WalletMainPageComponent implements OnInit {
       console.log('Transactions: ', transaction);
       this.loadIncomeByDate(walletId);
       this.loadExpenseByDate(walletId);
+
     }, error => {
       console.error('Error loading transactions: ', error);
       this.transactions = [];
@@ -105,69 +111,66 @@ export class WalletMainPageComponent implements OnInit {
     )
   }
 
-<<<<<<< Updated upstream
-=======
   getCurrencySymbol(currency: string): string {
-  switch (currency) {
-    case 'USD': return '$';
-    case 'EUR': return '€';
-    case 'PLN': return 'zł';
-    default: return currency;
-  }
-}
-
-currentPage: number = 1;
-pageSize: number = 5;
-totalPages: number = 0;
-pages: number[] = [];
-
-updatePagination() {
-  this.totalPages = Math.ceil(this.transactions.length / this.pageSize);
-  this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
-  const startIndex = (this.currentPage - 1) * this.pageSize;
-  const endIndex = startIndex + this.pageSize;
-  this.paginatedTransactions = this.filteredTransactions.slice(startIndex, endIndex);
-}
-
-goToPage(page: number) {
-  this.currentPage = page;
-  this.updatePagination();
-}
-
-nextPage() {
-  if (this.currentPage < this.totalPages) {
-    this.currentPage++;
-    this.updatePagination();
-  }
-}
-
-previousPage() {
-  if (this.currentPage > 1) {
-    this.currentPage--;
-    this.updatePagination();
-  }
-}
-
-selectedCategory = 'All Categories';
-
-getCategoryImage(category: string, color: string = 'violet'): string {
-    switch (category) {
-      case 'Food': return `/assets/icons/food-${color}.png`;
-      case 'Home': return `/assets/icons/home-${color}.png`;
-      case 'Healthcare': return `/assets/icons/healthcare-${color}.png` ;
-      case 'Travel': return `/assets/icons/travel-${color}.png`;
-      case 'Income': return `/assets/icons/income-${color}.png`;
-      default: return category;
+    switch (currency) {
+      case 'USD': return '$';
+      case 'EUR': return '€';
+      case 'PLN': return 'zł';
+      default: return currency;
     }
   }
-
-  isActiveCategory(category: string): boolean {
-  return this.selectedCategory === category;
-}
-
->>>>>>> Stashed changes
+  
+  currentPage: number = 1;
+  pageSize: number = 5;
+  totalPages: number = 0;
+  pages: number[] = [];
+  
+  updatePagination() {
+    this.totalPages = Math.ceil(this.transactions.length / this.pageSize);
+    this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedTransactions = this.filteredTransactions.slice(startIndex, endIndex);
+  }
+  
+  goToPage(page: number) {
+    this.currentPage = page;
+    this.updatePagination();
+  }
+  
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.updatePagination();
+    }
+  }
+  
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePagination();
+    }
+  }
+  
+  selectedCategory = 'All Categories';
+  
+  getCategoryImage(category: string, color: string = 'violet'): string {
+      switch (category) {
+        case 'Food': return `/assets/icons/food-${color}.png`;
+        case 'Home': return `/assets/icons/home-${color}.png`;
+        case 'Healthcare': return `/assets/icons/healthcare-${color}.png` ;
+        case 'Travel': return `/assets/icons/travel-${color}.png`;
+        case 'Income': return `/assets/icons/income-${color}.png`;
+        default: return category;
+      }
+    }
+  
+    isActiveCategory(category: string): boolean {
+    return this.selectedCategory === category;
+  }
   totalIncome: number = 0;
   totalExpense: number = 0;
+  totalBalance: number = 0;
 
   totalIncomeAmount() {
     this.transactionService.getWalletIncomeTotal(this.walletId).subscribe( total =>
@@ -189,7 +192,10 @@ getCategoryImage(category: string, color: string = 'violet'): string {
     this.isAddSavingsVisible = true;
   }
   
-  OpenSavingsOverview(){
+  selectedSaving: Saving | null = null;
+
+  OpenSavingsOverview(savingID: number){
+    this.selectedSaving = this.savings.find(s => s.savingID == savingID) || null;
     this.isSavingsOverviewVisible = true;
   }
 
@@ -299,7 +305,8 @@ ExpensebarChartOptions: ChartOptions = {
   scales: {
     x: {},
     y: {
-      beginAtZero: true
+      beginAtZero: true,
+
     }
   }
 };
@@ -387,8 +394,6 @@ loadExpenseByCategory(walletId: number) {
   });
 }
 
-<<<<<<< Updated upstream
-=======
 filteredTransactions: Transaction[] = [];
 fromDate: string = '';
 toDate: string = '';
@@ -512,6 +517,4 @@ resetFilters() {
   this.filteredTransactions = [...this.transactions];
   this.updatePagination();
 }
-
->>>>>>> Stashed changes
 }

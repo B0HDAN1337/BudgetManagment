@@ -20,7 +20,8 @@ namespace BudgetManagmentServer
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IWalletRepository, WalletRepository>();
             builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
-
+            builder.Services.AddScoped<ISavingRepository, SavingRepository>();
+            
             builder.Services.AddDbContext<BudgetManagmentContext>(options =>
                 options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 

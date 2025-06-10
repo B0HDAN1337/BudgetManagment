@@ -25,7 +25,7 @@
                                             <label class="name"><b>{{wallet.walletName}}</b></label>
                                             <label class="description">{{wallet.description}}</label>    
                                         </div>
-                                        <a [ngClass]="{'positive': wallet.currency > 0, 'negative': wallet.currency < 0}">{{wallet.currency}}</a>
+                                        <a [ngClass]="{'positive': wallet.currency > 0, 'negative': wallet.currency < 0}">{{wallet.currency | number:'1.2-2'}} {{getCurrencySymbol(wallet.walletCurrency)}}</a>
                                     </div>
                                     <button *ngIf="wallets && wallets.length >= 1 && wallets.length < 5" class="add-wallet-circle" (click)="OpenCreateMenu()">+</button>
                                 </div>
@@ -154,7 +154,7 @@
                   <div class="filters">
                     <div class="filter">
                       <label class="filter-label">Category</label>
-                      <select class="select-menu">
+                      <select class="select-menu" [(ngModel)]="selectedCategory">
                         <option class="category-option">All Categories</option>
                         <option class="category-option">Food</option>
                         <option class="category-option">Home</option>
@@ -167,29 +167,29 @@
                     <div class="filter">
                       <label class="filter-label">Currency</label>
                       <div class="currency-select">
-                        <select class="select-menu">
-                          <option>United States Dollar</option>
-                          <option>Euro</option>
-                          <option>Polish Złoty</option>
+                        <select class="select-menu" [(ngModel)]="selectedCurrency">
+                          <option value="USD">United States Dollar</option>
+                          <option value="EUR">Euro</option>
+                          <option value="PLN">Polish Złoty</option>
                         </select>
                       </div>
                     </div>
             
                     <div class="filter">
                       <label class="filter-label">From Date</label>
-                      <input class="select-menu" type="date" placeholder="22/02/2025">
+                      <input class="select-menu" type="date" [(ngModel)]="fromDate" placeholder="22/02/2025">
                     </div>
 
                     <div class="filter">
                       <label class="filter-label">To Date</label>
-                      <input class="select-menu" type="date" placeholder="22/04/2025">
+                      <input class="select-menu" type="date" [(ngModel)]="toDate" placeholder="22/04/2025">
                     </div>
           
                   </div>
             
                   <div class="filter-buttons">
-                    <button class="reset">Reset Filters</button>
-                    <button class="apply">Apply Filters</button>
+                    <button class="reset" (click)="resetFilters()">Reset Filters</button>
+                    <button class="apply" (click)="applyFilters()">Apply Filters</button>
                   </div>
                 </div>
             
@@ -208,12 +208,12 @@
                       <span class="date_transaction_list">{{transaction.date}}</span>
 
                       <div class="right-group">
-                        <span class="amount negative" [ngClass]="{'positive': transaction.amount > 0, 'negative': transaction.amount < 0}">{{transaction.amount}} $</span>
+                        <span class="amount negative" [ngClass]="{'positive': transaction.amount > 0, 'negative': transaction.amount < 0}">{{transaction.amount}} {{getCurrencySymbol(transaction.currency)}}</span>
                         <button class="edit-button" aria-label="Edit transaction" (click)="ShowEditTransactionMenu()">Edit</button>
                       </div>
                   </div>
                 
-                  <div class="transaction-row">
+                  <!-- <div class="transaction-row">
                     <div class="left-group">
                       <img src="assets/icons/income-violet.png" alt="Food icon" />
                       <span class="category">Income</span>
@@ -225,7 +225,7 @@
                       <span class="amount positive">+100.00 $</span>
                       <button class="edit-button" aria-label="Edit transaction" (click)="ShowEditTransactionMenu()" >Edit</button>
                     </div>
-                </div>
+                </div> -->
 
                 </div>
             

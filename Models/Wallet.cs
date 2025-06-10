@@ -16,10 +16,14 @@ namespace BudgetManagmentServer.Models
         [Required]
         [Range(1.0, float.MaxValue, ErrorMessage = "Must be > 0")]
         public float Currency { get; set; }
+        [Required]
+        public string WalletCurrency { get; set; }
         [JsonIgnore]
         public User? User { get; set; }
         public int userId { get; set; }
 
         public ICollection<Transaction>? Transactions { get; set; }
+
+        public ICollection<Saving>? Savings { get; set; }
     }
 }

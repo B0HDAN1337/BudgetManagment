@@ -24,6 +24,7 @@ export class OverviewPageComponent implements OnInit{
   wallets: Wallet[] =[];
   transactions: Transaction[] = [];
   paginatedTransactions: Transaction[] = [];
+  filteredTransactions: Transaction[] = [];
 
   transaction = {
     category: '',
@@ -185,7 +186,7 @@ updatePagination() {
   this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
   const startIndex = (this.currentPage - 1) * this.pageSize;
   const endIndex = startIndex + this.pageSize;
-  this.paginatedTransactions = this.transactions.slice(startIndex, endIndex);
+  this.paginatedTransactions = this.filteredTransactions.slice(startIndex, endIndex);
 }
 
 goToPage(page: number) {
@@ -222,4 +223,30 @@ deleteTransaction(transactionID: number) {
   }
   )
 }
+
+
+selectedCurrency: string = 'All';
+fromDate: string = '';
+toDate: string = '';
+
+applyFilters() {
+  this.filteredTransactions = this.transactions.filter(t => {
+    const categoryMatch = this.selectedCategory === 'All Categories' || t.category === this.selectedCategory;
+    const currencyMatch = this.selectedCurrency === 'All' || t.currency === this.selectedCurrency;
+    const dateFromMatch = !this.fromDate || new Date(t.date) >= new Date(this.fromDate);
+    const dateToMatch = !this.toDate || new Date(t.date) <= new Date(this.toDate);
+    return categoryMatch && currencyMatch && dateFromMatch && dateToMatch;
+  });
+  this.updatePagination();
+}
+
+resetFilters() {
+  this.selectedCategory = 'All Categories';
+  this.selectedCurrency = 'All';
+  this.fromDate = '';
+  this.toDate = '';
+  this.filteredTransactions = [...this.transactions];
+  this.updatePagination();
+}
+
 }
