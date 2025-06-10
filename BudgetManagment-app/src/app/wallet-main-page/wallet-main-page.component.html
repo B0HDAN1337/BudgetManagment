@@ -375,7 +375,7 @@
       <div class="corners-add-transaction">
           <button class="closeMenu" (click)="CloseMenu()">Close</button>
           
-          <form class="form" (ngSubmit)="CreateTransaction()">
+          <form class="form" (ngSubmit)="CreateTransaction(wallets.walletID)">
             
             <div class="top-row-container row">
               <div class="category">
@@ -409,14 +409,7 @@
                   <option value="PLN">Polish złoty</option>
                 </select>
               </div>
-              <div class="currency" style="margin-left: 105px;">
-                <label>Wallet</label>
-                <select [(ngModel)]="transaction.walletID" name="walletID" required>
-                  <option *ngFor="let wallet of wallets" [value]="wallet.walletID">
-                    {{ wallet.walletName }}
-                  </option>
-                </select>
-              </div>
+              
             </div>
           
             

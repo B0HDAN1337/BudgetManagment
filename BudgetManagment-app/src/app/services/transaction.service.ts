@@ -27,6 +27,9 @@ export class TransactionService {
  addTransaction(transaction: Partial<Transaction>): Observable<Transaction> {
     return this.http.post<Transaction>(this.transactionUrl, transaction);
   }
+  addTransactionByWallet(walletID: number, transaction: Partial<Transaction>): Observable<Transaction> {
+    return this.http.post<Transaction>(`${this.transactionUrl}/wallet/${walletID}/transaction`, transaction);
+  }
 
   delete(transactionID: number) {
     return this.http.delete(`${this.transactionUrl}/${transactionID}`);

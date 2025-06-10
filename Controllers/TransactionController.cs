@@ -38,20 +38,13 @@ namespace BudgetManagmentServer.Controllers
             var transactions = _repository.GetAllTransaction(userId);
             return Ok(transactions);
         }
-        [HttpPost]
-        public IActionResult CreateTransaction([FromBody] Transaction transaction)
+
+        private IActionResult CreateTransactionInternal(Transaction transaction, int walletId, int userId)
         {
-            int UserIdClaim = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            transaction.UserID = UserIdClaim;
+            transaction.UserID = userId;
+            transaction.WalletID = walletId;
 
-            if (UserIdClaim == null)
-            {
-                return BadRequest("User ID claim is missing");
-            }
-
-            
-
-            var wallet = _context.Wallets.FirstOrDefault(w => w.WalletID == transaction.WalletID);
+            var wallet = _context.Wallets.FirstOrDefault(w => w.WalletID == walletId);
             if (wallet == null)
             {
                 return BadRequest("Wallet ID missing");
@@ -59,7 +52,6 @@ namespace BudgetManagmentServer.Controllers
 
             if (transaction.Category == "Income")
             {
-
                 transaction.Type = TransactionType.Income;
                 transaction.amount = Math.Abs(transaction.amount);
             }
@@ -69,25 +61,39 @@ namespace BudgetManagmentServer.Controllers
                 transaction.amount = -Math.Abs(transaction.amount);
             }
 
-           float convertedAmount = transaction.amount;
+            float convertedAmount = transaction.amount;
             if (transaction.currency != wallet.WalletCurrency)
             {
                 convertedAmount = _repository.Convert(
-                    Math.Abs(transaction.amount), 
+                    Math.Abs(transaction.amount),
                     transaction.currency,
                     wallet.WalletCurrency
                 );
-
                 convertedAmount = transaction.amount < 0 ? -convertedAmount : convertedAmount;
             }
 
-
             transaction.ConvertedAmount = convertedAmount;
             wallet.Currency += convertedAmount;
+
             var newTransaction = _repository.CreateTransaction(transaction);
             _context.SaveChanges();
             return Ok(newTransaction);
         }
+
+        [HttpPost]
+        public IActionResult CreateTransaction([FromBody] Transaction transaction)
+        {
+            int UserIdClaim = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            return CreateTransactionInternal(transaction, transaction.WalletID, UserIdClaim);
+        }
+
+        [HttpPost("wallet/{walletId}/transaction")]
+        public IActionResult CreateTransactionForWallet(int walletId, [FromBody] Transaction transaction)
+        {
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            return CreateTransactionInternal(transaction, walletId, userId);
+        }
+
 
         [HttpGet("wallet/{walletID}")]
         public IActionResult GetTransactionByWallet(int walletID)
@@ -145,7 +151,7 @@ namespace BudgetManagmentServer.Controllers
                                 .GroupBy(t => t.date).Select(g => new
                                 {
                                     date = g.Key.ToString("yyyy-MM-dd"),
-                                    amount = g.Sum(t => t.amount)
+                                    amount = g.Sum(t => t.ConvertedAmount)
                                 }).OrderBy(x => x.date).ToList();
             return Ok(incomeByDate);
         }
@@ -157,7 +163,7 @@ namespace BudgetManagmentServer.Controllers
                                 .GroupBy(t => t.date).Select(g => new
                                 {
                                     date = g.Key.ToString("yyyy-MM-dd"),
-                                    amount = g.Sum(t => t.amount)
+                                    amount = g.Sum(t => t.ConvertedAmount)
                                 }).OrderBy(x => x.date).ToList();
             return Ok(expenseByDate);
         }
@@ -170,7 +176,7 @@ namespace BudgetManagmentServer.Controllers
                                     .Select(g => new
                                     {
                                         category = g.Key,
-                                        amount = g.Sum(t => t.amount)
+                                        amount = g.Sum(t => t.ConvertedAmount)
                                     }).ToList();
             var totalExpense = expenseByCategory.Sum(x => x.amount);
 
