@@ -30,9 +30,13 @@ export class AccountOverviewComponent implements OnInit {
   }
 
   ngOnInit(){
-    this.userService.getUserData().subscribe(data =>
+    this.getUserData();
+    }
+    getUserData()
+    {
+      this.userService.getUserData().subscribe(data =>
       {
-        this.userData = data;
+        this.userData = {...data};
         console.log(this.userData)
       }, error =>
       {
@@ -61,5 +65,18 @@ export class AccountOverviewComponent implements OnInit {
           )
       }
       
+    }
+
+    btnUpdate(userData: any)
+    {
+      this.userService.updateUser(userData).subscribe( success =>
+      {
+        console.log("Success Updated User", success);
+        this.getUserData();
+      }, error =>
+      {
+        console.log("Error update user", error);
+      }
+      )
     }
 }

@@ -43,8 +43,12 @@ export class TransactionService {
     return this.http.get<{income: number, expense: number}>(`http://localhost:5142/api/transactions/wallet/${walletID}/totals`);
   }
 
-  deleteTransactionById(transactionID: number): Observable<any> {
-    return this.http.delete<any>(`http://localhost:5142/api/transactions/${transactionID}`);
+  updateTransaction(transactionID: number, transaction: Transaction): Observable<Transaction> {
+    return this.http.post<Transaction>(`${this.transactionUrl}/${transactionID}`, transaction);
+  }
+
+  deleteTransactionById(transactionID: number){
+    return this.http.delete(`http://localhost:5142/api/transactions/${transactionID}`);
   }
 
   GetIncomeByDate(walletID: number): Observable<{date: string, amount: number}[]> {

@@ -44,14 +44,28 @@ namespace BudgetManagmentServer.Controllers
             return Ok(newUser);
         }
 
-        [HttpPost("{id}")]
-        public IActionResult UpdateUser(int id, User user)
+        [HttpPost("update")]
+        public IActionResult UpdateUser([FromBody] UpdateUserViewModel userViewModel)
         {
-            var updateUser = _userRepository.UpdateUser(id, user);
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userIdClaim))
+            {
+                return Unauthorized("User ID claim not found");
+            }
+
+            int userId = int.Parse(userIdClaim);
+            
+            var user = new User
+            {
+                UserName = userViewModel.UserName,
+                Email = userViewModel.Email
+            };
+
+            var updateUser = _userRepository.UpdateUser(userId, user);
 
             if (updateUser == null)
             {
-                return NotFound($"User with id {id} not found.");
+                return NotFound($"User with id {userIdClaim} not found.");
             }
 
             return Ok(updateUser);
@@ -133,15 +147,17 @@ namespace BudgetManagmentServer.Controllers
         [HttpGet("getdata")]
         public IActionResult GetData()
         {
-            var id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            int id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             var email = User.FindFirst(ClaimTypes.Email)?.Value;
             var username = User.FindFirst(ClaimTypes.Name)?.Value;
 
+            var user = _userRepository.GetUserById(id);
+
             var userData = new
             {
-                ID = id,
-                Email = email,
-                name = username 
+                ID = user.UserID,
+                Email = user.Email,
+                name = user.UserName 
             };
 
             return Ok(userData);

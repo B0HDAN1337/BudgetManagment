@@ -42,13 +42,16 @@ export class WalletMainPageComponent implements OnInit {
     private savingService: SavingService) {}
 
   transaction = {
-      category: '',
-      date: '',
-      amount: 0,
-      currency: '',
-      walletID: 0,
-      type: 0
-    }
+    transactionID: 0,
+    category: '',
+    date: '',
+    amount: 0,
+    currency: '',
+    walletID: 0,
+    type: 0,
+    userID: 0,
+    convertedAmount: 0
+  }
 
     ngOnInit() {
       this.walletId = +this.route.snapshot.paramMap.get('id')!;
@@ -76,6 +79,8 @@ export class WalletMainPageComponent implements OnInit {
     {
         console.log("Success transaction", success);
         alert("Success created transaction");
+        this.ngOnInit();
+        this.isAddTransactionVisible = false;
     }, error =>
     {
         console.log("Error transaction", error);
@@ -208,7 +213,8 @@ export class WalletMainPageComponent implements OnInit {
     this.isShowMoreTransactionsVisible = true;
   }
 
-  ShowEditTransactionMenu(){
+  ShowEditTransactionMenu(transaction: Transaction){
+    this.transaction = { ...transaction }; 
     this.isEditTransactionVisible = true;
   }
 
@@ -331,7 +337,7 @@ ExpensebarChartOptions: ChartOptions = {
   }
 
   expenseByCategoryData: ChartData<'doughnut'> = {
-  labels: [],
+  labels: ['Food', 'HealthCare', 'Travel'],
   datasets: [
     {
       data: [],
@@ -348,7 +354,7 @@ expenseByCategoryOptions: ChartOptions = {
   },
   plugins: {
     legend: {
-      position: 'right'
+      display: false
     },
     tooltip: {
       callbacks: {
@@ -365,6 +371,16 @@ expenseByCategoryOptions: ChartOptions = {
 
 expenseByCategoryType: ChartType = 'doughnut';
 
+getPercentForCategory(category: string): number {
+  const index = this.expenseByCategoryData.labels?.indexOf(category);
+  if (index !== -1 && index != null) {
+    const value = this.expenseByCategoryData.datasets[0].data[index];
+    return Math.round(value * 100) / 100; 
+  }
+  return 0;
+}
+
+
 generateRandomColor() {
   const letters = '0123456789ABCDEF';
   let color = '#';
@@ -375,12 +391,16 @@ generateRandomColor() {
 }
 
 loadExpenseByCategory(walletId: number) {
+  const categoryColors: { [category: string]: string } = {
+  Food: '#FF6F61',
+  Healthcare: '#4DB6AC',
+  Travel: '#FBC02D'
+};
   this.transactionService.GetExpenseByCategory(walletId).subscribe(data => {
     const labels = this.expenseByCategoryData.labels = data.map(d => d.category);
     const percentages = this.expenseByCategoryData.datasets[0].data = data.map(d => d.percentage);
+    const colors = data.map(d => categoryColors[d.category] || this.generateRandomColor());
 
-    // Генеруємо кольори для кожної категорії
-    const colors = this.expenseByCategoryData.datasets[0].backgroundColor = data.map(_ => this.generateRandomColor());
 
     this.expenseByCategoryData = {
       labels: labels,
@@ -516,5 +536,35 @@ resetFilters() {
   this.toDate = '';
   this.filteredTransactions = [...this.transactions];
   this.updatePagination();
+}
+
+
+updateTransaction() {
+  this.transactionService.updateTransaction(this.transaction.transactionID, this.transaction).subscribe(
+    success => {
+      console.log("Transaction updated successfully", success);
+      alert("Transaction updated successfully");
+      this.CloseEditTransactionMenu();
+      this.ngOnInit();
+      this.updatePagination();
+    },
+    error => {
+      console.error("Error updating transaction", error);
+      alert("Error updating transaction");
+    }
+  );
+}
+
+deleteTransaction(transactionID: number) {
+  this.transactionService.deleteTransactionById(transactionID).subscribe(success =>
+  {
+    console.log("Success deleted Transaction", success);
+    this.ngOnInit();
+    this.updatePagination();
+  }, error => 
+  {
+    console.log("Error delete Transaction", error);
+  }
+  )
 }
 }
