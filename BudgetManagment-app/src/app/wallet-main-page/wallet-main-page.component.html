@@ -67,8 +67,37 @@
               <img width="35" height="35" src="assets/icons/expenses.svg">
               <h3>Total expenses</h3>
             </div>
-            <div style="width: 300px; height: 300px;">
+            <div style="width: 300px; height: 300px; display: flex; flex-direction: row;">
              <canvas baseChart [data]="expenseByCategoryData" [type]="expenseByCategoryType" [options]="expenseByCategoryOptions"></canvas>
+
+             <div class="total-expenses-percents">
+
+              <div class="total-expenses-single-category" style="display: flex; flex-direction: row; gap: 10px; align-items: center;">
+                <div class="circle-total-expeneces-round" style="width: 47.24px; height: 47.24px; background-color: #FF6F61; border-radius: 50%; align-items: center; justify-content: center; display: flex;">
+                  <img src="assets/icons/local_dining.png" style="width: 30.78px; height: 30.78px; margin-right: 2px;" alt="">
+                </div>
+                <label class="total-expenses-category-name">Food</label>
+                <label class="total-expenses-category-percent">25%</label>
+              </div>
+
+              <div class="total-expenses-single-category" style="display: flex; flex-direction: row; gap: 10px; align-items: center;">
+                <div class="circle-total-expeneces-round" style="width: 47.24px; height: 47.24px; background-color: #4DB6AC; border-radius: 50%; align-items: center; justify-content: center; display: flex;">
+                  <img src="assets/icons/local_hospital.png" style="width: 30.78px; height: 30.78px; " alt="">
+                </div>
+                <label class="total-expenses-category-name">Healthcare</label>
+                <label class="total-expenses-category-percent">25%</label>
+              </div>
+
+              <div class="total-expenses-single-category" style="display: flex; flex-direction: row; gap: 10px; align-items: center;">
+                <div class="circle-total-expeneces-round" style="width: 47.24px; height: 47.24px; background-color: #FBC02D; border-radius: 50%; align-items: center; justify-content: center; display: flex;">
+                  <img src="assets/icons/local_airport.png" style="width: 30.78px; height: 30.78px; " alt="">
+                </div>
+                <label class="total-expenses-category-name">Travel</label>
+                <label class="total-expenses-category-percent">25%</label>
+              </div>
+
+             </div>
+
            </div>
           </div>
            
@@ -83,7 +112,7 @@
                 <span class="transaction-date">{{transaction.date | date:'shortDate'}}</span>
                 <span class="transaction-amount" [ngClass]="{'positive': transaction.amount > 0, 'negative': transaction.amount < 0}">{{transaction.amount}} {{getCurrencySymbol(transaction.currency)}}</span>
             </div>
-            <button class="show-more-transactions" >Show More</button>
+            <button class="show-more-transactions" (click)="OpenShowMoreTransactions()">Show More</button>
         </div>
 
         <label class="last-savings-text">Your <strong>Savings</strong></label>
@@ -425,4 +454,166 @@
   </div>
 
    
+</div>
+
+<div class="overlay1" *ngIf="isShowMoreTransactionsVisible">
+
+  <div class="centered-showmore-transaction">
+    <div class="corners-showmore-transaction">
+
+        <button class="closeMenu" (click)="CloseShowMoreTransactions()">Close</button>
+
+        <div class="container1">
+
+        <div class="filters-section">
+          <h2 class="filters-h2">Filters</h2>
+          <div class="filters">
+            <div class="filter">
+              <label class="filter-label">Category</label>
+              <select class="select-menu" [(ngModel)]="selectedCategory">
+                <option class="category-option">All Categories</option>
+                <option class="category-option">Food</option>
+                <option class="category-option">Home</option>
+                <option class="category-option">Healthcare</option>
+                <option class="category-option">Travel</option>
+                <option class="category-option">Income</option>
+              </select>
+            </div>
+    
+            <div class="filter">
+              <label class="filter-label">Currency</label>
+              <div class="currency-select">
+                <select class="select-menu" [(ngModel)]="selectedCurrency">
+                  <option value="USD">United States Dollar</option>
+                  <option value="EUR">Euro</option>
+                  <option value="PLN">Polish Złoty</option>
+                </select>
+              </div>
+            </div>
+    
+            <div class="filter">
+              <label class="filter-label">From Date</label>
+              <input class="select-menu" type="date" [(ngModel)]="fromDate" placeholder="22/02/2025">
+            </div>
+
+            <div class="filter">
+              <label class="filter-label">To Date</label>
+              <input class="select-menu" type="date" [(ngModel)]="toDate" placeholder="22/04/2025">
+            </div>
+  
+          </div>
+    
+          <div class="filter-buttons">
+            <button class="reset" (click)="resetFilters()">Reset Filters</button>
+            <button class="apply" (click)="applyFilters()">Apply Filters</button>
+          </div>
+        </div>
+    
+        <div class="transactions-section">
+          
+          <h3 class="transactions-h3">Your Last Transactions</h3>
+
+          <button class="edit-button" aria-label="Edit transaction" (click)="ShowEditTransactionMenu()">Edit</button>
+
+          <div class="transaction-row" *ngFor="let transaction of paginatedTransactions">
+              <div class="left-group">
+                <img [src]="getCategoryImage(transaction.category)"/>
+                <span class="category">{{transaction.category}}</span>
+              </div>
+
+              <span class="date_transaction_list">{{transaction.date}}</span>
+
+              
+
+              <div class="right-group">
+                <span class="amount negative" [ngClass]="{'positive': transaction.amount > 0, 'negative': transaction.amount < 0}">{{transaction.amount}} {{getCurrencySymbol(transaction.currency)}}</span>
+                <button class="edit-button" aria-label="Edit transaction" (click)="ShowEditTransactionMenu()">Edit</button>
+              </div>
+          </div>
+        
+          <!-- <div class="transaction-row">
+            <div class="left-group">
+              <img src="assets/icons/income-violet.png" alt="Food icon" />
+              <span class="category">Income</span>
+            </div>
+
+            <span class="date_transaction_list">09/04/2025</span>
+
+            <div class="right-group">
+              <span class="amount positive">+100.00 $</span>
+              <button class="edit-button" aria-label="Edit transaction" (click)="ShowEditTransactionMenu()" >Edit</button>
+            </div>
+        </div> -->
+
+        </div>
+    
+        <div class="pagination">
+          <span
+            class="page"
+            *ngFor="let page of pages"
+            [class.page-active]="currentPage === page"
+            (click)="goToPage(page)">
+            {{ page }}
+          </span>
+          <span class="page" (click)="nextPage()" [class.disabled]="currentPage === totalPages">next</span>
+          <div class="page-info"> Page: {{ currentPage }} of {{ totalPages }}</div>
+          <span class="page" (click)="goToPage(totalPages)" [class.disabled]="currentPage === totalPages">last</span>
+        </div>
+        
+      </div>
+
+    </div>
+    
+</div>
+</div>
+
+<div class="overlay_edit" *ngIf="isEditTransactionVisible">
+  <div class="centered-add-transaction">
+      <div class="corners-add-transaction">
+          <button class="closeMenu" (click)="CloseEditTransactionMenu()">Close</button>
+          
+          <form class="form_edit">
+              <div class="top-row-container_edit">
+                <div class="category_edit">
+                  <label>Category</label>
+                  <select name="Category" [(ngModel)]="transaction.category" ngModel required>
+                    <option value="" disabled selected hidden>Category</option>
+                    <option value="Food">Food</option>
+                    <option value="Healthcare">Healthcare</option>
+                    <option value="Income">Income</option>
+                    <option value="Travel">Travel</option>
+                  </select>
+                </div>
+                <div class="date_edit">
+                  <label>Date</label>
+                  <input name="Date" [(ngModel)]="transaction.date" ngModel type="text" placeholder="yyyy-mm-dd" required />
+                </div>
+              </div>
+            
+              <div class="bottom-row-container_edit">
+                <div class="amount_edit">
+                  <label>Amount</label>
+                  <input name="Amount" [(ngModel)]="transaction.amount" ngModel type="text" placeholder="Amount" required />
+                </div>
+                <div class="currency_edit">
+                  <label>Currency</label>
+                  <select name="Currency" [(ngModel)]="transaction.currency" ngModel required>
+                    <option value="" disabled selected hidden>Currency</option>
+                    <option value="USD">United States Dollar</option>
+                    <option value="EUR">Euro</option>
+                    <option value="PLN">Polish złoty</option>
+                  </select>
+                </div>
+                <div class="buttons-div-edit-transactions">
+                    <button type="submit" class="button-delete-edit-transaction">Delete</button>
+                    <button type="submit" class="button-save-edit-transaction">Save</button>
+                </div>
+                
+              </div>
+            </form>
+            
+          
+      </div>
+      
+  </div>
 </div>

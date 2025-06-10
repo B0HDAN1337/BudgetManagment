@@ -26,10 +26,12 @@ export class WalletMainPageComponent implements OnInit {
   wallets: any;
 
   transactions: Transaction[] = [];
+  paginatedTransactions: Transaction[] = [];
 
   isAddTransactionVisible = false;
   isShowMoreTransactionsVisible = false;
   isSaveMoneyOverviewVisible = false;
+  isEditTransactionVisible = false;
 
   constructor(
     private router: Router, 
@@ -110,31 +112,62 @@ export class WalletMainPageComponent implements OnInit {
   }
 
   getCurrencySymbol(currency: string): string {
-  switch (currency) {
-    case 'USD': return '$';
-    case 'EUR': return '€';
-    case 'PLN': return 'zł';
-    default: return currency;
-  }
-}
-
-selectedCategory = 'All Categories';
-
-getCategoryImage(category: string, color: string = 'violet'): string {
-    switch (category) {
-      case 'Food': return `/assets/icons/food-${color}.png`;
-      case 'Home': return `/assets/icons/home-${color}.png`;
-      case 'Healthcare': return `/assets/icons/healthcare-${color}.png` ;
-      case 'Travel': return `/assets/icons/travel-${color}.png`;
-      case 'Income': return `/assets/icons/income-${color}.png`;
-      default: return category;
+    switch (currency) {
+      case 'USD': return '$';
+      case 'EUR': return '€';
+      case 'PLN': return 'zł';
+      default: return currency;
     }
   }
-
-  isActiveCategory(category: string): boolean {
-  return this.selectedCategory === category;
-}
-
+  
+  currentPage: number = 1;
+  pageSize: number = 5;
+  totalPages: number = 0;
+  pages: number[] = [];
+  
+  updatePagination() {
+    this.totalPages = Math.ceil(this.transactions.length / this.pageSize);
+    this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedTransactions = this.filteredTransactions.slice(startIndex, endIndex);
+  }
+  
+  goToPage(page: number) {
+    this.currentPage = page;
+    this.updatePagination();
+  }
+  
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.updatePagination();
+    }
+  }
+  
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePagination();
+    }
+  }
+  
+  selectedCategory = 'All Categories';
+  
+  getCategoryImage(category: string, color: string = 'violet'): string {
+      switch (category) {
+        case 'Food': return `/assets/icons/food-${color}.png`;
+        case 'Home': return `/assets/icons/home-${color}.png`;
+        case 'Healthcare': return `/assets/icons/healthcare-${color}.png` ;
+        case 'Travel': return `/assets/icons/travel-${color}.png`;
+        case 'Income': return `/assets/icons/income-${color}.png`;
+        default: return category;
+      }
+    }
+  
+    isActiveCategory(category: string): boolean {
+    return this.selectedCategory === category;
+  }
   totalIncome: number = 0;
   totalExpense: number = 0;
   totalBalance: number = 0;
@@ -153,6 +186,8 @@ getCategoryImage(category: string, color: string = 'violet'): string {
   isAddSavingsVisible = false;
   isSavingsOverviewVisible = false;
 
+  
+
   OpenAddSavingsMenu(){
     this.isAddSavingsVisible = true;
   }
@@ -168,6 +203,15 @@ getCategoryImage(category: string, color: string = 'violet'): string {
     this.isSaveMoneyOverviewVisible = true;
   }
 
+  OpenShowMoreTransactions()
+  {
+    this.isShowMoreTransactionsVisible = true;
+  }
+
+  ShowEditTransactionMenu(){
+    this.isEditTransactionVisible = true;
+  }
+
   CloseAddSavingsMenu()
   {
     this.isAddSavingsVisible = false;
@@ -179,6 +223,15 @@ getCategoryImage(category: string, color: string = 'violet'): string {
 
   CloseSaveMoneyOverview(){
     this.isSaveMoneyOverviewVisible = false;
+  }
+
+  CloseShowMoreTransactions()
+  {
+    this.isShowMoreTransactionsVisible = false;
+  }
+
+  CloseEditTransactionMenu(){
+    this.isEditTransactionVisible = false;
   }
 
 
@@ -454,4 +507,14 @@ deleteSavings(savingID: number) {
   )
 }
 
+selectedCurrency: string = 'All';
+
+resetFilters() {
+  this.selectedCategory = 'All Categories';
+  this.selectedCurrency = 'All';
+  this.fromDate = '';
+  this.toDate = '';
+  this.filteredTransactions = [...this.transactions];
+  this.updatePagination();
+}
 }
