@@ -331,7 +331,7 @@ ExpensebarChartOptions: ChartOptions = {
   }
 
   expenseByCategoryData: ChartData<'doughnut'> = {
-  labels: [],
+  labels: ['Food', 'HealthCare', 'Travel'],
   datasets: [
     {
       data: [],
@@ -348,7 +348,7 @@ expenseByCategoryOptions: ChartOptions = {
   },
   plugins: {
     legend: {
-      position: 'right'
+      display: false
     },
     tooltip: {
       callbacks: {
@@ -365,6 +365,16 @@ expenseByCategoryOptions: ChartOptions = {
 
 expenseByCategoryType: ChartType = 'doughnut';
 
+getPercentForCategory(category: string): number {
+  const index = this.expenseByCategoryData.labels?.indexOf(category);
+  if (index !== -1 && index != null) {
+    const value = this.expenseByCategoryData.datasets[0].data[index];
+    return Math.round(value * 100) / 100; 
+  }
+  return 0;
+}
+
+
 generateRandomColor() {
   const letters = '0123456789ABCDEF';
   let color = '#';
@@ -375,12 +385,16 @@ generateRandomColor() {
 }
 
 loadExpenseByCategory(walletId: number) {
+  const categoryColors: { [category: string]: string } = {
+  Food: '#FF6F61',
+  Healthcare: '#4DB6AC',
+  Travel: '#FBC02D'
+};
   this.transactionService.GetExpenseByCategory(walletId).subscribe(data => {
     const labels = this.expenseByCategoryData.labels = data.map(d => d.category);
     const percentages = this.expenseByCategoryData.datasets[0].data = data.map(d => d.percentage);
+    const colors = data.map(d => categoryColors[d.category] || this.generateRandomColor());
 
-    // Генеруємо кольори для кожної категорії
-    const colors = this.expenseByCategoryData.datasets[0].backgroundColor = data.map(_ => this.generateRandomColor());
 
     this.expenseByCategoryData = {
       labels: labels,

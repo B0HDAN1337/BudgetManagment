@@ -77,7 +77,7 @@
                   <img src="assets/icons/local_dining.png" style="width: 30.78px; height: 30.78px; margin-right: 2px;" alt="">
                 </div>
                 <label class="total-expenses-category-name">Food</label>
-                <label class="total-expenses-category-percent">25%</label>
+                <label class="total-expenses-category-percent">{{getPercentForCategory('Food')}}%</label>
               </div>
 
               <div class="total-expenses-single-category" style="display: flex; flex-direction: row; gap: 10px; align-items: center;">
@@ -85,7 +85,7 @@
                   <img src="assets/icons/local_hospital.png" style="width: 30.78px; height: 30.78px; " alt="">
                 </div>
                 <label class="total-expenses-category-name">Healthcare</label>
-                <label class="total-expenses-category-percent">25%</label>
+                <label class="total-expenses-category-percent">{{getPercentForCategory('Healthcare')}}%</label>
               </div>
 
               <div class="total-expenses-single-category" style="display: flex; flex-direction: row; gap: 10px; align-items: center;">
@@ -93,7 +93,7 @@
                   <img src="assets/icons/local_airport.png" style="width: 30.78px; height: 30.78px; " alt="">
                 </div>
                 <label class="total-expenses-category-name">Travel</label>
-                <label class="total-expenses-category-percent">25%</label>
+                <label class="total-expenses-category-percent">{{getPercentForCategory('Travel')}}%</label>
               </div>
 
              </div>
@@ -115,7 +115,7 @@
             <button class="show-more-transactions" (click)="OpenShowMoreTransactions()">Show More</button>
         </div>
 
-        <label class="last-savings-text">Your <strong>Savings</strong></label>
+        <!-- <label class="last-savings-text">Your <strong>Savings</strong></label>
 
         <div class="savings-container">
 
@@ -159,7 +159,7 @@
           
         </div>
 
-      </div>
+      </div> -->
 
     </div>
   </div>
@@ -168,7 +168,7 @@
 
 <!-- overlay -->
 
-<div class="overlay_savings_creation" *ngIf="isAddSavingsVisible">
+<!-- <div class="overlay_savings_creation" *ngIf="isAddSavingsVisible">
   <div class="centered-add-savings">
       <div class="corners-add-savings">
           <button class="closeMenu" (click)="CloseAddSavingsMenu()">Close</button>
@@ -221,9 +221,9 @@
   </div>
 
    
-</div>
+</div> -->
 
-<div class="overlay-savings-overview" *ngIf="isSavingsOverviewVisible">
+<!-- <div class="overlay-savings-overview" *ngIf="isSavingsOverviewVisible">
   <div class="centered-savings-overview">
       <div class="corners-savings-overview">
           <button class="closeMenu" (click)="CloseSavingsOverview()">Close</button>
@@ -334,8 +334,8 @@
   </div>
 
    
-</div>
-
+</div> -->
+<!-- 
 <div class="overlay-save-money" *ngIf="isSaveMoneyOverviewVisible">
   <div class="centered-save-money">
       <div class="corners-save-money">
@@ -392,7 +392,7 @@
   </div>
 
    
-</div>
+</div> -->
 
 
 
@@ -513,7 +513,6 @@
           
           <h3 class="transactions-h3">Your Last Transactions</h3>
 
-          <button class="edit-button" aria-label="Edit transaction" (click)="ShowEditTransactionMenu()">Edit</button>
 
           <div class="transaction-row" *ngFor="let transaction of paginatedTransactions">
               <div class="left-group">
