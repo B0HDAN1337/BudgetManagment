@@ -32,9 +32,19 @@ namespace BudgetManagmentServer.Repository
         {
             var existUser = _context.Users.Find(id);
 
-            existUser.UserName = user.UserName;
-            existUser.Email = user.Email;
-            existUser.Password = user.Password;
+            if (existUser == null)
+            return null;
+
+            if (!string.IsNullOrWhiteSpace(user.UserName))
+            {
+                existUser.UserName = user.UserName;
+            }
+
+
+            if (!string.IsNullOrWhiteSpace(user.Email))
+            {
+                existUser.Email = user.Email;
+            }
 
             _context.SaveChanges();
             return existUser;
