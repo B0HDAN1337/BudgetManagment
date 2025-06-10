@@ -1,5 +1,5 @@
 <div class="dynamic-name" *ngIf="wallets">
-    <label>Welcome Back, <b>{{wallets.walletName}}</b></label>
+    <label>Welcome Back, <b>{{wallets.walletName }}</b></label>
 </div>
 <div class="container">
 
@@ -11,7 +11,7 @@
 
         <section class="balance-section">
           <label>Current <strong>Balance</strong></label>
-          <p class="balance-amount" *ngIf="wallets">{{wallets.currency}} {{getCurrencySymbol(wallets.walletCurrency)}}</p>
+          <p class="balance-amount" *ngIf="wallets">{{wallets.currency | number:'1.2-2'}} {{getCurrencySymbol(wallets.walletCurrency)}}</p>
           <button class="btn-add-transaction" (click)="OpenMenu()">Add Transaction</button>
         </section>
 
@@ -38,7 +38,7 @@
             <div class="stat-item">
                  <img width="35" height="35" src="assets/icons/change.svg">
                 <strong>Total change</strong>
-                <p [ngClass]="{'positive': (totalIncome + totalExpense) > 0, 'negative': (totalIncome + totalExpense) < 0}">{{totalIncome + totalExpense}} {{getCurrencySymbol(wallets.walletCurrency)}}</p>
+                <p [ngClass]="{'positive': (totalIncome + totalExpense) > 0, 'negative': (totalIncome + totalExpense) < 0}">{{totalIncome + totalExpense | number:'1.2-2'}} {{getCurrencySymbol(wallets.walletCurrency)}}</p>
             </div>
           </div>
 

@@ -25,7 +25,7 @@
                                             <label class="name"><b>{{wallet.walletName}}</b></label>
                                             <label class="description">{{wallet.description}}</label>    
                                         </div>
-                                        <a [ngClass]="{'positive': wallet.currency > 0, 'negative': wallet.currency < 0}">{{wallet.currency}}</a>
+                                        <a [ngClass]="{'positive': wallet.currency > 0, 'negative': wallet.currency < 0}">{{wallet.currency | number:'1.2-2'}} {{getCurrencySymbol(wallet.walletCurrency)}}</a>
                                     </div>
                                     <button *ngIf="wallets && wallets.length >= 1 && wallets.length < 5" class="add-wallet-circle" (click)="OpenCreateMenu()">+</button>
                                 </div>
