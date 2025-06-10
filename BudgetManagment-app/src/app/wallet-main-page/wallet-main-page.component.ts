@@ -69,8 +69,8 @@ export class WalletMainPageComponent implements OnInit {
     this.isAddTransactionVisible = false;
   }
 
-  CreateTransaction() {
-    this.transactionService.addTransaction(this.transaction).subscribe( success =>
+  CreateTransaction(walletID: number) {
+    this.transactionService.addTransactionByWallet(walletID, this.transaction).subscribe( success =>
     {
         console.log("Success transaction", success);
         alert("Success created transaction");
@@ -354,11 +354,11 @@ applyFilters() {
 
     this.totalIncome = this.filteredTransactions
       .filter(t => t.type === 0) 
-      .reduce((sum, t) => sum + t.amount, 0);
+      .reduce((sum, t) => sum + t.convertedAmount, 0);
 
     this.totalExpense = this.filteredTransactions
       .filter(t => t.type === 1) 
-      .reduce((sum, t) => sum + t.amount, 0);
+      .reduce((sum, t) => sum + t.convertedAmount, 0);
 
       this.updateCharts();
   }
