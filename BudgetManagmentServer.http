@@ -1,6 +1,0 @@
-@BudgetManagmentServer_HostAddress = http://localhost:5142
-
-GET {{BudgetManagmentServer_HostAddress}}/api/User/
-Accept: application/json
-
-###
